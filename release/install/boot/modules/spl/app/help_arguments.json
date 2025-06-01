@@ -1,0 +1,16 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "spl/app/help" },
+            { "content": "Show the help information for the items requested." },
+            { "content": "{bold syntax}: {italic ./spl <appOpts> spl/app/help <opts>}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help informatiion" }, 
+        { "name": "items", "alias": "i", "type": "String", "multiple": true, "defaultOption": true, "description": "The list of items help is required for." }
+    ]
+}

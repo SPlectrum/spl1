@@ -1,0 +1,17 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "spl/blob/move" },
+            { "content": "Moves a file or folder from source to destination. Source and destination are in URI format." },
+            { "content": "{bold syntax}: {italic ./spl <appOptions> spl/blob/move <options>}" }
+]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help informatiion", "typeLabel": "flag" }, 
+        { "name": "from", "alias": "f", "description": "The repository the file is in." }, 
+        { "name": "to", "alias": "t", "description": "The repository the file is in." }                               
+]
+}

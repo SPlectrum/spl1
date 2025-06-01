@@ -1,0 +1,19 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "spl/data/write" },
+            { "content": "Writes a record to a folder." },
+            { "content": "{bold syntax}: {italic ./spl <appOptions> spl/data/write <options>}" }
+]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help informatiion", "typeLabel": "flag" }, 
+        { "name": "repo", "alias": "r", "description": "The repository the record is in." }, 
+        { "name": "dir", "alias": "d", "description": "The directory the record is in." }, 
+        { "name": "path", "alias": "p", "multiple": true, "description": "The record folder path in 2 space delimited parts." }, 
+        { "name": "uri", "alias": "u", "description": "The record folder path in uri format in one part." }
+    ]
+}

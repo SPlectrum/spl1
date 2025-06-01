@@ -1,0 +1,18 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "spl/app/wrap" },
+            { "content": "Wraps a JS script into an action." },
+            { "content": "{bold syntax}: {italic ./spl <appOpts> spl/app/wrap <opts>}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help informatiion" }, 
+        { "name": "api", "alias": "a", "description": "The API of the method to be created." },
+        { "name": "method", "alias": "m", "description": "The method name to be created." },
+        { "name": "file", "alias": "f", "description": "The file containing the JS script to wrap into an action. It must reside in the scripts folder." }
+    ]
+}

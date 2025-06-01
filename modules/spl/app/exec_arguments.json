@@ -1,0 +1,17 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "spl/app/exec" },
+            { "content": "Executes a batch file of commands." },
+            { "content": "{bold syntax}: {italic ./spl <appOpts> spl/app/exec <opts>}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help informatiion" }, 
+        { "name": "file", "alias": "f", "description": "The file containing the batch of commands to execute. It must reside in the batches folder." },
+        { "name": "args", "alias": "a", "multiple": true, "description": "Optional argument for batch file." }
+    ]
+}

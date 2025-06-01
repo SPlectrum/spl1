@@ -1,0 +1,20 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "spl/package/deploy" },
+            { "content": "Deploys a package from the workspace to the filesystem." },
+            { "content": "{bold syntax}: {italic ./spl <appOptions> spl/package/deploy <options>}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help informatiion", "typeLabel": "flag" }, 
+        { "name": "repo", "alias": "r", "description": "The repository of the package destination." }, 
+        { "name": "dir", "alias": "d", "description": "The directory of the package destination." }, 
+        { "name": "file", "alias": "f", "description": "The file name of the package destination." }, 
+        { "name": "path", "alias": "p", "multiple": true, "description": "The path of the package destination in 2 space delimited parts." }, 
+        { "name": "uri", "alias": "u", "description": "The path of the package destination in uri format in one part." }
+    ]
+}

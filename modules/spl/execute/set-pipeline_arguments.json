@@ -1,0 +1,15 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "spl/execute/set-pipeline" },
+            { "content": "This action adds a new pipeline to the front of the existing pipeline of the execution record." },
+            { "content": "{bold syntax}: {italic ./spl <appOptions> spl/execute/set-pipeline <options>}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help informatiion", "typeLabel": "flag" }
+    ]
+}

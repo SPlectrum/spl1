@@ -1,0 +1,19 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "spl/app/process-file" },
+            { "content": "Reads commands from a specified file and stores them for processing." },
+            { "content": "{bold syntax}: {italic ./spl <appOpts> spl/app/process-file <opts>}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help informatiion" }, 
+        { "name": "file", "alias": "f", "description": "The file containing the batch of commands to read." },
+        { "name": "repo", "alias": "r", "description": "The repository where the file is located (defaults to appRoot)." },
+        { "name": "dir", "alias": "d", "description": "The directory where the file is located (defaults to 'batches')." },
+        { "name": "appRoot", "alias": "a", "description": "The root folder of the app." }
+    ]
+}

@@ -1,0 +1,15 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "spl/execute/complete" },
+            { "content": "The action completes every request execution." },
+            { "content": "{bold syntax}: {italic ./spl <appOptions> spl/execute/complete <options>}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help informatiion", "typeLabel": "flag" }
+    ]
+}

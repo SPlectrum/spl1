@@ -1,0 +1,16 @@
+{   
+    "headers": {
+        "package": {
+            "name": "dirs_toplevel.json"
+          }
+    },
+    "value": {
+        "/apps/": "",
+        "/data/": "",
+        "/modules/": "",
+        "/packages/": "",
+        "/runtime/": "",
+        "/runtime/sessions/client/" :"",
+        "/runtime/sessions/test/" :""
+    }
+}

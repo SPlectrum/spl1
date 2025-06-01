@@ -1,0 +1,20 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "spl/package" },
+            { "content": "Standalone API to manage creation and deployment of data and functional packages." },
+            { "content": "{bold syntax}: {italic ./spl <appOpts> spl/package <apiOpts> <method>}" }
+]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help informatiion", "typeLabel": "flag" }, 
+        { "name": "repo", "alias": "r", "description": "The repository of the package source." }, 
+        { "name": "dir", "alias": "d", "description": "The directory of the package source." }, 
+        { "name": "file", "alias": "f", "description": "The file name of the package source." }, 
+        { "name": "path", "alias": "p", "multiple": true, "description": "The path of the package source in 3 space delimited parts." }, 
+        { "name": "uri", "alias": "u", "description": "The path of the package source in uri format in one part." }
+]
+}

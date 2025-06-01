@@ -1,0 +1,6 @@
+spl/package/load -r install -d packages -f dirs_toplevel.json @@ spl/package/deploy -r . -d . -f dirs_toplevel.json
+spl/package/load -r install -d packages -f dirs_session.json @@ spl/package/deploy -r runtime/sessions -d client -f dirs_session.json
+spl/package/load -r install -d packages -f dirs_session.json @@ spl/package/deploy -r runtime/sessions -d test -f dirs_session.json
+spl/package/load -r install -d packages -f apps_test2.json @@ spl/package/deploy -r apps -d . -f apps_test2.json
+spl/package/load -r install -d packages -f apps_test-suite.json @@ spl/package/deploy -r apps -d . -f apps_test-suite.json
+spl/package/create -r install/modules -d . -f modules_spl.json @@ spl/package/deploy -r modules -d . -f modules_spl.json

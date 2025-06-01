@@ -1,0 +1,15 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "spl/data/queue" },
+            { "content": "Writes a record to a queue folder." },
+            { "content": "{bold syntax}: {italic ./spl <appOptions> spl/data/queue <options>}" }
+]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help informatiion", "typeLabel": "flag" }
+    ]
+}

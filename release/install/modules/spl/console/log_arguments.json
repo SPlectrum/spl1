@@ -1,0 +1,16 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "spl/console/log" },
+            { "content": "Writes a message to the console." },
+            { "content": "{bold syntax}: {italic ./spl <appOpts> spl/console/log <opts>}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help informatiion" }, 
+        { "name": "message", "alias": "m", "type": "String", "multiple": true, "defaultOption": true, "description": "The message to display, as an array of strings" }
+    ]
+}

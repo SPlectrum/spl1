@@ -1,0 +1,18 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "spl/app/generate" },
+            { "content": "Generates a command from a parsed pipeline." },
+            { "content": "{bold syntax}: {italic ./spl <appOpts> spl/app/generate <opts>}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information" }, 
+        { "name": "actionName", "alias": "n", "description": "The name for the generated action." },
+        { "name": "filePath", "alias": "f", "description": "The original batch file path." },
+        { "name": "appRoot", "alias": "r", "description": "The application root directory." }
+    ]
+}

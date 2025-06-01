@@ -1,0 +1,12 @@
+{   
+    "headers": {
+        "package": {
+            "name": "dirs_session.json"
+          }
+    },
+    "value": {
+        "/requests/complete/": "",
+        "/requests/initialise/": "",
+        "/requests/queue/": ""
+    }
+}

@@ -1,0 +1,17 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "spl/app/wrap" },
+            { "content": "Wraps a JS script into an action." },
+            { "content": "{bold syntax}: {italic ./spl <appOpts> spl/app/wrap <opts>}" }
+        ]
+    },
+    "value":
+    [
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help informatiion" },
+        { "name": "file", "alias": "f", "description": "The file containing the JS script to wrap into an action. It must reside in the scripts folder." },
+        { "name": "args", "alias": "a", "multiple": true, "description": "Optional arguments for the script being wrapped." }
+    ]
+}
