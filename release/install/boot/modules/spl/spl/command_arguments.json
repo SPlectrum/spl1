@@ -1,0 +1,15 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "spl/command" },
+            { "content": "The initial API for command parsing and execution. DEPRECATED" },
+            { "content": "{bold syntax}: {italic ./spl <appOpts> spl/command <apiOpts> <method>}" }
+]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" }
+    ]
+}

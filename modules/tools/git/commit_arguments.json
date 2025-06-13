@@ -1,0 +1,19 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "tools/git/commit" },
+            { "content": "Commit staged changes." },
+            { "content": "{bold syntax}: {italic ./spl <appOptions> tools/git/commit <options>}" }
+        ]
+    },
+    "value": 
+    [
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
+        { "name": "message", "alias": "m", "type": "String", "description": "commit message", "typeLabel": "text" },
+        { "name": "all", "alias": "a", "type": "Boolean", "description": "commit all modified files", "typeLabel": "flag" },
+        { "name": "amend", "type": "Boolean", "description": "amend previous commit", "typeLabel": "flag" },
+        { "name": "repo", "alias": "r", "type": "String", "description": "specify the git repository root folder path", "typeLabel": "path" }
+    ]
+}

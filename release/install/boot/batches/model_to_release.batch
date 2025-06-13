@@ -1,0 +1,2 @@
+spl/package/create -r apps -d model -f apps_model.json
+spl/package/save -r ../release/install/packages -d . -f apps_model.json

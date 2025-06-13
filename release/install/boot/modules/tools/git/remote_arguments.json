@@ -1,0 +1,21 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "tools/git/remote" },
+            { "content": "Manage remote repositories." },
+            { "content": "{bold syntax}: {italic ./spl <appOptions> tools/git/remote <options>}" }
+        ]
+    },
+    "value": 
+    [
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
+        { "name": "add", "type": "String", "description": "add remote with name", "typeLabel": "name" },
+        { "name": "url", "type": "String", "description": "remote URL", "typeLabel": "url" },
+        { "name": "remove", "type": "String", "description": "remove remote by name", "typeLabel": "name" },
+        { "name": "list", "alias": "l", "type": "Boolean", "description": "list all remotes", "typeLabel": "flag" },
+        { "name": "verbose", "alias": "v", "type": "Boolean", "description": "verbose output", "typeLabel": "flag" },
+        { "name": "repo", "alias": "r", "type": "String", "description": "specify the git repository root folder path", "typeLabel": "path" }
+    ]
+}

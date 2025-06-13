@@ -1,0 +1,30 @@
+{
+    "headers": 
+    {
+        "top" : 
+        [
+            { "header": "7zip Archive Management" },
+            { "content": "Comprehensive archive operations using 7zip command line tools." }
+        ],
+        "bottom": 
+        [ 
+            { "content": "Supports all major archive formats: 7z, zip, tar, gzip, bzip2, xz, wim, iso" },
+            { "content": "Project home: {underline https://github.com/SPlectrum/spl}" }
+        ],
+        "header": 
+        [
+            { "content": "Set archive context and common options for 7zip operations." },
+            { "content": "{bold syntax}: {italic ./spl tools/7zip <options>}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
+        { "name": "archive", "alias": "a", "type": "String", "description": "Default archive file path for operations"},
+        { "name": "working", "alias": "w", "type": "String", "description": "Set working directory for operations"},
+        { "name": "password", "alias": "p", "type": "String", "description": "Default password for encrypted archives"},
+        { "name": "output", "alias": "o", "type": "String", "description": "Default output directory for extractions"},
+        { "name": "verbose", "alias": "v", "type": "Boolean", "description": "Enable verbose output", "typeLabel": "flag"},
+        { "name": "yes", "alias": "y", "type": "Boolean", "description": "Assume yes on all queries", "typeLabel": "flag"}
+    ]
+}

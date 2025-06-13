@@ -1,0 +1,16 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "spl/console/error" },
+            { "content": "Writes a message to stderr of the console." },
+            { "content": "{bold syntax}: {italic ./spl <appOpts> spl/console/error <opts>}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help informatiion" }, 
+        { "name": "message", "alias": "m", "type": "String", "multiple": true, "defaultOption": true, "description": "The message to display, as an array of strings" }
+    ]
+}

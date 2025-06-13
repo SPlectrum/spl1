@@ -1,4 +1,5 @@
-[Home](../README.md)
+[← Home](../README.md)
+
 # spl Data Layer
 
 The data is stored as (immutable) Kafka records, and accessed throught the data layer spl/data.  

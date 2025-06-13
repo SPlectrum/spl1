@@ -1,0 +1,21 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "tools/7zip/extract" },
+            { "content": "Extract files from archive preserving directory structure using 7zip 'x' command." },
+            { "content": "{bold syntax}: {italic ./spl <appOptions> tools/7zip/extract <options> [files]}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
+        { "name": "archive", "alias": "a", "type": "String", "description": "archive file to extract (required)", "required": true },
+        { "name": "output", "alias": "o", "type": "String", "description": "output directory for extracted files" },
+        { "name": "files", "type": "String", "description": "specific files to extract (optional)", "defaultOption": true },
+        { "name": "password", "alias": "p", "type": "String", "description": "archive password if encrypted" },
+        { "name": "overwrite", "alias": "y", "type": "Boolean", "description": "overwrite existing files without prompting", "typeLabel": "flag" },
+        { "name": "working", "alias": "w", "type": "String", "description": "working directory" }
+    ]
+}

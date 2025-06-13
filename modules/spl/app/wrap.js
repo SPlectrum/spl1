@@ -10,6 +10,8 @@ exports.default = function spl_app_wrap (input)
     const appRoot = spl.action(input, "appRoot");
     const filePath = spl.action(input, "file");
     const actionName = filePath.replace(/\.[^/.]+$/, "");
+    const isShellScript = filePath.endsWith('.sh');
+    const isPythonScript = filePath.endsWith('.py');
     
     // Read the script file
     const scriptUri = spl.URI(appRoot, "scripts", filePath);
@@ -19,8 +21,52 @@ exports.default = function spl_app_wrap (input)
     
     const scriptContents = spl.wsGet(input, `spl/blob.${spl.fURI(scriptUri)}`).value;
     
-    // Create wrapped action
-    const wrappedActionJs = `//  name        ${actionName}
+    let wrappedActionJs;
+    
+    if (isShellScript || isPythonScript) {
+        // For shell and Python scripts, create a wrapper that executes them directly
+        const interpreter = isShellScript ? 'bash' : 'python3';
+        
+        wrappedActionJs = `//  name        ${actionName}
+//  URI         usr/${actionName}
+//  type        API Method
+//  description Auto-generated wrapper for ${filePath}
+///////////////////////////////////////////////////////////////////////////////
+const spl = require("../spl.js")
+///////////////////////////////////////////////////////////////////////////////
+exports.default = function usr_${actionName.replace(/[^a-zA-Z0-9]/g, '_')} (input)
+{
+    const { spawn } = require('child_process');
+    const path = require('path');
+    
+    const actionArgs = spl.action(input, "args") || [];
+    const cwdRoot = spl.context(input, "cwd");
+    const appRoot = spl.config(input, "spl/app", "appRoot");
+    const scriptPath = path.join(cwdRoot, appRoot, 'scripts', '${filePath}');
+    const scriptDir = path.join(cwdRoot, appRoot, 'scripts');
+    
+    const child = spawn('${interpreter}', [scriptPath, ...actionArgs], {
+        stdio: 'inherit',
+        cwd: scriptDir
+    });
+    
+    child.on('close', (code) => {
+        if (code !== 0) {
+            console.error(\`Script exited with code \${code}\`);
+            process.exit(code);
+        }
+        spl.completed(input);
+    });
+    
+    child.on('error', (err) => {
+        console.error(\`Failed to execute script: \${err.message}\`);
+        process.exit(1);
+    });
+}
+///////////////////////////////////////////////////////////////////////////////`;
+    } else {
+        // For JS scripts, use the existing eval approach
+        wrappedActionJs = `//  name        ${actionName}
 //  URI         usr/${actionName}
 //  type        API Method
 //  description Auto-generated wrapper for ${filePath}
@@ -43,6 +89,7 @@ exports.default = function usr_${actionName.replace(/[^a-zA-Z0-9]/g, '_')} (inpu
     spl.completed(input);
 }
 ///////////////////////////////////////////////////////////////////////////////`;
+    }
 
     // Create arguments file
     const wrappedArgumentsJson = `{

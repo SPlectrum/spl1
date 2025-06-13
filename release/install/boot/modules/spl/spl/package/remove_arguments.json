@@ -1,0 +1,20 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "spl/package/remove" },
+            { "content": "Removes a package from the filesystem." },
+            { "content": "{bold syntax}: {italic ./spl <appOptions> spl/package/remove <options>}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help informatiion", "typeLabel": "flag" }, 
+        { "name": "repo", "alias": "r", "description": "The repository of the package." }, 
+        { "name": "dir", "alias": "d", "description": "The directory of the package." }, 
+        { "name": "file", "alias": "f", "description": "The file name of the package." }, 
+        { "name": "path", "alias": "p", "multiple": true, "description": "The path of the package in 3 space delimited parts." }, 
+        { "name": "uri", "alias": "u", "description": "The path of the package in uri format in one part." }
+    ]
+}

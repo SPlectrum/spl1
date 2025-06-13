@@ -1,0 +1,18 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "tools/git/status" },
+            { "content": "Gets the current repository status showing staged, modified, and untracked files." },
+            { "content": "{bold syntax}: {italic ./spl <appOptions> tools/git/status <options>}" }
+        ]
+    },
+    "value": 
+    [
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
+        { "name": "repo", "alias": "r", "type": "String", "description": "specify the git repository root folder path", "typeLabel": "path" },
+        { "name": "porcelain", "alias": "p", "type": "Boolean", "description": "Give the output in an easy-to-parse format for scripts", "typeLabel": "flag" },
+        { "name": "short", "alias": "s", "type": "Boolean", "description": "Give the output in the short-format", "typeLabel": "flag" }
+    ]
+}

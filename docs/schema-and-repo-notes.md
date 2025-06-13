@@ -1,3 +1,5 @@
+[← Home](../README.md)
+
 # Schema and Repo Notes
 
 ## Where to put schemas - Repo structure

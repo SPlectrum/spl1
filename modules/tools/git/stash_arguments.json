@@ -1,0 +1,21 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "tools/git/stash" },
+            { "content": "Stash changes in a dirty working directory." },
+            { "content": "{bold syntax}: {italic ./spl <appOptions> tools/git/stash <options>}" }
+        ]
+    },
+    "value": 
+    [
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
+        { "name": "save", "type": "String", "description": "save stash with message", "typeLabel": "text" },
+        { "name": "pop", "type": "Boolean", "description": "pop latest stash", "typeLabel": "flag" },
+        { "name": "list", "alias": "l", "type": "Boolean", "description": "list all stashes", "typeLabel": "flag" },
+        { "name": "apply", "type": "String", "description": "apply specific stash", "typeLabel": "name" },
+        { "name": "drop", "type": "String", "description": "drop specific stash", "typeLabel": "name" },
+        { "name": "repo", "alias": "r", "type": "String", "description": "specify the git repository root folder path", "typeLabel": "path" }
+    ]
+}

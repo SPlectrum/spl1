@@ -11,6 +11,7 @@
     "value": 
     [ 
         { "name": "help", "alias": "h", "type": "Boolean", "description": "show help informatiion" }, 
-        { "name": "file", "alias": "f", "description": "The file containing the JS scripts to run. It must reside in the batches folder." }
+        { "name": "file", "alias": "f", "description": "The file containing the JS scripts to run. It must reside in the batches folder." },
+        { "name": "args", "alias": "a", "multiple": true, "description": "Optional argument for batch file." }
     ]
 }

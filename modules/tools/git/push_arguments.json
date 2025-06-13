@@ -1,0 +1,20 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "tools/git/push" },
+            { "content": "Push commits to remote repository." },
+            { "content": "{bold syntax}: {italic ./spl <appOptions> tools/git/push <options>}" }
+        ]
+    },
+    "value": 
+    [
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
+        { "name": "remote", "type": "String", "description": "remote name (defaults to 'origin')", "typeLabel": "name" },
+        { "name": "branch", "alias": "b", "type": "String", "description": "branch name (defaults to current branch)", "typeLabel": "name" },
+        { "name": "force", "alias": "f", "type": "Boolean", "description": "force push", "typeLabel": "flag" },
+        { "name": "tags", "alias": "t", "type": "Boolean", "description": "push tags", "typeLabel": "flag" },
+        { "name": "repo", "alias": "r", "type": "String", "description": "specify the git repository root folder path", "typeLabel": "path" }
+    ]
+}

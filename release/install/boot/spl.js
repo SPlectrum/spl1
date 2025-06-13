@@ -9,7 +9,7 @@ const appRoot = root.slice(root.length - 2).join("/")
 const commandString = process.argv.slice(2);
 ///////////////////////////////////////////////////////////////////////////////
 const context = {   action: "spl/execute/initialise", consoleProgress: "start",  consoleMode: "standard", // silent, standard, warning, verbose, debug 
-                    runtimeMode: "silent", cwd: splRoot, session: session, modules: `${appRoot}/modules`, TTL: 100 };
+                    runtimeMode: "silent", cwd: splRoot, session: session, modules: `${appRoot}/modules`, appRoot: appRoot, TTL: 100 };
 const action = "spl/app/process";
 const batch = commandString;
 /*`spl/console/log hello world _!_ spl/console/error hello world 2

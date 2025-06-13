@@ -1,0 +1,7 @@
+spl/package/load -r install -d packages -f apps_boot.json @@ spl/package/deploy -r apps -d . -f apps_boot.json
+spl/package/load -r install -d packages -f apps_test-suite.json @@ spl/package/deploy -r apps -d . -f apps_test-suite.json
+spl/package/load -r install -d packages -f apps_test-tools-git.json @@ spl/package/deploy -r apps -d . -f apps_test-tools-git.json
+spl/package/load -r install -d packages -f apps_test-tools-7zip.json @@ spl/package/deploy -r apps -d . -f apps_test-tools-7zip.json
+spl/package/load -r install -d packages -f apps_test-boot.json @@ spl/package/deploy -r apps -d . -f apps_test-boot.json
+spl/package/load -r install -d packages -f apps_watcher.json @@ spl/package/deploy -r apps -d . -f apps_watcher.json
+spl/package/load -r install -d packages -f apps_model.json @@ spl/package/deploy -r apps -d . -f apps_model.json

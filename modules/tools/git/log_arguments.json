@@ -1,0 +1,21 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "tools/git/log" },
+            { "content": "Get commit history." },
+            { "content": "{bold syntax}: {italic ./spl <appOptions> tools/git/log <options>}" }
+        ]
+    },
+    "value": 
+    [
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
+        { "name": "count", "alias": "n", "type": "Number", "description": "number of commits to show", "typeLabel": "number" },
+        { "name": "oneline", "type": "Boolean", "description": "one line per commit", "typeLabel": "flag" },
+        { "name": "graph", "type": "Boolean", "description": "show commit graph", "typeLabel": "flag" },
+        { "name": "since", "type": "String", "description": "show commits since date", "typeLabel": "date" },
+        { "name": "until", "type": "String", "description": "show commits until date", "typeLabel": "date" },
+        { "name": "repo", "alias": "r", "type": "String", "description": "specify the git repository root folder path", "typeLabel": "path" }
+    ]
+}

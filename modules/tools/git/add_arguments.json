@@ -1,0 +1,19 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "tools/git/add" },
+            { "content": "Add files to staging area." },
+            { "content": "{bold syntax}: {italic ./spl <appOptions> tools/git/add <options>}" }
+        ]
+    },
+    "value": 
+    [
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
+        { "name": "files", "type": "String", "description": "files to add (supports patterns like '.', '*.js')", "typeLabel": "pattern" },
+        { "name": "all", "alias": "A", "type": "Boolean", "description": "add all modified files", "typeLabel": "flag" },
+        { "name": "force", "alias": "f", "type": "Boolean", "description": "force add ignored files", "typeLabel": "flag" },
+        { "name": "repo", "alias": "r", "type": "String", "description": "specify the git repository root folder path", "typeLabel": "path" }
+    ]
+}

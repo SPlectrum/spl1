@@ -23,7 +23,7 @@ exports.getDetails = function ( appRoot, moduleRoot, URI )
 {
     var prefix = "";
     var getRoot = "", getDir = moduleRoot;
-    if ( URI.indexOf ( "spl" ) != 0 ) { getRoot = appRoot; getDir = "modules"; }
+    if ( URI.indexOf ( "spl" ) != 0 && URI.indexOf ( "tools" ) != 0 ) { getRoot = appRoot; getDir = "modules"; }
     
     if ( URI.length > 0 ) prefix = `${URI}_`;
     const fileURI = `${(URI==="")?"":prefix}arguments.json`;
