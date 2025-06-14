@@ -25,22 +25,31 @@
 - Arguments passed via `-a` or `--args` flag to both `spl/app/exec` and generated usr/ commands
 - **Testing Rule**: Always test batch files directly using `spl/app/exec -f {file}.batch` before generating usr/ commands - this isolates batch logic from generation issues
 
-## Batch File with Arguments Development Workflow
+## Batch File with Arguments Development Workflow (Issue-Based)
+
+**GitHub Issue Integration**: Each batch file development should be a separate GitHub issue
 1. **Create/Edit**: Modify `.batch` file with command sequence and parameter placeholders (`$1`, `$2`, etc.)
 2. **Test Batch First**: Use `spl/app/exec -f {file}.batch -a arg1 arg2` to test batch file execution
 3. **Debug Batch Issues**: If batch fails, fix the batch file logic before generation
 4. **Generate Command**: Only after batch tests pass, convert to usr/ command with `spl/app/create -f {file}.batch`  
 5. **Test Command**: Test generated usr/ command with `usr/{command} -a arg1 arg2`
-6. **Parameter Patterns**: `$1`, `$2` (positional), `$@` (array), `$*` (space-separated string)
+6. **Commit with Issue Reference**: `git commit -m "feat: add batch automation for deployment (#123)"`
+7. **Parameter Patterns**: `$1`, `$2` (positional), `$@` (array), `$*` (space-separated string)
 
 **Testing Principle**: Batch files are the source of truth - test them directly first to isolate logic issues from code generation problems.
 
-## Boot App Development Workflow
-1. **Modify**: Edit batch files or usr/ commands in `spl/apps/boot/`
-2. **Test**: Use temporary spl-prefixed folders for testing (e.g., `spl-test-install`)
-3. **Regenerate**: If batch files changed, use `spl/app/create -f {file}.batch` to update usr/ commands
-4. **Publish**: Use `usr/boot_to_release` to publish changes to release folder
-5. **Avoid**: Never test deployment in development `spl/` directory - use separate test folders
+## Boot App Development Workflow (Phase-Based)
+
+**Issue-Per-Change Approach**: Each boot app modification should align with GitHub issues
+1. **Plan**: Create GitHub issue for boot app enhancement within appropriate milestone phase
+2. **Branch**: Create feature branch: `git checkout -b feature/boot-enhancement-issue-456`
+3. **Modify**: Edit batch files or usr/ commands in `spl/apps/boot/`
+4. **Test**: Use temporary spl-prefixed folders for testing (e.g., `spl-test-install`)
+5. **Regenerate**: If batch files changed, use `spl/app/create -f {file}.batch` to update usr/ commands
+6. **Publish**: Use `usr/boot_to_release` to publish changes to release folder
+7. **Commit**: Reference issue: `git commit -m "feat: enhance boot deployment process (#456)"`
+8. **PR**: Create pull request: `gh pr create --title "Boot enhancement (#456)" --body "Closes #456"`
+9. **Avoid**: Never test deployment in development `spl/` directory - use separate test folders
 
 ## App Creation Workflow (Complete all steps)
 1. Copy structure from model app (`spl`, `spl.js`, `modules/`)

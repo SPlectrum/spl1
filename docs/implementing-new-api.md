@@ -116,14 +116,28 @@ echo "{category}/{api-name}/{method} --help" > batches/{api-name}-{method}-tests
 # 5. Update boot app release system (see creating-new-apps.md)
 ```
 
-## Development Workflow
-1. **Plan API scope** - Define methods and functionality
-2. **Create directory structure** - Follow pattern above
-3. **Implement auxiliary library** - Common functions
-4. **Implement methods** - Individual operations
-5. **Create test app** - Validation and testing
-6. **Integration testing** - Test with SPL system
-7. **Release integration** - Update boot app
+## Development Workflow (Phase-Based Approach)
+
+**Phase Planning**: Break API implementation into GitHub issues within a milestone phase
+1. **Plan API scope** - Define methods and functionality (GitHub issue for planning)
+2. **Create directory structure** - Follow pattern above (GitHub issue for scaffolding)
+3. **Implement auxiliary library** - Common functions (GitHub issue per library area)
+4. **Implement methods** - Individual operations (GitHub issue per method group)
+5. **Create test app** - Validation and testing (GitHub issue for test implementation)
+6. **Integration testing** - Test with SPL system (GitHub issue for integration)
+7. **Release integration** - Update boot app (GitHub issue for release packaging)
+
+**Issue-Per-Branch Workflow**:
+- Each step above becomes a GitHub issue (1-3 days work)
+- Create feature branch per issue: `feature/api-planning-issue-123`
+- Test batch files with `spl/app/exec -f` before generating usr/ methods
+- Commit with issue reference: `feat: implement git status method (#123)`
+- Create PR referencing issue: `gh pr create --title "Implement git status (#123)" --body "Closes #123"`
+
+**Integration with Phase-Based Development**:
+- API implementation fits within larger milestone phases
+- Coordinate with repository restructure and TDD implementation phases
+- Follow PRINCE2 "just enough planning" - detail current issues, outline future ones
 
 ## Naming Conventions
 - **API URI**: `{category}/{api-name}` (e.g., `tools/git`)

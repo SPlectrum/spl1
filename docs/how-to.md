@@ -156,22 +156,29 @@ docs/new-feature-guide.md
 # - Tool References (for tool-specific docs)
 ```
 
-**4. Git Commit Process**:
+**4. GitHub Issue-Based Workflow**:
 ```bash
-# IMPORTANT: Package changes to release folder first
+# IMPORTANT: Work within GitHub issue workflow
+# 1. Create or work on specific GitHub issue
+git checkout -b feature/issue-123
+
+# 2. Package changes to release folder first (if needed)
 # Changes in spl/ install directory are NOT git-tracked
 cd spl/apps/boot
 ./spl usr/boot_to_release      # If boot app was modified
 ./spl usr/apps_to_release      # If any apps were created/modified
 
-# Then stage all related changes together
+# 3. Stage all related changes together
 git add docs/new-document.md CLAUDE.md README.md release/
 
-# Create descriptive commit
-git commit -m "docs: add new feature documentation
+# 4. Create descriptive commit referencing issue
+git commit -m "docs: add new feature documentation (#123)
 
 Added comprehensive guide for new feature including workflow
 integration and updated navigation in README.md and CLAUDE.md."
+
+# 5. Create PR when ready
+gh pr create --title "Add new feature documentation (#123)" --body "Closes #123"
 ```
 
 ### File Creation Checklist
@@ -180,6 +187,7 @@ integration and updated navigation in README.md and CLAUDE.md."
 ✓ Start with [← Home](../README.md) navigation
 ✓ Follow standard template structure
 ✓ Update CLAUDE.md if workflow-related
+✓ Follow phase-based development and issue-per-branch workflow
 ✓ Add to appropriate README.md section
 ✓ Commit all changes together with descriptive message
 ```

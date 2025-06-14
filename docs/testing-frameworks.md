@@ -18,18 +18,22 @@ batches/
   js-help-tests.batch     # Test help functionality
 ```
 
-## Testing Workflow
-1. Create test scripts covering edge cases
-2. Create batch files to automate testing
-3. Generate usr/ commands from batch files
-4. Validate all functionality before extending
+## Testing Workflow (TDD Integration)
+
+**Phase-Based Testing**: Integrate with TDD Implementation roadmap phases
+1. **Plan Tests**: Create GitHub issues for test coverage within TDD milestone phases
+2. **Red Phase**: Create test scripts covering edge cases (failing tests first)
+3. **Green Phase**: Create batch files to automate testing and make tests pass
+4. **Refactor**: Generate usr/ commands from batch files and optimize
+5. **Commit**: Reference issue: `git commit -m "test: add edge case coverage for API (#789)"`
+6. **Validate**: All functionality before extending to next phase
 
 ## Benefits
 Prevents regressions when adding multi-language support and provides clear validation of functionality.
 
 ## Incremental Testing Workflow
 
-**Phase-Based Testing Discovery**: The 7zip API implementation revealed an effective incremental testing pattern that should be standardized across all API development.
+**Phase-Based Testing Discovery**: The 7zip API implementation revealed an effective incremental testing pattern that should be standardized across all API development. This aligns with our TDD Implementation roadmap phase.
 
 **Testing Phases**:
 1. **Batch File Testing**: Test command sequences as batch files before generating permanent usr/ methods
@@ -38,7 +42,7 @@ Prevents regressions when adding multi-language support and provides clear valid
 4. **State Management**: Clean up test artifacts to ensure repeatable test runs
 5. **Packaging Verification**: Confirm changes are properly packaged to release folder
 
-**Key Learning**: Use `spl/app/exec -f {file}.batch` for rapid iteration before committing to permanent usr/ method generation.
+**Key Learning**: Use `spl/app/exec -f {file}.batch` for rapid iteration before committing to permanent usr/ method generation. This supports our issue-per-branch workflow by enabling quick validation before creating PRs.
 
 ## Common Testing Pitfalls
 

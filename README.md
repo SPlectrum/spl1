@@ -1,6 +1,8 @@
-# SPlectrum Platform Core
+# SPlectrum Platform Core - spl1 Iteration
 
 SPlectrum is a modular execution platform designed for Linux environments, providing a comprehensive framework for building and deploying applications through a command-based architecture.
+
+**spl1 Transition Repository**: This iteration focuses on repository restructure, external install workflows, and core API enhancements. See [Federated Monorepo Design](./docs/federated-monorepo-design.md) for transition strategy and [Phase-Based Development Strategy](./docs/phase-based-development-strategy.md) for implementation approach.
 
 ## Quick Start
 
@@ -69,22 +71,28 @@ SPlectrum is built exclusively for Linux environments:
 For developers working on SPlectrum:
 - Read [How to](./docs/how-to.md) for essential development guidelines
 - See [Development Workflow Strategy](./docs/development-workflow-strategy.md) for AI-assisted development approach
+- Review [Branching Strategy](./docs/branching-strategy.md) for simplified GitHub Flow with TDD workflow
 - See [Implementing New API](./docs/implementing-new-api.md) for creating new modules
 - Review [Execute API Properties](./docs/execute-api-properties.md) for execution context details
 
 ## Documentation
 
 ### Essential Guides
+- [spl1 Epics Overview](./docs/spl1-epics-overview.md) - Seven major work blocks for spl1 transition
+- [Federated Monorepo Design](./docs/federated-monorepo-design.md) - Repository Restructure epic and federation strategy
 - [Prerequisites](./docs/prerequisites.md) - System requirements and dependency setup
 - [Installation Guide](./INSTALL.md) - Installing SPlectrum from distributed release archive
 - [Project Overview](./docs/project-overview.md) - Architecture, components, and core concepts
 - [How to](./docs/how-to.md) - Essential development and usage guidelines
+- [Branching Strategy](./docs/branching-strategy.md) - Simplified GitHub Flow with integrated TDD
+- [Phase-Based Development Strategy](./docs/phase-based-development-strategy.md) - PRINCE2-inspired approach to roadmap execution
+- [Phase-Based Implementation Guide](./docs/phase-based-implementation-guide.md) - Step-by-step guide for daily workflow
 - [App Development](./docs/app-development.md) - Application development patterns and workflows
 - [Code Quality Patterns](./docs/code-quality-patterns.md) - Critical coding standards and anti-patterns
 - [Testing Frameworks](./docs/testing-frameworks.md) - Comprehensive testing methodologies
 - [Creating New Apps](./docs/creating-new-apps.md) - Complete guide for building applications
 - [Implementing New API](./docs/implementing-new-api.md) - Guide for creating new modules
-- [Creating a Release](./docs/creating-a-release.md) - Release process and deployment
+- [Release and Install Process](./docs/release-and-install-process.md) - Comprehensive release and deployment guide
 - [Future Development](./docs/future-development.md) - Roadmap and planned improvements
 
 ### API Documentation  
@@ -109,6 +117,9 @@ For developers working on SPlectrum:
 
 ## Project Status
 
-**Current Version**: Core platform with essential functionality
-**Target**: MVP for application development by version 1.0
+**Current Phase**: spl1 - Transitional repository for restructure and enhancement
+**Focus Areas**: Repository reorganization, external install workflow, AVRO integration, TDD implementation  
+**Target**: Federated repository architecture with autonomous AI development capability
 **Platform**: Linux-first design with WSL support
+
+**Branch Strategy**: Simplified GitHub Flow with feature/* and bugfix/* branches, integrated TDD workflow

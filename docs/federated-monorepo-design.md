@@ -8,7 +8,64 @@ A hybrid approach combining monorepo benefits with distributed API development -
 
 ## Architecture Vision
 
-### Core Platform Repository (`spl-platform`)
+### Transition Strategy: Single-Concern Folders → Federated Repositories
+
+**Phase 1 (spl1)**: Reorganize current monorepo into single-concern folders
+```
+spl1/
+├── core/           # Execution engine, data layer, packages  
+├── apps/           # Applications (boot, test-suite, watcher)
+├── tools/          # External tool integrations (git, 7zip)
+└── docs/           # Centralized documentation
+```
+
+**Architectural Notes**:
+- spl1 is a transitional repository (like spl0) focused on restructuring for future federation
+- The top-level repository serves as orchestrator for domain-specific components
+- Initial structure is hierarchical but may evolve based on learning from implementation
+- Core API migration to "bare" (minimal, pure API) design is prioritized during this phase
+
+**Phase 2**: Extract into domain-specific repositories  
+```
+spl-core/           # Execution engine, data layer, packages
+├── CLAUDE.md       # Core platform patterns
+├── modules/spl/    # Core APIs
+└── docs/
+
+spl-apps/           # Applications (boot, test-suite, watcher)
+├── CLAUDE.md       # App development patterns  
+├── apps/           # Individual applications
+└── docs/
+
+spl-tools/          # External tool integrations
+├── CLAUDE.md       # Tool integration patterns
+├── modules/tools/  # Git, 7zip, etc.
+└── docs/
+```
+
+**Phase 3**: Full federated API architecture with per-API repositories
+
+### Benefits of Domain Separation
+
+**Efficiency Gains**:
+- Faster file searches and navigation in smaller codebases
+- Focused CLAUDE.md files with domain-specific guidance
+- Reduced cognitive overhead from irrelevant context
+- Better tool performance on smaller file sets
+
+**Context Management**:
+- Clear domain boundaries and responsibilities
+- Single domain expertise per repository
+- Reduced risk of applying wrong patterns across domains
+- Easier maintenance of specialized knowledge
+
+**AI Development Benefits**:
+- Interactive mode for complex cross-domain work
+- Autonomous mode for routine domain-specific tasks
+- Deep specialized context builds over time per domain
+- Parallel work streams possible across domains
+
+### Final Target: Core Platform Repository (`spl-platform`)
 ```
 spl-platform/
 ├── core/                    # Execution engine, spl.js functions, data layer
