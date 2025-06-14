@@ -14,15 +14,31 @@
 
 ## Tool Wrappers
 
-### Git API - Partial ✅
+### Git API - Implemented ✅
 - `tools/git` ✅ - Context management
 - `tools/git/status` ✅ - Repository status  
-- All others 📋 - Planned (add, commit, push, pull, branch, checkout, etc.)
+- `tools/git/add` ✅ - Stage files
+- `tools/git/commit` ✅ - Commit changes
+- `tools/git/push` ✅ - Push to remote
+- `tools/git/pull` ✅ - Pull from remote
+- `tools/git/branch` ✅ - Branch management
+- `tools/git/checkout` ✅ - Switch branches
+- `tools/git/log` ✅ - Commit history
+- `tools/git/diff` ✅ - Show changes
+- `tools/git/reset` ✅ - Reset state
+- `tools/git/stash` ✅ - Stash management
+- `tools/git/remote` ✅ - Remote management
+- `tools/git/init` ✅ - Initialize repository
+- `tools/git/clone` ✅ - Clone repository
 
-### 7zip API - Scaffolded 🔧
-- All methods scaffolded in `modules/tools/7zip/`
-- `add`, `extract`, `list`, `test`, `update`, `delete` - Need implementation
-- Arguments schemas complete
+### 7zip API - Implemented ✅
+- `tools/7zip/add` ✅ - Add files to archive
+- `tools/7zip/extract` ✅ - Extract archive contents
+- `tools/7zip/extract-flat` ✅ - Flat extraction
+- `tools/7zip/list` ✅ - List archive contents
+- `tools/7zip/test` ✅ - Test archive integrity
+- `tools/7zip/update` ✅ - Update archive
+- `tools/7zip/delete` ✅ - Delete from archive
 
 ## App-Specific Methods ✅
 - `usr/create_linux_installer` 📋 - Planned

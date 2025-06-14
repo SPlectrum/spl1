@@ -20,23 +20,33 @@
 
 **Dependencies**: Complete multi-language extension first to understand full requirements
 
-## Multi-Language Script Support
 
-**Status**: ✅ COMPLETED - JavaScript, Bash, and Python support implemented
+## Next Development Items
 
-**Implemented Features**:
-- File extension detection (`.js`, `.sh`, `.py`)
-- Direct execution for bash and Python scripts using `child_process.spawn()`
-- Wrapper generation for all three script types
-- Comprehensive test suite for all languages
-- Documentation of multi-language patterns
+**High Priority**:
+
+1. **Enhanced Help and Discovery System**
+   - Improve help functionality for app user functions (`usr/` methods)
+   - Add list functions for APIs to enable discovery of available commands
+   - Implement comprehensive help system across all SPL APIs
+   - Ensure consistent help output format and discoverability
+
+2. **Extend Script Execution with Working Directory Parameter** 
+   - Add `cwd` argument to `spl/app/run` and `spl/app/wrap` 
+   - Allow scripts to execute in custom working directories instead of always defaulting to `{appRoot}/scripts/`
+   - Current behavior: Scripts always execute in `scripts/` directory
+   - Proposed: Optional `cwd` parameter to specify alternate execution directory
+   - Use case: Scripts that need to operate on files in different directories (e.g., `data/`, `output/`, project root)
+   - Implementation: Add `cwd` action parameter, modify `child.spawn()` cwd option
+
+3. **Subdirectory CLAUDE.md Prototype with Boot App**
+   - Create `/spl/apps/boot/CLAUDE.md` as first federated guidance implementation
+   - Design self-contained format optimized for AI-assisted development
+   - Test discovery mechanism and override behavior
+   - Establish patterns for component autonomy and repository evolution
+   - See [Subdirectory CLAUDE.md Evolution Plan](./subdirectory-claude-md-plan.md) for full vision
 
 **Pending Enhancements**:
-- **Script Execution CWD Control**: Add `cwd` argument to `spl/app/run` and `spl/app/wrap` to allow scripts to execute in custom working directories instead of always defaulting to `{appRoot}/scripts/`
-  - Current behavior: Scripts always execute in `scripts/` directory
-  - Proposed: Optional `cwd` parameter to specify alternate execution directory
-  - Use case: Scripts that need to operate on files in different directories (e.g., `data/`, `output/`, project root)
-  - Implementation: Add `cwd` action parameter, modify `child.spawn()` cwd option
 
 ## Standardized Path Resolution
 

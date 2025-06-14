@@ -56,12 +56,8 @@ cp /path/to/SPlectrum.7z .
 
 ### 2. Create Install Directory
 ```bash
-# From the extracted release directory
-./spl_execute boot usr/release_to_install -a <install-directory-name>
-
-# Examples
-./spl_execute boot usr/release_to_install -a spl-production
-./spl_execute boot usr/release_to_install -a ~/SPlectrum
+# Installation commands to be documented
+# Process updated in recent versions
 ```
 
 ### 3. Linux Self-Extracting Installers

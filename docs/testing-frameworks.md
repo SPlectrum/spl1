@@ -40,6 +40,15 @@ Prevents regressions when adding multi-language support and provides clear valid
 
 **Key Learning**: Use `spl/app/exec -f {file}.batch` for rapid iteration before committing to permanent usr/ method generation.
 
+## Common Testing Pitfalls
+
+**Named Arguments Requirement**: 
+- **Issue**: `./spl_execute spl test-spl-app spl/app/run simple-test.py hello world` fails with "no such file or directory" error for `simple-test.py_arguments.json`
+- **Root Cause**: SPL parser treats positional arguments as action names, looking for corresponding argument definition files
+- **Solution**: Always use named parameters: `./spl_execute spl test-spl-app spl/app/run -f simple-test.py -a hello world`
+- **Pattern**: `-f` for files, `-a` for arguments, `-d` for debug flag
+- **Learning**: This is a recurring issue - document and prevent with proper command examples
+
 ## Argument Schema Validation
 
 **Alias Constraint Discovery**: All command line argument aliases must be single characters, causing validation failures with longer aliases like "sfx" or "slt".

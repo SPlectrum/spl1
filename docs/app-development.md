@@ -87,16 +87,27 @@ const context = {
 - **Boot App**: Uses local modules (`./modules/spl/spl.js`), requires explicit context setup
 - **Test Apps**: Use global modules (`../../../modules/spl/spl.js`), include moduleOverlay patterns
 
-**Module Update Workflow for Apps**:
-1. **Update Install**: `usr/release_to_install -a {install-dir}` - Copy modules to install folder
-2. **Update App**: `usr/modules_to_boot` - Deploy modules from install to app
-3. **Limitation**: `modules_to_boot` only copies `spl/` subdirectory, not top-level `tools/`
-4. **Manual Override**: Direct copy required for tools: `cp -r install/modules/tools apps/{app}/modules/`
+**Four-Step Release Workflow for Apps**:
+1. **Update Packages**: `usr/apps_to_release` - Update all app packages in release folder
+2. **Update Install**: `usr/release_to_install -a {install-dir}` - Copy modules to install folder
+3. **Update App**: `usr/modules_to_boot` - Deploy modules from install to app
+4. **Update Release**: `usr/boot_to_release` - Deploy final changes back to release folder
+
+**Module Update Limitations**:
+- `modules_to_boot` only copies `spl/` subdirectory, not top-level `tools/`
+- Manual override may be required for tools: `cp -r install/modules/tools apps/{app}/modules/`
 
 **Debug Flag Benefits**:
 - Use `-d` flag to see complete execution context and workspace state
 - Shows context values like `appRoot`, `cwd`, execution history
 - Essential for diagnosing module resolution and path issues
+
+**Named Arguments Requirement (CRITICAL)**:
+- **ALL SPL commands require named arguments** - positional arguments cause parsing errors
+- **Correct**: `spl/app/run -f script.js -a hello world`
+- **Wrong**: `spl/app/run script.js hello world` (fails with missing argument files error)
+- **Root Cause**: SPL parser treats positional args as file paths, looking for `{arg}_arguments.json`
+- **Rule**: Always use `-f` for files, `-a` for arguments, `-d` for debug, etc.
 
 **Batch Command Argument Pattern**:
 - Batch commands generated from `.batch` files use `--args` or `-a` flag for parameters

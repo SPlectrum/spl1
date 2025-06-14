@@ -1,10 +1,10 @@
 [← Home](../README.md)
 
-# 7zip API Wrapper - Methods Implementation Guide
+# 7zip API Wrapper - Methods Reference
 
-This document outlines the implementation plan for the SPL 7zip API wrapper, based on the [7zip Command Line API Reference](7zip-command-line-api.md) and following the established SPL module pattern demonstrated in the [Git API Methods](git-api-methods.md).
+This document provides the complete API reference for the SPL 7zip wrapper, implementing the [7zip Command Line API Reference](7zip-command-line-api.md) and following the established SPL module pattern demonstrated in the [Git API Methods](git-api-methods.md).
 
-**Implementation Status**: All methods are currently scaffolded with placeholder implementations. See `modules/tools/7zip/` directory for the current code structure.
+The complete 7zip API is implemented in the `modules/tools/7zip/` directory with full functionality for all archive operations.
 
 ## Overview
 
@@ -235,17 +235,6 @@ The wrapper processes 7zip return codes according to the [7zip Command Line API 
 
 These are integrated with SPL's error handling system through `spl.throwError()` for non-zero return codes.
 
-## Implementation Priority
-
-Recommended implementation order based on SPlectrum usage patterns:
-
-1. **`add`** - Critical for release process (self-extracting archives)
-2. **`extract`** - Essential for package deployment
-3. **`list`** - Useful for archive inspection
-4. **`test`** - Important for archive verification
-5. **`update`** - Maintenance operations
-6. **`delete`** - Archive cleanup
-7. **`extract-flat`** - Specialized extraction
 
 ## Related Documentation
 

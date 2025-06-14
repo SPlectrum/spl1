@@ -1,45 +1,66 @@
 [← Home](../README.md)
 
-# Git API Wrapper - Methods Implementation Guide
+# Git API Wrapper - Methods Reference
 
-This document outlines all the methods that should be implemented for the SPL Git API wrapper, based on the existing implementation pattern and design specifications.
+This document provides the complete API reference for the SPL Git wrapper, implementing comprehensive git command functionality following the established SPL module pattern.
 
 ## Overview
 
 The SPL Git API provides a comprehensive wrapper around git commands, following the established SPL module pattern. Each method executes git commands through the auxiliary [`git.js`](../modules/tools/git/git.js) library and integrates seamlessly with the SPL platform's execution and error handling systems.
 
-## Implementation Status
-- ✅ `tools/git` - Context management  
-- ✅ `tools/git/status` - Repository status
-- 📋 All other methods - Planned but not implemented
+## Git API Methods
 
-## Implemented Methods
-
-### `tools/git` ✅
+### `tools/git`
 Set repository context. Args: `path`, `create`, `help`
 
-### `tools/git/status` ✅  
+### `tools/git/status`
 Get repository status. Args: `repo`, `porcelain`, `short`, `help`
 Files: `status.js`, `status_arguments.json`
 
-## Planned Methods 📋
+## Repository Management
 
-### Basic Operations  
-- `init` - Initialize repository (args: repo, bare, template)
-- `clone` - Clone repository (args: url, directory, branch, depth)
-- `add` - Stage files (args: files, all, force)
-- `commit` - Commit changes (args: message, all, amend)
-- `push` - Push to remote (args: remote, branch, force, tags)  
-- `pull` - Pull from remote (args: remote, branch, rebase)
+### `tools/git/init`
+Initialize repository. Args: `repo`, `bare`, `template`
 
-### Advanced Operations
-- `branch` - Branch management (args: name, delete, list, remote)
-- `checkout` - Switch branches (args: branch, create, files)
-- `remote` - Remote management (args: add, url, remove, list)
-- `log` - Commit history (args: count, oneline, graph, since, until)
-- `diff` - Show changes (args: staged, files, commit)
-- `reset` - Reset state (args: mode, commit, files)
-- `stash` - Stash changes (args: save, pop, list, apply, drop)
+### `tools/git/clone`
+Clone repository. Args: `url`, `directory`, `branch`, `depth`
+
+### `tools/git/add`
+Stage files. Args: `files`, `all`, `force`
+
+### `tools/git/commit`
+Commit changes. Args: `message`, `all`, `amend`
+
+### `tools/git/push`
+Push to remote. Args: `remote`, `branch`, `force`, `tags`
+
+### `tools/git/pull`
+Pull from remote. Args: `remote`, `branch`, `rebase`
+
+## Branch and History Management
+
+### `tools/git/branch`
+Branch management. Args: `name`, `delete`, `list`, `remote`
+
+### `tools/git/checkout`
+Switch branches. Args: `branch`, `create`, `files`
+
+### `tools/git/log`
+Commit history. Args: `count`, `oneline`, `graph`, `since`, `until`
+
+### `tools/git/diff`
+Show changes. Args: `staged`, `files`, `commit`
+
+### `tools/git/reset`
+Reset state. Args: `mode`, `commit`, `files`
+
+### `tools/git/stash`
+Stash changes. Args: `save`, `pop`, `list`, `apply`, `drop`
+
+## Remote Management
+
+### `tools/git/remote`
+Remote management. Args: `add`, `url`, `remove`, `list`
 
 ## Implementation Pattern
 
