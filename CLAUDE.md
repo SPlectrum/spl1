@@ -120,33 +120,47 @@ gh release create vX.XX --title "Title" --notes "Notes" SPlectrum.7z INSTALL.md
 
 ## GitHub Project Management
 
+**Integration Intention**: GitHub Projects will enhance the existing workflow by providing visual Kanban boards, cross-phase coordination, and automated issue tracking. This complements the current milestone/issue/branch pattern without disrupting it.
+
+**Seven-Epic Structure**:
+- **RR**: Repository Restructure (federated monorepo design)
+- **SE**: SPlectrum Engines (external install workflows)  
+- **CAE**: Core API Enhancement (unified streaming APIs)
+- **TDD**: TDD Implementation (comprehensive test-driven workflow)
+- **BARE**: Migration to Bare (minimal dependency architecture)
+- **NFD**: New Functionality Development (cross-epic supporting tools)
+- **AVRO**: AVRO Integration (schema-based data architecture)
+
 **Phase-Based Planning**:
-- **Milestones** = Individual phases from roadmap items (1-3 weeks)
+- **Milestones** = Epic phases with prefixes (e.g., RR-1, CAE-1) lasting 1-3 weeks
 - **Issues** = Specific tasks within phases (1-3 days)  
-- **Versions** = Combination of related phases across multiple roadmap areas
+- **Versions** = Combination of related phases across multiple epics
+- **Projects** = Visual workflow management across all phases (NFD-1 issue #9)
 
 **Milestone → Issue → Branch Workflow**:
 ```bash
-# 1. Create milestone for phase
+# 1. Create milestone for epic phase
 gh api repos/:owner/:repo/milestones --method POST \
-  --field title="Repository Restructure Phase 1" \
-  --field due_on="2024-07-31T23:59:59Z"
+  --field title="RR-1: Repository Restructure - Phase 1" \
+  --field description="Phase 1: Plan and implement single-concern folder structure"
 
-# 2. Create issues within milestone
+# 2. Create issues within milestone  
 gh issue create --title "Plan single-concern folder structure" \
-  --milestone "Repository Restructure Phase 1" \
+  --milestone "RR-1: Repository Restructure - Phase 1" \
   --label "planning,enhancement"
 
 # 3. Work on individual issues
-git checkout -b feature/plan-folder-structure
+git checkout -b feature/issue-123
 # Work and commit referencing issue...
 gh pr create --title "Plan folder structure (#123)" --body "Closes #123"
 ```
 
-**Version Composition**:
-- Combine completed phases into meaningful version releases
-- Version numbers independent of milestone completion
-- Semantic versioning based on delivered capabilities
+**Version Strategy**:
+- **spl1 starts at 0.6.0** (continuation from spl0 which ended at 0.5.x)
+- **Target 1.0** when Repository Restructure (RR) reaches end goal state
+- **0.6.0 "Baseline"**: Seven-epic structure + initial analysis/planning issues
+- **0.6.1 "Sufficient Analysis & Planning"**: First pass analysis enabling implementation
+- **0.6.2+ progression**: PRINCE2 "just enough planning" approach
 
 ## Essential Development Tools
 

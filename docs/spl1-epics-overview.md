@@ -4,7 +4,9 @@
 
 This document defines the seven major epics (blocks of work) for the spl1 transitional repository. Each epic represents a significant area of development that will be broken into milestone phases and individual GitHub issues.
 
-## Epic 1: Repository Restructure
+**Epic Prefixes**: RR, SE, CAE, TDD, BARE, NFD, AVRO for milestone identification (e.g., RR-1, CAE-1)
+
+## Epic 1: Repository Restructure (RR)
 
 **Status**: Well-defined and documented
 
@@ -12,11 +14,11 @@ This document defines the seven major epics (blocks of work) for the spl1 transi
 
 **Summary**: Reorganize the current monorepo into single-concern folders (core/, apps/, tools/, docs/) to prepare for future federated repository architecture. This epic provides the foundation for all other work.
 
-## Epic 2: External Install Workflow
+## Epic 2: SPlectrum Engines (SE)
 
 **Status**: Detailed definition in progress
 
-**Goal**: Create and manage SPlectrum installs outside the repository for development and repository management tasks.
+**Goal**: Create and manage SPlectrum Engines - deployable installs that power functionality outside the repository for development and repository management tasks.
 
 **Core Problem**: Development currently happens within the repository's ignored `spl/` directory, which creates workflow limitations and potential conflicts.
 
@@ -45,7 +47,7 @@ This document defines the seven major epics (blocks of work) for the spl1 transi
 
 **Design Status**: Still needs considerable thinking and design work before implementation phases can be defined.
 
-## Epic 3: Core API Enhancement
+## Epic 3: Core API Enhancement (CAE)
 
 **Status**: Detailed definition complete
 
@@ -83,7 +85,7 @@ This document defines the seven major epics (blocks of work) for the spl1 transi
 
 **Design Status**: Well-defined scope, ready for milestone phase breakdown.
 
-## Epic 4: TDD Implementation
+## Epic 4: TDD Implementation (TDD)
 
 **Status**: Detailed definition complete
 
@@ -124,7 +126,7 @@ This document defines the seven major epics (blocks of work) for the spl1 transi
 
 **Design Status**: Well-defined scope, ready for milestone phase breakdown.
 
-## Epic 5: Migration to Bare
+## Epic 5: Migration to Bare (BARE)
 
 **Status**: Detailed definition complete
 
@@ -151,7 +153,7 @@ This document defines the seven major epics (blocks of work) for the spl1 transi
 
 **Design Status**: Well-defined scope with clear two-part approach, ready for milestone phase breakdown.
 
-## Epic 6: New Functionality Development
+## Epic 6: New Functionality Development (NFD)
 
 **Status**: Framework defined, requirements will emerge during implementation
 
@@ -188,7 +190,7 @@ This document defines the seven major epics (blocks of work) for the spl1 transi
 
 **Design Status**: Framework established, specific requirements will be identified and planned as other epics progress.
 
-## Epic 7: AVRO Integration
+## Epic 7: AVRO Integration (AVRO)
 
 **Status**: Detailed definition complete
 

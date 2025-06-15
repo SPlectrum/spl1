@@ -31,12 +31,13 @@ Break each major roadmap item into phases that are:
 - **Well-interfaced** - Clean integration points with other phases
 - **Value-contributing** - Meaningfully advances overall goals
 
-### Version Composition
-Combine phases from different roadmap areas into versions that:
+### Version Composition (0.6.x Series)
+Combine epic phases into versions starting from 0.6.0 that:
 - **Share thematic coherence** - Phases work together toward common capabilities
 - **Maintain manageable scope** - 4-8 weeks total development time
 - **Minimize external dependencies** - Can be developed and tested independently
 - **Deliver clear value** - Provide meaningful improvements to the platform
+- **Progress toward 1.0** - Each version advances Repository Restructure (RR) toward end goal
 
 ### Learning and Adaptation Cycle
 After each version delivery:
@@ -71,9 +72,9 @@ After each version delivery:
 - **Version releases** represent completion of multiple related phases
 
 ### Milestone Management
-- **GitHub Milestones** represent phases rather than full roadmap items
-- **Version releases** combine multiple milestone completions
-- **Progress tracking** via milestone dependencies and phase sequencing
+- **GitHub Milestones** represent epic phases with prefixes (RR-1, CAE-1, etc.)
+- **Version releases** combine multiple milestone completions across epics
+- **Progress tracking** via phase dependencies and epic sequencing
 
 ### Quality Assurance
 - **Phase-level testing** ensures individual phase quality
