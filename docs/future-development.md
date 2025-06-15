@@ -185,3 +185,39 @@ spl.resolvePath(input, relativePath, scope)
 - **Future tools**: Will have similar external dependencies
 
 **Proposed Solution**: Implement prerequisite checking system with helpful installation instructions in error messages.
+
+## What have I learned?
+
+*This section captures key insights and learnings from development sessions to inform future work.*
+
+### Session 2025-06-15: Project Automation & Workflow Optimization
+
+**Key Learning: Programmatic Project Management is Transformative**
+- GitHub Projects v2 GraphQL API enables complete field automation
+- Separating backlog creation from planning configuration is crucial for performance
+- Decision-making intelligence belongs in field values, not views
+- Single view with smart field population is more effective than multiple static views
+
+**Workflow Design Insights:**
+- **Backlog → Planning → Execution → Archive** creates optimal separation of concerns
+- Lightweight issue creation enables fast idea capture without overhead
+- Selective project import during planning sessions maintains focus and performance
+- Version-based cleanup prevents project bloat while preserving decision context
+
+**Technical Architecture Lessons:**
+- GraphQL mutations for field updates scale better than CLI commands for bulk operations
+- Decision Score algorithm (85/75/60 for analysis/infrastructure/implementation) provides clear priority ranking
+- Epic + Version + Session Type + Context Switch Cost creates comprehensive decision matrix
+- Time tracking integration with project state enables momentum-based recommendations
+
+**Project Management Discoveries:**
+- PRINCE2 "just enough planning" works excellently with programmatic automation
+- Issues can exist in multiple states (backlog vs planned) with different configuration needs
+- Cross-epic coordination benefits from visual project management with programmatic intelligence
+- Immediate field population during import creates better planning session efficiency
+
+**Future Applications:**
+- Pattern applicable to any complex project requiring strategic coordination
+- Automation reduces cognitive load while maintaining strategic visibility
+- Version-focused workflow aligns well with iterative development approaches
+- Integration with time tracking creates powerful context-switching optimization
