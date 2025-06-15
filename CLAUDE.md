@@ -31,19 +31,42 @@ This file provides essential operational guidance for Claude Code when working w
 3. `./spl_execute spl boot usr/modules_to_boot` (Install → Boot)  
 4. `./spl_execute spl boot usr/boot_to_release` (Boot → Release)
 
-## Critical Operational Rules
+## Operational Rules Framework
 
+### **MUST Rules** (Non-Negotiable Requirements)
 - **Discuss, Think, Plan, Start**: For all significant work, follow this methodology - initiate discussions, request planning time, create planning documents, then implement
-- **Always return to repo root** (`/mnt/c/SPlectrum/spl0`) after any subdirectory operations
-- **Never use in-code defaults** (`|| "value"`) - causes hidden bugs
-- **Use named arguments ALWAYS** - `spl/app/run -f script.js -a args` NOT `spl/app/run script.js args`
+- **Time tracking REQUIRED** - Update `/logs/timelog.txt` at every activity transition, issue switch, and session boundary
+- **Document learnings REQUIRED** - At session end, capture "What have I learned?" in appropriate docs/ files
+- **Assign issues to milestones** - All issues must be assigned to appropriate epic phase milestone
+- **Always return to repo root** (`/mnt/c/SPlectrum/spl1`) after any subdirectory operations
+- **Stage all files before commit** - Work packages are atomic, use `git add .`
+- **Package before commit** - Run four-step release process before git operations
+
+### **SHOULD Rules** (Strong Recommendations)
+- **Create issues for significant work** - When discussion leads to implementation decisions, create GitHub issue before starting work to enable proper tracking and documentation
+- **Close issues on completion** - Mark issues complete when work is finished, with judgment required on completion criteria
+- **Use named arguments** - `spl/app/run -f script.js -a args` NOT `spl/app/run script.js args`
 - **Correct command syntax** - `./spl_execute <install-folder> <app-name> <command>` (e.g., `./spl_execute spl boot usr/apps_to_release`)
 - **Test batch files first** with `spl/app/exec -f` before generating usr/ commands
-- **Package before commit** - run four-step release process before git operations
-- **Stage all files before commit** - work packages are atomic, use `git add .`
-- **Module locations**: Global (`/modules/`) vs install (`/spl/modules/`) - check app's `spl.js`
-- **Script vs Batch**: `scripts/` for multi-language execution, `batches/` for SPL commands
-- **Documentation housekeeping**: When features are completed, REMOVE all planning/scaffolding documentation entirely - don't mark as "completed", delete the sections and renumber remaining items
+- **Follow existing code patterns** - Mimic style, libraries, and conventions in codebase
+- **Documentation housekeeping** - When features completed, REMOVE planning/scaffolding docs entirely
+
+### **PREFER Rules** (Better Choices When Options Exist)
+- **PREFER editing existing files** over creating new ones
+- **PREFER rg (ripgrep)** over grep for searching
+- **PREFER Task tool** for unknown codebase exploration
+- **PREFER direct tools** (Read, Glob) for specific known files
+
+### **AVOID Rules** (Generally Don't Do)
+- **AVOID in-code defaults** (`|| "value"`) - causes hidden bugs
+- **AVOID creating unnecessary documentation** - only create when explicitly requested
+- **AVOID mixing concerns** - Script vs Batch: `scripts/` for multi-language, `batches/` for SPL
+
+### **CONTEXTUAL Rules** (Situation-Dependent Guidelines)
+- **Module locations**: Check app's `spl.js` - Global (`/modules/`) vs install (`/spl/modules/`)
+- **Debug mode**: Use `./spl_execute spl app-name -d command` when troubleshooting
+- **Path issues**: Use `spl.context(input, "cwd")` for install root resolution
+- **Test help**: All commands support `-h` or `--help` for guidance
 
 ## Git Workflow
 
@@ -174,6 +197,22 @@ gh pr create --title "Plan folder structure (#123)" --body "Closes #123"
 ## Learning Rule
 
 At regular intervals, ask "What have I learned?" and update documentation in appropriate docs/ files.
+
+## Time Tracking Responsibility
+
+**Active Time Logging**: Claude Code maintains an append-only time log at `/logs/timelog.txt` during all sessions using activity-driven format: `timestamp | activity_type | context`
+
+**Key Responsibilities**:
+- Log `session_start` and `session_end` for every session
+- Update log at natural transition points (activity changes, issue switches, breaks)
+- Use activity types: `discussion`, `planning`, `development`, `testing`, `documentation`, `research`, `break`, `issue_switch`
+- Context format: `#123 description` for issues, `unassigned` for general work
+- Follow format specification in `/logs/timelog-format.md`
+
+**Integration with Workflow**:
+- Log activity changes when starting new issues or switching contexts
+- Record break periods for accurate session analysis
+- Enable post-session analysis of time distribution and productivity patterns
 
 ## Future Evolution
 

@@ -45,7 +45,24 @@ This document defines the seven major epics (blocks of work) for the spl1 transi
    - Testing different configurations
    - Parallel workstream isolation
 
-**Design Status**: Still needs considerable thinking and design work before implementation phases can be defined.
+4. **Rule Adherence Automation**
+   - Develop scripts that automatically adhere to multiple operational rules
+   - Reduce cognitive load on AI development by encoding best practices
+   - Enable consistent workflow execution across all development activities
+
+**Automation Examples**:
+   - **Issue Management**: Single script handles creation + milestone assignment + labeling + time log updates
+   - **Session Management**: Automated session start/end with proper directory setup + time tracking + git status
+   - **Workflow Compliance**: Multi-rule enforcement through single command execution
+   - **Quality Gates**: Automated pre-commit validation combining multiple rule checks
+
+**Benefits**:
+   - **Consistency**: Encode MUST/SHOULD rules into reusable automation
+   - **Efficiency**: Reduce multi-step workflows to single commands  
+   - **Reliability**: Eliminate manual rule adherence errors
+   - **Scalability**: Add new rules to existing automation scripts
+
+**Design Status**: Still needs considerable thinking and design work before implementation phases can be defined. Rule adherence automation represents a key workflow improvement opportunity that aligns with external install capabilities.
 
 ## Epic 3: Core API Enhancement (CAE)
 

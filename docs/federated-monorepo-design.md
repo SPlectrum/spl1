@@ -90,6 +90,47 @@ spl-kubernetes-api/        # Future container orchestration
 spl-custom-tool-api/       # Third-party extensions
 ```
 
+## Refined Architecture Strategy
+
+### Two-Type Context Architecture
+
+Based on analysis of repository needs, the federated architecture should distinguish between two fundamental context types:
+
+**Execution Contexts** (Active Development Environments):
+- Powered by SPlectrum engines providing specialized development runtime
+- Rich, domain-specific CLAUDE.md files with development workflows
+- Tool configurations, coding patterns, and debugging approaches
+- Optimized for productive development work
+
+**Data Catalogs** (Package Storage and Registry):
+- Single-concern focused packages with embedded documentation and test suites
+- Self-contained units with independent lifecycle management  
+- Minimal operational CLAUDE.md files for maintenance and organization
+- Optimized for storage, discovery, and deployment
+
+### Parallel Architecture Migration Strategy
+
+Rather than reorganizing existing structure, implement a **parallel architecture approach**:
+
+1. **New Folders Alongside Existing**: Build future architecture while current system continues operating
+2. **Deprecation Pathway**: Gradual migration of functionality to new architecture  
+3. **Validation Phase**: Old folders deprecated only when new system proves stable
+4. **Zero Disruption**: Current `modules/`, `release/` etc. remain functional during transition
+
+This creates a much safer migration path than big-bang reorganization, allowing:
+- Continuous operation during restructure
+- Incremental validation of new architecture
+- Risk mitigation through parallel systems
+- Natural evolution rather than forced migration
+
+### SPlectrum Engines as Development Runtime
+
+SPlectrum engines become the **development runtime layer** that powers execution contexts:
+- Provide specialized development environments per context type
+- Enable engine-driven tooling, workflows, and capabilities
+- Create truly isolated, optimized development experiences
+- Support both autonomous and interactive development modes
+
 ## Key Components
 
 ### API Registry (`api-registry.json`)
