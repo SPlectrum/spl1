@@ -207,6 +207,7 @@ At regular intervals, ask "What have I learned?" and update documentation in app
 - Update log at natural transition points (activity changes, issue switches, breaks)
 - Use activity types: `discussion`, `planning`, `development`, `testing`, `documentation`, `research`, `break`, `issue_switch`
 - Context format: `#123 description` for issues, `unassigned` for general work
+- **ALWAYS use UTC timestamps** with Z suffix (e.g., `2025-06-15T15:35:00Z`) for consistency
 - Follow format specification in `/logs/timelog-format.md`
 
 **Integration with Workflow**:
