@@ -18,6 +18,7 @@ This file provides essential operational guidance for Claude Code when working w
 - **NEVER use bash echo >> for timelog updates** - causes format corruption
 - **ALWAYS use Edit tool** for all timelog modifications
 - **ALWAYS use UTC timestamps** with Z suffix for consistency
+- **Use system time** - Check current time at session start for accurate timestamps
 - **Follow exact format**: `    ##→TIMESTAMP | activity | context`
 
 **ONGOING TIME TRACKING RESPONSIBILITY:**
