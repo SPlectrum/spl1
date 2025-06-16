@@ -36,6 +36,66 @@ This learning reinforces the value of simplicity in development workflows, espec
 
 This learning demonstrates the value of treating documentation as architecture - applying software design principles to improve usability and maintenance.
 
+## Key Learning: Strategic Architecture Documentation Through Issues
+
+**Date**: 2025-06-16  
+**Learning**: Creating comprehensive strategic documents alongside detailed GitHub issues creates powerful implementation guidance through bi-directional linkage.
+
+**Insight**: When developing complex architectural visions (container unified entity strategy, AVRO service definitions, Qubes integration), the combination of strategic documents + linked issues provides:
+- **Strategic Context**: High-level vision and architectural reasoning in dedicated documents
+- **Implementation Focus**: Tactical execution details in GitHub issues
+- **Traceability**: Clear connection between vision and implementation work
+- **Knowledge Preservation**: Strategic thinking captured beyond immediate implementation needs
+
+**Applied Pattern**:
+1. Write comprehensive strategic document with architectural vision
+2. Create detailed GitHub issue with implementation phases
+3. Link document in issue for strategic context
+4. Reference issue in document for implementation tracking
+
+**Examples Applied**:
+- Container Unified Entity Strategy + Issue #29 (Podman API)
+- AVRO Service Definitions + Issue #30 (AVRO Implementation) 
+- Qubes Integration Strategy + Issue #31 (Qubes API)
+
+**Additional Insight**: This pattern works especially well for post-BARE migration features where clean API foundations enable better architectural planning. The strategic documents serve as northstar guidance for implementers who need to understand the broader vision.
+
+This learning reinforces the value of comprehensive planning that bridges strategic thinking with tactical execution, ensuring architectural vision guides implementation decisions.
+
+## Key Learning: Workflow Modularization Benefits
+
+**Date**: 2025-06-16  
+**Learning**: Single-responsibility workflows provide better maintainability and discoverability than monolithic instruction sets.
+
+**Insight**: When SESSION_END functionality was embedded within SESSION_START workflow, it created cognitive overhead and reduced discoverability. Separating into dedicated workflows enables:
+- **Clear Boundaries**: Each workflow has single, well-defined purpose
+- **Independent Evolution**: SESSION_START and SESSION_END can evolve separately
+- **Better Usability**: Users can trigger specific workflow without navigating complex combined instructions
+- **Maintenance Efficiency**: Changes isolated to specific workflow files
+
+**Applied Solution**: Created separate SESSION_END workflow with proper session termination sequence, learning capture, and git operations.
+
+This reinforces the architectural principle that applies to both code and documentation: single-responsibility principle improves maintainability and usability.
+
+## Key Learning: Technology Evaluation Methodology
+
+**Date**: 2025-06-16  
+**Learning**: Systematic technology evaluation considering specific architectural constraints yields better solutions than generic technology choices.
+
+**Insight**: When evaluating search technologies for SPlectrum documentation, initial vector database suggestion was improved through architectural analysis:
+- **Context Matters**: SPlectrum's highly structured relationships favor graph databases
+- **Hybrid Approaches**: Combining technologies can leverage strengths of each
+- **Phase-Based Implementation**: Start with best-fit technology, add complementary capabilities
+
+**Applied Analysis**:
+- Vector search: Good for semantic discovery, weak for structured relationships
+- Knowledge graphs: Excellent for SPlectrum's modular architecture and dependencies  
+- Hybrid graph + vector: Optimal approach leveraging both structured and semantic search
+
+**Methodology**: Evaluate technology fit against specific architectural characteristics rather than applying generic "best practices."
+
+This learning emphasizes the importance of architecture-driven technology decisions rather than technology-driven architecture decisions.
+
 ## Key Learning: Phase-Based Development Strategy
 
 **Date**: 2025-06-14  

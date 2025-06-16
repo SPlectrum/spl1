@@ -19,6 +19,25 @@ git commit -m "feat: implement feature (#123)" # Reference issue number
 gh pr create --title "Feature title (#123)" --body "Closes #123"
 ```
 
+## Unplanned Work Commits
+For unplanned work (no GitHub issue), reference timelog context:
+```bash
+git commit -m "$(cat <<'EOF'
+feat: descriptive title of changes
+
+- Bullet point summary of changes
+- Include key implementation details
+
+This was unplanned work - [brief context of how it emerged].
+Full activity tracked in timelog: [relevant timelog contexts].
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+EOF
+)"
+```
+
 ## TDD Bug Workflow
 ```bash
 git checkout -b bugfix/issue-456               # Bug fix branch

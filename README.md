@@ -28,7 +28,7 @@ SPlectrum consists of several key components:
 - **Data Layer** (`modules/spl/data/`) - Immutable Kafka-like record storage using file directory structures  
 - **Package Management** (`modules/spl/package/`) - Complete lifecycle management for deployment packages
 - **Application Framework** (`modules/spl/app/`) - Command parsing and application lifecycle management
-- **Tool Wrappers** (`modules/tools/`) - Git and 7zip command-line tool integration
+- **Tool Wrappers** (`modules/tools/`) - Git, 7zip, and extensible tool integration framework
 
 ## Available Apps
 
@@ -46,7 +46,8 @@ SPlectrum consists of several key components:
 SPlectrum is built exclusively for Linux environments:
 - Native Linux distributions
 - WSL2 (Windows Subsystem for Linux)
-- Container deployments (planned)
+- Container deployments with Podman integration
+- Qubes OS security-first environments
 
 ## Getting Started
 
@@ -87,6 +88,7 @@ For developers working on SPlectrum:
 ### Essential Guides
 - [spl1 Epics Overview](./docs/spl1-epics-overview.md) - Seven major work blocks for spl1 transition
 - [Federated Monorepo Design](./docs/federated-monorepo-design.md) - Repository Restructure epic and federation strategy
+- [Container Unified Entity Strategy](./docs/container-unified-entity-strategy.md) - Container-based registry and distribution vision
 - [Prerequisites](./docs/prerequisites.md) - System requirements and dependency setup
 - [Installation Guide](./INSTALL.md) - Installing SPlectrum from distributed release archive
 - [Project Overview](./docs/project-overview.md) - Architecture, components, and core concepts
@@ -113,10 +115,15 @@ For developers working on SPlectrum:
 - [Boot App Functionality](./docs/boot-app-functionality.md) - Release and deployment operations
 - [spl Data Layer](./docs/spl-data-layer.md) - Immutable data storage design
 - [Schema and Repo Notes](./docs/schema-and-repo-notes.md) - Data structure design notes
+- [AVRO Service Definitions for SPlectrum Communication](./docs/avro-service-definitions-communication.md) - Type-safe distributed communication
 - [Federated Monorepo Design](./docs/federated-monorepo-design.md) - Future distributed API architecture
 - [Subdirectory CLAUDE.md Evolution Plan](./docs/subdirectory-claude-md-plan.md) - Federated AI guidance architecture
 - [PRINCE2 Integration Approach](./docs/prince2-integration-approach.md) - Lightweight project management methodology
 - [ITIL Integration Approach](./docs/itil-integration-approach.md) - Service management for platform evolution
+
+### Security & Integration
+- [Qubes OS Overview](./docs/qubes-os-overview.md) - Security-focused operating system fundamentals
+- [Qubes OS Integration with SPlectrum](./docs/qubes-splectrum-integration.md) - Security-first development environments
 
 ### Tool References
 - [7zip Command Line API](./docs/7zip-command-line-api.md) - Raw 7zip command reference
@@ -125,8 +132,8 @@ For developers working on SPlectrum:
 ## Project Status
 
 **Current Phase**: spl1 - Transitional repository for restructure and enhancement
-**Focus Areas**: Repository reorganization, external install workflow, AVRO integration, TDD implementation  
-**Target**: Federated repository architecture with autonomous AI development capability
-**Platform**: Linux-first design with WSL support
+**Focus Areas**: Repository reorganization, container unified entity strategy, AVRO service definitions, security-first development
+**Target**: Federated repository architecture with container registry and distributed communication
+**Platform**: Linux-first design with container and security isolation support
 
 **Branch Strategy**: Simplified GitHub Flow with feature/* and bugfix/* branches, integrated TDD workflow

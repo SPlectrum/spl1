@@ -7,6 +7,7 @@ This file maintains the complete registry of uppercase workflow trigger keywords
 | Keyword | File | Purpose | Trigger Context |
 |---------|------|---------|-----------------|
 | **SESSION_START** | `SESSION_START.md` | Time tracking & session initiation | Every new Claude session |
+| **SESSION_END** | `SESSION_END.md` | Session termination & learning capture | End of Claude session |
 | **GITHUB_WORKFLOW** | `GITHUB_WORKFLOW.md` | Project management & issue lifecycle | GitHub operations, project planning |
 | **GIT_WORKFLOW** | `GIT_WORKFLOW.md` | Branching, commits, releases | Git operations, version releases |
 | **OPERATIONAL_RULES** | `OPERATIONAL_RULES.md` | Development rules framework | Development decisions, coding standards |
