@@ -10,12 +10,12 @@ Execute commands using the SPL execution system:
 
 ```bash
 # Basic command execution
-./spl_execute <app-name> <module/api/method> [options] [arguments]
+./spl_execute <install-folder> <app-name> <module/api/method> [options] [arguments]
 
 # Examples
-./spl_execute test-suite spl/console/log "Hello World"
-./spl_execute watcher tools/git/status --repo data/project
-./spl_execute boot usr/create_linux_installer
+./spl_execute spl test-suite spl/console/log "Hello World"
+./spl_execute spl watcher tools/git/status --repo data/project
+./spl_execute spl boot usr/create_linux_installer
 ```
 
 **Debug Mode**: Add `-d` flag for detailed execution information.
@@ -52,23 +52,30 @@ SPlectrum is built exclusively for Linux environments:
 
 1. **Execute your first command**:
    ```bash
-   ./spl_execute test-suite spl/console/log "Getting started with SPlectrum"
+   ./spl_execute spl test-suite spl/console/log "Getting started with SPlectrum"
    ```
 
 2. **Explore available commands**:
    ```bash
-   ./spl_execute test-suite --help
-   ./spl_execute watcher spl/console/log --help
+   ./spl_execute spl test-suite --help
+   ./spl_execute spl watcher spl/console/log --help
    ```
 
 3. **Check system status**:
    ```bash
-   ./spl_execute watcher tools/git/status --repo .
+   ./spl_execute spl watcher tools/git/status --repo .
    ```
 
 ## Development
 
 For developers working on SPlectrum:
+- **AI Development**: See [CLAUDE.md](./CLAUDE.md) for uppercase keyword workflow triggers
+  - **SESSION_START** - Time tracking and session initiation
+  - **GITHUB_WORKFLOW** - Project management with Backlog → Staged → Planned → Active workflow
+  - **GIT_WORKFLOW** - Branching and commit workflows
+  - **OPERATIONAL_RULES** - Development rules framework
+  - **ESSENTIAL_COMMANDS** - Core SPL execution commands
+  - **RELEASE_PROCESS** - GitHub release creation
 - Read [How to](./docs/how-to.md) for essential development guidelines
 - See [Development Workflow Strategy](./docs/development-workflow-strategy.md) for AI-assisted development approach
 - Review [Branching Strategy](./docs/branching-strategy.md) for simplified GitHub Flow with TDD workflow

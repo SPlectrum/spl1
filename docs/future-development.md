@@ -15,6 +15,27 @@
 
 This learning reinforces the value of simplicity in development workflows, especially during architectural transitions.
 
+## Key Learning: Modular Workflow Documentation Architecture
+
+**Date**: 2025-06-16  
+**Learning**: Breaking large instruction files into keyword-triggered modules dramatically improves maintainability and discoverability.
+
+**Insight**: Complex operational guidance (like CLAUDE.md) becomes unwieldy as a single file. Using uppercase keywords as triggers to dedicated workflow files creates:
+- **Scannability**: Immediate identification of relevant workflows
+- **Maintainability**: Changes isolated to specific workflow files
+- **Discoverability**: Registry pattern prevents keyword conflicts
+- **Extensibility**: Clear path for adding new workflows
+
+**Applied Solution**: 
+- Restructured CLAUDE.md with **KEYWORD_REGISTRY** as master reference
+- Created 7 dedicated workflow files (SESSION_START, GITHUB_WORKFLOW, etc.)
+- Documented both custom workflows and built-in AI behaviors
+- Established **PLANNED_VS_UNPLANNED** work classification
+
+**Additional Insight**: Including built-in AI behaviors in the registry provides complete system transparency, helping users understand automatic vs. explicit workflows.
+
+This learning demonstrates the value of treating documentation as architecture - applying software design principles to improve usability and maintenance.
+
 ## Key Learning: Phase-Based Development Strategy
 
 **Date**: 2025-06-14  
