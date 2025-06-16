@@ -2,6 +2,8 @@
 
 # Qubes OS Integration with SPlectrum
 
+**Related GitHub Issue**: [#31 - NFD: Implement Qubes OS Integration for Security-First Development Environment](https://github.com/SPlectrum/spl1/issues/31)
+
 ## Executive Summary
 
 This document explores the strategic integration of Qubes OS isolation capabilities with the SPlectrum platform, creating a security-first development and deployment environment that leverages compartmentalization for enhanced security, testing, and operational workflows.

@@ -1,5 +1,7 @@
 # Subdirectory CLAUDE.md Evolution Plan
 
+**Related GitHub Issue**: [#35 - RR: Implement subdirectory CLAUDE.md federated guidance system](https://github.com/SPlectrum/spl1/issues/35)
+
 ## Vision
 
 Evolve from monorepo with single CLAUDE.md to federated repository architecture where each component becomes autonomous with its own AI guidance.

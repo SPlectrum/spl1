@@ -14,6 +14,8 @@ This file maintains the complete registry of uppercase workflow trigger keywords
 | **ESSENTIAL_COMMANDS** | `ESSENTIAL_COMMANDS.md` | Core SPL execution commands | SPL platform operations |
 | **RELEASE_PROCESS** | `RELEASE_PROCESS.md` | GitHub release creation | Creating platform releases |
 | **PLANNED_VS_UNPLANNED** | `PLANNED_VS_UNPLANNED.md` | Work classification strategy | Deciding whether to create issues |
+| **PROJECT_AUTOMATION** | `PROJECT_AUTOMATION.md` | GraphQL project management automation | GitHub Projects field population, recommendations |
+| **NEXT_ISSUE** | `NEXT_ISSUE.md` | Automated next issue selection workflow | Determining which GitHub issue to work on next |
 
 ## Built-in Claude Code Keywords
 

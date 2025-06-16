@@ -2,6 +2,8 @@
 
 # Container Unified Entity Strategy for SPlectrum
 
+**Related GitHub Issue**: [#29 - NFD: Implement Podman Container Runtime API Integration](https://github.com/SPlectrum/spl1/issues/29)
+
 ## Executive Summary
 
 This document outlines the strategic vision for containers as the unified entity within the SPlectrum platform, representing the evolution from current fragmented bundling approaches (git repos, file packages) to a comprehensive container-based registry system. This transformation is planned for post-BARE migration implementation.

@@ -2,6 +2,8 @@
 
 # AVRO Service Definitions for SPlectrum Communication
 
+**Related GitHub Issue**: [#30 - AVRO: Implement Service Definitions for Unified Local/Internode Communication](https://github.com/SPlectrum/spl1/issues/30)
+
 ## Executive Summary
 
 This document outlines the architectural vision for implementing Apache AVRO service definitions as the unified communication layer for SPlectrum, enabling seamless local and internode communication through type-safe, schema-driven service contracts. This approach provides a foundation for distributed SPlectrum deployments while maintaining the platform's modular principles.

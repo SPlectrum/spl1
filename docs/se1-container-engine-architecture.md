@@ -1,5 +1,7 @@
 # SE-1: Container-Based Engine Architecture
 
+**Related GitHub Issue**: [#32 - SE-1: Container engine prototype implementation](https://github.com/SPlectrum/spl1/issues/32)
+
 ## Strategic Context
 **SE-1 as Container Pioneer**: First container implementation for SPlectrum platform, establishing patterns and practices for subsequent container adoption in RR epic and overall container unified entity strategy.
 
