@@ -12,7 +12,7 @@ This document defines the seven major epics (blocks of work) for the spl1 transi
 
 **Reference**: See [Federated Monorepo Design](./federated-monorepo-design.md) for complete details.
 
-**Summary**: Reorganize the current monorepo into single-concern folders (core/, apps/, tools/, docs/) to prepare for future federated repository architecture. This epic provides the foundation for all other work.
+**Summary**: Reorganize the current monorepo into single-concern folders (core/, apps/, tools/, docs/) transitioning to container-wrapped git repositories. This creates a container-native federated architecture where each logical component is distributed as a containerized git repository through the container registry.
 
 ## Epic 2: SPlectrum Engines (SE)
 

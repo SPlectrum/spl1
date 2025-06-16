@@ -17,6 +17,7 @@
 - **Test batch files first** with `spl/app/exec -f` before generating usr/ commands
 - **Follow existing code patterns** - Mimic style, libraries, and conventions in codebase
 - **Documentation housekeeping** - When features completed, REMOVE planning/scaffolding docs entirely
+- **Decision logging** - Log strategic/architectural decisions in `docs/decision-log.md` when they meet decision criteria (strategic changes, technical architecture, workflow changes, technology adoption, epic modifications)
 
 ## PREFER Rules (Better Choices When Options Exist)
 - **PREFER editing existing files** over creating new ones

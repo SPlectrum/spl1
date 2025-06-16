@@ -33,6 +33,11 @@ SPlectrum currently employs multiple approaches for bundling information and fun
 - **Organization**: Directory-based module system with URI addressing
 - **Limitations**: Runtime dependency requirements, version conflicts
 
+#### 5. Repository Components (RR Epic Target)
+- **Purpose**: Git repositories as distributable federated components
+- **Current Plan**: Multi-repository architecture with separate concerns
+- **New Direction**: Container-wrapped git repositories for unified distribution
+
 ### Current Limitations
 
 1. **Fragmented Ecosystem**: Multiple bundling formats create complexity
@@ -61,12 +66,17 @@ Containers represent the natural evolution toward a **unified entity** that can 
 │  • App bundles        │  • Runtime deps     │  • Git        │
 │  • Data assets        │  • System libs      │  • 7zip       │
 │  • Configurations     │  • Language runtimes│  • Node.js    │
+│                                                              │
+│  Repository Components (RR Epic Integration)                │
+│  • Container-wrapped git repos  • Federated architecture    │
+│  • Self-contained dev envs      • Registry distribution     │
 └─────────────────────────────────────────────────────────────┘
                                 │
                                 ▼
               ┌─────────────────────────────────┐
               │        CONTAINER REGISTRY       │
               │     (Unified Distribution)      │
+              │   Including Repository Components│
               └─────────────────────────────────┘
 ```
 
@@ -223,55 +233,16 @@ const gitStatus = await spl.tools.exec({
 
 ## Migration Strategy
 
-### Current → Container Transition
-
-#### 1. **Gradual Migration Approach**
-- Maintain backward compatibility during transition
-- Parallel operation of existing and container-based systems
-- Progressive migration of components by priority
-
-#### 2. **Compatibility Layer**
-```javascript
-// Transparent container resolution
-spl.load('spl/execute/next')  // Traditional module loading
-spl.load('container://registry.splectrum.io/spl/execute:latest')  // Container loading
-```
-
-#### 3. **Testing Strategy**
-- Container-based TDD workflows
-- Integration testing with containerized dependencies
-- Performance benchmarking against existing implementations
+Gradual migration with backward compatibility, transparent container resolution, and container-based TDD workflows.
 
 ### Risk Mitigation
 
-#### 1. **Performance Considerations**
-- Container startup overhead assessment
-- Layer caching optimization strategies
-- Resource usage monitoring and limits
-
-#### 2. **Complexity Management**
-- Clear migration documentation
-- Training materials for container-based development
-- Tooling for container lifecycle management
-
-#### 3. **Dependency Management**
-- Careful selection of base images
-- Security scanning for container vulnerabilities
-- Regular updates and patching strategies
+Address performance overhead, complexity through documentation/training, and dependency security through scanning and updates.
 
 ## Success Metrics
 
-### Technical Metrics
-- **Deployment Time**: Reduction in application deployment time
-- **Dependency Conflicts**: Elimination of version conflicts
-- **Platform Consistency**: Identical behavior across platforms
-- **Security Incidents**: Reduction in security-related issues
-
-### Operational Metrics
-- **Developer Onboarding**: Time to productive development environment
-- **System Reliability**: Reduction in environment-related failures
-- **Maintenance Overhead**: Simplified system maintenance requirements
-- **Scalability**: Improved horizontal scaling capabilities
+**Technical**: Faster deployment, eliminated conflicts, platform consistency, improved security
+**Operational**: Rapid onboarding, higher reliability, reduced maintenance, better scalability
 
 ## Conclusion
 

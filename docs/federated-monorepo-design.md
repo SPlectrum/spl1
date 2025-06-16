@@ -25,25 +25,29 @@ spl1/
 - Initial structure is hierarchical but may evolve based on learning from implementation
 - Core API migration to "bare" (minimal, pure API) design is prioritized during this phase
 
-**Phase 2**: Extract into domain-specific repositories  
+**Phase 2**: Container-wrapped git repositories
 ```
-spl-core/           # Execution engine, data layer, packages
-├── CLAUDE.md       # Core platform patterns
-├── modules/spl/    # Core APIs
-└── docs/
+registry.splectrum.io/repos/spl-core:latest
+├── Git repository with execution engine, data layer, packages
+├── Container runtime with Node.js and dependencies
+└── Integrated toolchain (git, build tools)
 
-spl-apps/           # Applications (boot, test-suite, watcher)
-├── CLAUDE.md       # App development patterns  
-├── apps/           # Individual applications
-└── docs/
+registry.splectrum.io/repos/spl-apps:latest  
+├── Git repository with applications (boot, test-suite, watcher)
+├── Container runtime with application dependencies
+└── Integrated development environment
 
-spl-tools/          # External tool integrations
-├── CLAUDE.md       # Tool integration patterns
-├── modules/tools/  # Git, 7zip, etc.
-└── docs/
+registry.splectrum.io/repos/spl-tools:latest
+├── Git repository with tool integrations (git, 7zip)
+├── Container runtime with external tools pre-installed
+└── Unified tool execution environment
 ```
 
-**Phase 3**: Full federated API architecture with per-API repositories
+**Phase 3**: Container-native distribution model
+- Each repository container is independently versioned and distributed
+- Registry-based dependency management replaces git submodules
+- Self-contained development environments with zero external dependencies
+- Orchestrated deployment through container composition
 
 ### Benefits of Domain Separation
 
