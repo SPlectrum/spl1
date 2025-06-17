@@ -4,20 +4,38 @@
 Uses simplified GitHub Flow with issue-per-branch approach integrated with GitHub Projects.
 
 ## Branch Types
-- `feature/issue-123` - Individual GitHub issues (1-3 days)
-- `bugfix/issue-456` - Bug fixes with TDD workflow (same day preferred)
+- `feature/issue-123` - Feature development tied to GitHub issue
+- `bugfix/issue-456` - Bug fixes with TDD workflow tied to GitHub issue
+- `unplanned` - Unplanned work (reused branch, minimize usage)
 
-## Complete Workflow
+## Timelog-Driven Branch Selection
+
+**Before any code changes, check timelog context:**
+
+### Issue Work (Planned)
 ```bash
-# 1. Issue created and added to project (see GITHUB_WORKFLOW)
-# 2. When assigned to milestone (planned work):
-git status && git diff && git log --oneline -5  # Check state
-git checkout -b feature/issue-123               # Create issue branch
+# Timelog shows: ##→2025-06-17T10:30:00Z | development | #123 feature description
+git checkout -b feature/issue-123               # or bugfix/issue-123
 # Work on specific issue...
 git add .                                       # Stage ALL files (atomic work packages)
 git commit -m "feat: implement feature (#123)" # Reference issue number
 gh pr create --title "Feature title (#123)" --body "Closes #123"
 ```
+
+### Unplanned Work
+```bash
+# Timelog shows: ##→2025-06-17T10:30:00Z | development | unassigned
+git checkout unplanned                          # Reused branch for unplanned work
+# Make changes...
+git add .
+git commit -m "..." # Use unplanned commit format (see below)
+gh pr create --title "Unplanned: description" --body "Unplanned work"
+```
+
+## Branch Housekeeping
+- **Issue branches**: Delete when GitHub issue is closed (`git branch -d feature/issue-123`)
+- **Unplanned branch**: Keep active, reuse for all unplanned work
+- **Goal**: Minimize unplanned work to reduce maintenance overhead
 
 ## Unplanned Work Commits
 For unplanned work (no GitHub issue), reference timelog context:
