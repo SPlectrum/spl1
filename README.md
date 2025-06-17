@@ -102,7 +102,7 @@ For developers working on SPlectrum:
 - [Creating New Apps](./docs/creating-new-apps.md) - Complete guide for building applications
 - [Implementing New API](./docs/implementing-new-api.md) - Guide for creating new modules
 - [Release and Install Process](./docs/release-and-install-process.md) - Comprehensive release and deployment guide
-- [Future Development](./docs/future-development.md) - Roadmap and planned improvements
+- [Current Development Process](./docs/current-development-process.md) - Current development workflow and process
 
 ### API Documentation  
 - [Execute API Properties](./docs/execute-api-properties.md) - Execution context and pipeline properties

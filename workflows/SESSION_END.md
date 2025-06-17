@@ -26,7 +26,7 @@
 ### **2. Learning Documentation**
 - Review session activities for key insights
 - Document learnings in relevant docs/ files:
-  - Technical insights → `docs/future-development.md`
+  - Technical insights → `docs/current-development-process.md`
   - Process improvements → workflow files
   - Architecture decisions → strategic documents
   - Development patterns → `docs/code-quality-patterns.md`
@@ -38,9 +38,9 @@
 - Highlight any blockers or next steps for future sessions
 
 ### **4. Git Operations**
-- Stage all modified files from session
-- Create commit with session summary
-- Push changes to remote repository
+- Execute GIT_WORKFLOW to handle all git operations with proper branching policy
+- GIT_WORKFLOW will analyze timelog context to determine planned vs unplanned work
+- Applies appropriate branching strategy (issue branches, unplanned branch, or direct commit)
 
 ### **5. Time Tracking Finalization (LAST STEP)**
 - Ensure all session activities are properly logged
@@ -81,6 +81,11 @@ For sessions with significant outcomes, consider creating brief session summary:
 - Review session work classification accuracy
 - Document effectiveness of planning decisions
 - Note any unplanned work that should have been planned
+
+### **Connection to GIT_WORKFLOW**
+- SESSION_END delegates all git operations to GIT_WORKFLOW
+- Ensures consistent branching policy across all session terminations
+- Maintains separation of concerns: session management vs git operations
 
 ### **Connection to GITHUB_WORKFLOW**
 - Ensure any issues created during session are properly configured
