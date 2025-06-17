@@ -300,7 +300,7 @@ gh pr create \
 ### Learning Capture
 
 After each phase and version completion, update:
-- `docs/future-development.md` with key learnings
+- `docs/current-development-process.md` with key learnings
 - Phase decomposition guidelines based on experience
 - Version composition patterns that worked well
 - Effort estimation improvements

@@ -2,6 +2,39 @@
 
 This file provides essential operational guidance for Claude Code when working with this repository.
 
+## Critical File Reference Rule
+
+**MANDATORY FILE PATH SPECIFICATION**: All file references in workflows, documentation, and instructions MUST specify exact file paths.
+
+**Examples:**
+- ❌ "log in timelog" → ✅ "log in `logs/timelog.txt`"
+- ❌ "update documentation" → ✅ "update `docs/project-overview.md`"
+- ❌ "check the config" → ✅ "check `settings/config.json`"
+
+**Purpose**: Eliminates ambiguity, prevents errors, enables automation, and improves maintainability.
+
+## Critical Workflow Execution Rule
+
+**MANDATORY WORKFLOW LOGGING**: When any custom workflow is recognized, Claude MUST:
+
+1. **FIRST ACTION**: Log workflow start in `logs/timelog.txt` before executing any workflow steps:
+   ```
+   ##→YYYY-MM-DDTHH:MM:SSZ | WORKFLOW_NAME | workflow_start: [workflow_context]
+   ```
+
+2. **DURING EXECUTION**: Log each workflow step as it is completed:
+   ```
+   ##→YYYY-MM-DDTHH:MM:SSZ | WORKFLOW_NAME | step_description: [step_details]
+   ```
+
+3. **LAST ACTION**: Log workflow completion after all workflow steps complete:
+   ```
+   ##→YYYY-MM-DDTHH:MM:SSZ | WORKFLOW_NAME | workflow_complete: [summary]
+   ```
+
+This enables detection of incomplete workflow executions and ensures proper workflow accountability.
+
+**SESSION_START SPECIAL REQUIREMENT**: When SESSION_START workflow is recognized, Claude MUST check system time first to ensure accurate timestamps for all session activities.
 ## Workflow Triggers
 
 **KEYWORD_REGISTRY** → See [workflows/KEYWORD_REGISTRY.md](./workflows/KEYWORD_REGISTRY.md) - Complete keyword system
@@ -43,7 +76,7 @@ This file provides essential operational guidance for Claude Code when working w
 - `docs/phase-based-development-strategy.md` - PRINCE2-inspired roadmap execution approach
 - `docs/phase-based-implementation-guide.md` - Step-by-step workflow implementation guide
 - `docs/branching-strategy.md` - Simplified GitHub Flow with integrated TDD
-- `docs/future-development.md` - Learning capture and planned improvements
+- `docs/current-development-process.md` - Current development workflow and process
 
 
 ## Persistent Todo Management

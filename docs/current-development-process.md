@@ -1,6 +1,6 @@
-# Future Development
+# Current Development Process
 
-## Current Development Process
+## Overview
 
 **All future development is now managed through GitHub Issues and Projects.**
 
