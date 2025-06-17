@@ -13,7 +13,7 @@
    ```
    ##→YYYY-MM-DDTHH:MM:SSZ | discussion/planning/development | context_description
    ```
-3. **CHECK REPOSITORY TODO LIST**: Read `discussion-topics.md`, show summary of pending items, and ask user what from the list (if any) should we start with
+3. **CHECK REPOSITORY TODO LIST**: Read `discussion-topics.md`, show complete list of pending topics with titles and descriptions so user can make informed choice, then ask what from the list (if any) should we start with
 
 ## CRITICAL FORMAT RULES
 
