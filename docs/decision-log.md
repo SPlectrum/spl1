@@ -35,7 +35,7 @@ Decisions should be logged when they meet any of these criteria:
 
 **Context**: Need to maintain discussion topics and todos across Claude Code sessions to ensure continuity and prevent forgotten items.
 
-**Decision**: Created persistent repository todo list at `discussion-topics.md` and integrated into SESSION_START workflow.
+**Decision**: Created persistent repository todo list at `todo-list.md` and integrated into SESSION_START workflow.
 
 **Rationale**: 
 - Claude Code sessions are stateless - todos don't persist between sessions

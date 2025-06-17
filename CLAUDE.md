@@ -2,10 +2,48 @@
 
 This file provides essential operational guidance for Claude Code when working with this repository.
 
+## Critical Workflow Execution Rule
+
+**MANDATORY WORKFLOW LOGGING**: When any custom workflow is recognized, Claude MUST:
+
+1. **FIRST ACTION**: Log workflow start in timelog before executing any workflow steps:
+   ```
+   ##→YYYY-MM-DDTHH:MM:SSZ | WORKFLOW_NAME | workflow_start: [workflow_context]
+   ```
+
+2. **DURING EXECUTION**: Log each workflow step as it is completed:
+   ```
+   ##→YYYY-MM-DDTHH:MM:SSZ | WORKFLOW_NAME | step_description: [step_details]
+   ```
+
+3. **LAST ACTION**: Log workflow completion after all workflow steps complete:
+   ```
+   ##→YYYY-MM-DDTHH:MM:SSZ | WORKFLOW_NAME | workflow_complete: [summary]
+   ```
+
+This enables detection of incomplete workflow executions and ensures proper workflow accountability.
+
+**SESSION_START SPECIAL REQUIREMENT**: When SESSION_START workflow is recognized, Claude MUST check system time first to ensure accurate timestamps for all session activities.
+
 ## Workflow Triggers
 
 **KEYWORD_REGISTRY** → See [workflows/KEYWORD_REGISTRY.md](./workflows/KEYWORD_REGISTRY.md) - Complete keyword system
 
+### User-Friendly Sesame Triggers
+Use natural language with "sesame" suffix:
+- `start sesame` → SESSION_START workflow
+- `finish sesame` → SESSION_END workflow  
+- `git sesame` → GIT_WORKFLOW
+- `github sesame` → GITHUB_WORKFLOW
+- `rules sesame` → OPERATIONAL_RULES
+- `commands sesame` → ESSENTIAL_COMMANDS
+- `release sesame` → RELEASE_PROCESS
+- `planning sesame` → PLANNED_VS_UNPLANNED
+- `project sesame` → PROJECT_AUTOMATION
+- `next sesame` → NEXT_ISSUE
+- `recommend sesame` → WORKFLOW_RECOMMENDATION (experimental)
+
+### Technical Keywords (for documentation)
 **SESSION_START** → See [workflows/SESSION_START.md](./workflows/SESSION_START.md)
 **GITHUB_WORKFLOW** → See [workflows/GITHUB_WORKFLOW.md](./workflows/GITHUB_WORKFLOW.md)  
 **GIT_WORKFLOW** → See [workflows/GIT_WORKFLOW.md](./workflows/GIT_WORKFLOW.md)
@@ -13,6 +51,7 @@ This file provides essential operational guidance for Claude Code when working w
 **ESSENTIAL_COMMANDS** → See [workflows/ESSENTIAL_COMMANDS.md](./workflows/ESSENTIAL_COMMANDS.md)
 **RELEASE_PROCESS** → See [workflows/RELEASE_PROCESS.md](./workflows/RELEASE_PROCESS.md)
 **PLANNED_VS_UNPLANNED** → See [workflows/PLANNED_VS_UNPLANNED.md](./workflows/PLANNED_VS_UNPLANNED.md)
+**WORKFLOW_RECOMMENDATION** → See [workflows/WORKFLOW_RECOMMENDATION.md](./workflows/WORKFLOW_RECOMMENDATION.md)
 
 ## spl1 Context
 
@@ -48,7 +87,7 @@ This file provides essential operational guidance for Claude Code when working w
 
 ## Persistent Todo Management
 
-**Repository Todo List**: `discussion-topics.md` - Maintains discussion topics and todos across sessions to ensure continuity.
+**Repository Todo List**: `todo-list.md` - Maintains discussion topics and todos across sessions to ensure continuity.
 
 ## Learning Rule
 

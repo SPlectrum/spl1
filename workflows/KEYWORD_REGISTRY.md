@@ -4,18 +4,19 @@ This file maintains the complete registry of uppercase workflow trigger keywords
 
 ## Custom Workflow Keywords
 
-| Keyword | File | Purpose | Trigger Context |
-|---------|------|---------|-----------------|
-| **SESSION_START** | `SESSION_START.md` | Time tracking & session initiation | Every new Claude session |
-| **SESSION_END** | `SESSION_END.md` | Session termination & learning capture | End of Claude session |
-| **GITHUB_WORKFLOW** | `GITHUB_WORKFLOW.md` | Project management & issue lifecycle | GitHub operations, project planning |
-| **GIT_WORKFLOW** | `GIT_WORKFLOW.md` | Branching, commits, releases | Git operations, version releases |
-| **OPERATIONAL_RULES** | `OPERATIONAL_RULES.md` | Development rules framework | Development decisions, coding standards |
-| **ESSENTIAL_COMMANDS** | `ESSENTIAL_COMMANDS.md` | Core SPL execution commands | SPL platform operations |
-| **RELEASE_PROCESS** | `RELEASE_PROCESS.md` | GitHub release creation | Creating platform releases |
-| **PLANNED_VS_UNPLANNED** | `PLANNED_VS_UNPLANNED.md` | Work classification strategy | Deciding whether to create issues |
-| **PROJECT_AUTOMATION** | `PROJECT_AUTOMATION.md` | GraphQL project management automation | GitHub Projects field population, recommendations |
-| **NEXT_ISSUE** | `NEXT_ISSUE.md` | Automated next issue selection workflow | Determining which GitHub issue to work on next |
+| Keyword | File | Purpose | Trigger Context | Sesame Alias |
+|---------|------|---------|-----------------|--------------|
+| **SESSION_START** | `SESSION_START.md` | Time tracking & session initiation | Every new Claude session | `start sesame` |
+| **SESSION_END** | `SESSION_END.md` | Session termination & learning capture | End of Claude session | `finish sesame` |
+| **GITHUB_WORKFLOW** | `GITHUB_WORKFLOW.md` | Project management & issue lifecycle | GitHub operations, project planning | `github sesame` |
+| **GIT_WORKFLOW** | `GIT_WORKFLOW.md` | Branching, commits, releases | Git operations, version releases | `git sesame` |
+| **OPERATIONAL_RULES** | `OPERATIONAL_RULES.md` | Development rules framework | Development decisions, coding standards | `rules sesame` |
+| **ESSENTIAL_COMMANDS** | `ESSENTIAL_COMMANDS.md` | Core SPL execution commands | SPL platform operations | `commands sesame` |
+| **RELEASE_PROCESS** | `RELEASE_PROCESS.md` | GitHub release creation | Creating platform releases | `release sesame` |
+| **PLANNED_VS_UNPLANNED** | `PLANNED_VS_UNPLANNED.md` | Work classification strategy | Deciding whether to create issues | `planning sesame` |
+| **PROJECT_AUTOMATION** | `PROJECT_AUTOMATION.md` | GraphQL project management automation | GitHub Projects field population, recommendations | `project sesame` |
+| **NEXT_ISSUE** | `NEXT_ISSUE.md` | Automated next issue selection workflow | Determining which GitHub issue to work on next | `next sesame` |
+| **WORKFLOW_RECOMMENDATION** | `WORKFLOW_RECOMMENDATION.md` | Workflow recommendation system based on historical data | When uncertain which workflow approach to use | `recommend sesame` |
 
 ## Built-in Claude Code Keywords
 
@@ -57,6 +58,31 @@ Potential additional workflow triggers:
 | Documentation | DOCS_WORKFLOW | Documentation standards |
 | Learning | LEARNING_CAPTURE | End-of-session learning documentation |
 
+## Sesame Alias System
+
+The **sesame suffix** provides user-friendly triggers for workflow keywords:
+
+- **Pattern**: `[descriptive_word] sesame` → `WORKFLOW_KEYWORD`
+- **Magic word**: "sesame" (reference to "Open Sesame" - opens workflow execution)
+- **Usage**: Users type friendly aliases, system maps to technical keywords
+- **Timelog**: Always records technical keywords for consistency
+
+### Sesame Alias Mapping
+
+```
+start sesame     → SESSION_START
+finish sesame    → SESSION_END  
+git sesame       → GIT_WORKFLOW
+github sesame    → GITHUB_WORKFLOW
+rules sesame     → OPERATIONAL_RULES
+commands sesame  → ESSENTIAL_COMMANDS
+release sesame   → RELEASE_PROCESS
+planning sesame  → PLANNED_VS_UNPLANNED
+project sesame   → PROJECT_AUTOMATION
+next sesame      → NEXT_ISSUE
+recommend sesame → WORKFLOW_RECOMMENDATION
+```
+
 ## Registry Maintenance Rules
 
 1. **Add new keywords here FIRST** before creating workflow files
@@ -64,6 +90,7 @@ Potential additional workflow triggers:
 3. **Check for conflicts** - ensure keywords are unique and clear
 4. **Follow naming convention**: NOUN_VERB or CONTEXT_ACTION format
 5. **Keep alphabetical order** within each section for easy scanning
+6. **Add sesame alias** for all new workflow keywords using descriptive, memorable words
 
 ## Usage Pattern
 
