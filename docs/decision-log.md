@@ -31,6 +31,24 @@ Decisions should be logged when they meet any of these criteria:
 
 ## Decisions
 
+## 2025-06-17: Repository Todo List for Session Continuity
+
+**Context**: Need to maintain discussion topics and todos across Claude Code sessions to ensure continuity and prevent forgotten items.
+
+**Decision**: Created persistent repository todo list at `discussion-topics.md` and integrated into SESSION_START workflow.
+
+**Rationale**: 
+- Claude Code sessions are stateless - todos don't persist between sessions
+- Important discussion topics were getting lost between sessions
+- Manual todo tracking in session memory insufficient for project continuity
+- Repository-based persistence ensures all team members can see pending items
+
+**Impact**: 
+- Enhanced session continuity through automated todo list checking
+- SESSION_START workflow modified to include todo list review
+- CLAUDE.md updated with persistent todo management documentation
+- Development workflow efficiency improvement
+
 ## 2025-06-16: Container-Wrapped Git Repositories for RR Epic
 
 **Context**: RR epic originally targeted transition from monorepo to multiple separate repositories for federated architecture.

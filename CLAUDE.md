@@ -46,6 +46,10 @@ This file provides essential operational guidance for Claude Code when working w
 - `docs/future-development.md` - Learning capture and planned improvements
 
 
+## Persistent Todo Management
+
+**Repository Todo List**: `discussion-topics.md` - Maintains discussion topics and todos across sessions to ensure continuity.
+
 ## Learning Rule
 
 At regular intervals, ask "What have I learned?" and update documentation in appropriate docs/ files.
