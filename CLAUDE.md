@@ -147,7 +147,7 @@ Use natural language with "sesame" suffix:
 
 ## Persistent Todo Management
 
-**Repository Todo List**: `discussion-topics.md` - Maintains discussion topics and todos across sessions to ensure continuity.
+**Repository Todo List**: `todo-list.md` - Maintains discussion topics and todos across sessions to ensure continuity.
 
 ## Learning Rule
 

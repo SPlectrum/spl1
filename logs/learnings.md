@@ -40,6 +40,23 @@ This learning reinforces the value of simplicity in development workflows, espec
 
 This learning demonstrates the value of treating documentation as architecture - applying software design principles to improve usability and maintenance.
 
+## Key Learning: Workflow Execution Accountability System
+
+**Date**: 2025-06-17  
+**Learning**: Mandatory workflow logging with start/step/completion tracking prevents incomplete workflow executions and enables systematic recovery.
+
+**Insight**: Claude sessions can end abruptly (timeouts, disconnections, crashes), causing incomplete workflow execution where only partial steps complete. Previous approach logged completion markers without ensuring actual work completion, creating false success signals.
+
+**Applied Solution**:
+- **Central Rule**: All custom workflows must log start, each step, and completion
+- **Recovery Detection**: SESSION_START checks for incomplete workflows from previous sessions
+- **Audit Trail**: Complete workflow execution history enables post-session analysis
+- **False Completion Prevention**: Logging start first (not completion last) prevents misleading entries
+
+**System Impact**: This accountability framework ensures workflow reliability and enables continuous improvement through execution data analysis, critical for AI-assisted development where session interruption is unpredictable.
+
+This learning reinforces the importance of fault-tolerant systems design even in documentation and process management.
+
 ## Key Learning: Strategic Architecture Documentation Through Issues
 
 **Date**: 2025-06-16  
