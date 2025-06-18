@@ -10,10 +10,7 @@
 
 2. **CAPTURE SESSION LEARNINGS**: Ask "What have I learned this session?" and document insights in appropriate files
 
-3. **LOG SESSION END**: Use Edit tool to append session_end entry to `/logs/timelog.txt` as FINAL activity:
-   ```
-   ##→YYYY-MM-DDTHH:MM:SSZ | session_end |
-   ```
+3. **FINALIZE SESSION**: Complete all remaining session termination tasks
 
 ## SESSION COMPLETION CHECKLIST
 
@@ -42,18 +39,9 @@
 - GIT_WORKFLOW will analyze timelog context to determine planned vs unplanned work
 - Applies appropriate branching strategy (issue branches, unplanned branch, or direct commit)
 
-### **5. Time Tracking Finalization (LAST STEP)**
-- Ensure all session activities are properly logged
-- Verify all time entries have proper format and context
-- Add final session_end entry as last timelog action
-
-## CRITICAL FORMAT RULES
-
-- **SESSION_END IS ALWAYS LAST ENTRY** in timelog for any session
-- **ALWAYS use Edit tool** for timelog session_end entry
-- **ALWAYS use UTC timestamps** with Z suffix
-- **Empty context field** for session_end entries (trailing `|` with no content)
-- **Follow exact format**: `    ##→TIMESTAMP | session_end |`
+### **5. Session Completion**
+- Ensure all session work is properly documented
+- Verify all todos are in appropriate status
 
 ## SESSION OUTCOME DOCUMENTATION
 
@@ -69,6 +57,26 @@ For sessions with significant outcomes, consider creating brief session summary:
 - **Process Learnings**: Workflow improvements, efficiency gains
 - **Strategic Learnings**: Long-term vision insights, planning approaches
 - **Tool Learnings**: Better ways to use development tools or AI capabilities
+
+## INCOMPLETE WORKFLOW DETECTION
+
+### **Session Start Workflow Check**
+At the start of each session, Claude MUST:
+1. Read the timelog to check the last entry
+2. If last entry is `SESSION_END | session_end:` with no subsequent activities, previous session ended cleanly
+3. If last entry shows incomplete SESSION_END (session_end logged but activities after), complete the missing steps:
+   - Check TodoRead for incomplete todos from previous session
+   - Mark appropriate todos as completed based on git history
+   - Capture any obvious learnings from previous session's work
+   - Stage and commit any uncommitted changes with session summary
+
+### **Recovery Actions**
+When detecting incomplete SESSION_END:
+```
+Previous session had incomplete SESSION_END workflow. Completing missing steps:
+- [List specific recovery actions taken]
+- Session continuity restored
+```
 
 ## INTEGRATION WITH OTHER WORKFLOWS
 

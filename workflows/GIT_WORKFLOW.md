@@ -14,7 +14,7 @@ Uses simplified GitHub Flow with issue-per-branch approach integrated with GitHu
 
 ### Issue Work (Planned)
 ```bash
-# Timelog shows: ##→2025-06-17T10:30:00Z | development | #123 feature description
+# Timelog shows: ##→2025-06-17T10:30:00Z | FREESTYLE | development: #123 feature description
 git checkout -b feature/issue-123               # or bugfix/issue-123
 # Work on specific issue...
 git add .                                       # Stage ALL files (atomic work packages)
@@ -24,7 +24,7 @@ gh pr create --title "Feature title (#123)" --body "Closes #123"
 
 ### Unplanned Work
 ```bash
-# Timelog shows: ##→2025-06-17T10:30:00Z | development | unassigned
+# Timelog shows: ##→2025-06-17T10:30:00Z | FREESTYLE | development: unassigned
 git checkout unplanned                          # Reused branch for unplanned work
 # Make changes...
 git add .
