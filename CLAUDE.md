@@ -46,43 +46,61 @@ This enables detection of incomplete workflow executions and ensures proper work
 - SESSION_START MUST verify and switch to unplanned if on main
 
 ### 2. Branch Switching Protocol
-**Before any branch switch:**
-- Commit current work to current branch first
-- Never switch with uncommitted changes
+**MANDATORY: Complete work cycle before leaving ANY branch:**
+1. Commit all changes to current branch
+2. Push current branch to remote
+3. Create PR: current-branch → main
+4. Merge PR (integrates work into main)
+5. Only then switch to target branch
 
-**After switching to issue branch (`feature/issue-123` or `bugfix/issue-456`):**
-- Merge main → issue branch to get latest changes
-- Ensures issue work starts with current codebase
+**After switching to target branch:**
+- Merge main → target-branch to get latest changes (including work just merged)
+- Ensures target branch starts with complete current codebase
 
-**After switching to unplanned branch:**
-- Merge main → unplanned branch to get latest changes (including issue branch merges)
-- Ensures unplanned work starts with current codebase
+**CRITICAL WORKFLOW INTEGRITY RULE:**
+- **MUST NOT modify any repository files during steps 1-5 above**
+- **NO timelog entries, documentation updates, or any file changes during PR cycle**
+- **File modifications ONLY allowed after successful branch switch**
+- **Workflow tracking happens AFTER transition, never during**
+
+**Critical Rules:**
+- NO branch transitions without completing PR cycle first
+- NO file modifications during transition sequence
 
 ### 3. Work Lifecycle Management
 **Issue Branches (`feature/issue-123`, `bugfix/issue-456`):**
 - Accumulate multiple commits throughout issue development
-- Create PR only when issue is completed/closed
-- Branch deleted after merge
+- MUST complete PR cycle when transitioning away from branch (even if issue incomplete)
+- Branch can be recreated from main for continued work
+- Branch deleted only after issue completion
 
 **Unplanned Branch:**
 - Immediate commit + PR + merge cycle for each work session
+- MUST complete PR cycle when transitioning to issue work
 - Always kept active, never deleted
-- Gets continuous main updates
+- Gets continuous main updates through merge operations
 
 ### 4. Integration Strategy
+**All Branch Transitions:**
+```
+any-branch: commit → push → PR → merge → switch → merge main into target
+```
+
 **Unplanned Work Flow:**
 ```
-unplanned: commit → PR → merge → cleanup
+unplanned: commit → PR → merge → (optional switch)
 ```
 
-**Planned Work Flow:**
+**Issue Work Flow:**
 ```
-issue-branch: accumulate commits → PR on completion → merge → branch deletion
+issue-branch: accumulate commits → PR when transitioning → continue or complete
 ```
 
-**Main Updates:**
-- All merged changes flow back to active branches via merge operations
-- Ensures all branches stay current with latest changes
+**Integration Points:**
+- Every branch transition forces work through main
+- All active branches stay synchronized via main
+- No work isolation - everything integrates continuously
+- Prevents branch divergence and work loss
 
 **Purpose**: Maintains clean separation between planned/unplanned work, prevents conflicts, ensures all work stays current with latest changes.
 ## Workflow Triggers
