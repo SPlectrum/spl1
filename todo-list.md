@@ -2,9 +2,7 @@
 
 ## Current Topics for Discussion
 
-- **Workflow recommendation tweaking**
-  - Status: In Progress
-  - Priority: Medium
+*No active items.*
 
 ---
 
