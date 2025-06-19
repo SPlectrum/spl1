@@ -247,3 +247,23 @@ This learning reinforces the value of operational tooling over static documentat
 - **Validation**: Confirmed workflow integrity rules work in practice
 - **Outcome**: Clean repository state with all branches synchronized, ready for next development cycle
 
+### Role-Based CLAUDE.md Architecture
+- **Insight**: Federated monorepo requires role-specific operational guidance
+- **Solution**: CLAUDE.md files define role behaviors for different folder structures (APIs/, APPs/, engines/)
+- **Strategic Implication**: SE-data catalog interactions need architectural definition
+- **Next Phase**: Design inheritance and override resolution for federated CLAUDE.md system
+
+## 2025-06-18
+
+### Critical Workflow Integrity Requirements
+- **Problem**: File modifications during branch transitions contaminate work content with workflow tracking
+- **Solution**: MUST NOT modify any files during PR cycle (commit → push → PR → merge → switch)
+- **Critical Rule**: File modifications ONLY allowed AFTER successful branch switch
+- **Learning**: Strict separation between work content and workflow management prevents merge conflicts and maintains clean PRs
+
+### Complete PR Cycle for All Branch Transitions
+- **Discovery**: Previous branching policy incomplete - missing mandatory PR cycle before leaving ANY branch
+- **Correction**: ALL branch transitions require: commit → push → PR → merge → switch → merge main into target
+- **Impact**: Ensures continuous integration of all work through main, prevents work isolation
+- **Benefit**: No work loss, all branches stay synchronized, supports persistent unplanned branch strategy
+
