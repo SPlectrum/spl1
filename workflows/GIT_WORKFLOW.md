@@ -12,13 +12,22 @@ Uses simplified GitHub Flow with issue-per-branch approach integrated with GitHu
 
 **CRITICAL**: Always keep main synchronized with remote before branch operations:
 
-### SESSION_START Main Sync
+### MANDATORY RULE: Post-PR Sync
+**EVERY PR merge MUST be followed immediately by:**
+1. `git checkout main && git pull origin main` 
+2. `git checkout unplanned && git merge main`
+
+**NO EXCEPTIONS** - This ensures all branches stay synchronized with merged changes.
+
+### SESSION_START Main Sync (MANDATORY)
 ```bash
 git checkout main
 git pull origin main                            # Sync local main with remote
 git checkout unplanned                          # Return to default branch
 git merge main                                  # Update unplanned with latest main
 ```
+
+**CRITICAL**: This sync step is MANDATORY at session start to ensure all work begins with current codebase.
 
 ### Pre-Work Main Sync
 Before creating any issue branch or starting work:
@@ -64,6 +73,13 @@ git merge main                                  # Ensure unplanned has latest ma
 git add .
 git commit -m "..." # Use unplanned commit format (see below)
 gh pr create --title "Unplanned: description" --body "Unplanned work"
+gh pr merge --squash                            # Merge PR immediately
+
+# 3. MANDATORY: Sync branches after PR merge
+git checkout main
+git pull origin main                            # Sync local main with merged changes
+git checkout unplanned                          # Return to default branch
+git merge main                                  # Update unplanned with latest main
 ```
 
 ## Branch Housekeeping
