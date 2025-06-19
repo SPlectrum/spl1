@@ -12,7 +12,6 @@ This file provides essential operational guidance for Claude Code when working w
 - ❌ "check the config" → ✅ "check `settings/config.json`"
 
 **Purpose**: Eliminates ambiguity, prevents errors, enables automation, and improves maintainability.
-
 ## Critical Workflow Execution Rule
 
 **MANDATORY WORKFLOW LOGGING**: When any custom workflow is recognized, Claude MUST:
