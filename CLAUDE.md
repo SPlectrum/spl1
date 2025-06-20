@@ -115,6 +115,31 @@ This enables detection of incomplete workflow executions and ensures proper work
 
 **Purpose**: Ensures version accountability, accurate progress tracking, comprehensive release reports, and historical preservation of all project work.
 
+## Critical Backlog to Completion Workflow
+
+**MANDATORY TASK CREATION PROCESS**: All planned work MUST follow structured decomposition workflow.
+
+### Workflow Stages
+1. **Backlog (Unplanned)**: High-level issues without milestones
+2. **Planned Work - Task Creation**: Parent issues assigned milestones, decomposed into child issues  
+3. **Planned Work - Implementation**: Child issues executed following single-step rule
+4. **Completion**: Parent closed when all children complete
+
+### Task Creation Rules
+- **Mandatory Decomposition**: Parent issues MUST be broken into child issues before implementation
+- **Parent-Child Linking**: Child issues MUST reference parent for traceability
+- **Issue Count Increase Expected**: Task creation increases issue count - this is healthy decomposition
+- **Milestone Inheritance**: Child issues inherit milestone from parent
+
+### Integration with Version Management
+- **Milestone Assignment**: Commits parent to specific version
+- **Project Inclusion**: Child issues appear in version project boards
+- **Progress Tracking**: Version completion measured by child issue completion
+
+**Purpose**: Bridges strategic planning with executable implementation through granular task decomposition.
+
+**Reference**: See `docs/backlog-to-completion-workflow.md` for complete workflow documentation.
+
 ## Critical Branch Management Rule
 
 **MANDATORY BRANCH POLICY**: Repository MUST maintain proper branch state for all work types.
