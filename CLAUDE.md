@@ -2,6 +2,23 @@
 
 This file provides essential operational guidance for Claude Code when working with this repository.
 
+## Quick Reference
+
+**Essential Workflow Commands:**
+- `start sesame` → SESSION_START workflow
+- `finish sesame` → SESSION_END workflow  
+- `git sesame` → GIT_WORKFLOW
+- `next sesame` → NEXT_ISSUE
+- `planning sesame` → PLANNED_VS_UNPLANNED
+
+**Critical Workflow Principles:**
+- **Single-Step Completion**: Each step is DONE, then choose next action
+- **File Path Specification**: All references MUST specify exact paths
+- **Version Scope Control**: Project contains only current version work
+- **Branch Default State**: Always return to `unplanned` branch
+
+**IMPORTANT**: All rules marked "MANDATORY" override default behavior and MUST be followed exactly.
+
 ## Critical File Reference Rule
 
 **MANDATORY FILE PATH SPECIFICATION**: All file references in workflows, documentation, and instructions MUST specify exact file paths.
@@ -34,6 +51,69 @@ This file provides essential operational guidance for Claude Code when working w
 This enables detection of incomplete workflow executions and ensures proper workflow accountability.
 
 **SESSION_START SPECIAL REQUIREMENT**: When SESSION_START workflow is recognized, Claude MUST check system time first to ensure accurate timestamps for all session activities.
+
+## Critical Step-by-Step Execution Rule
+
+**MANDATORY WORKFLOW PATTERN**: All work MUST follow single-step completion with choice points.
+
+### 1. Single-Step Completion
+- Each step is a complete, meaningful achievement
+- Mark step as DONE immediately upon completion
+- NO automatic progression to "next step" of same task
+
+### 2. Choice Point After Every Step
+- After completing ANY step, PAUSE and present options:
+  - Continue with related next step
+  - Switch to different priority item
+  - Address urgent issues
+  - End session
+
+### 3. Item Granularity
+- ALL work items MUST be single completable steps
+- ❌ "Implement AVRO service" 
+- ✅ "Create GitHub issue for AVRO prototype"
+- ✅ "Research AVRO library options"
+- ✅ "Write AVRO schema example"
+
+### 4. Progress Recognition
+- Celebrate each completed step as meaningful progress
+- Update `logs/timelog.txt` with step completion
+- Remove completed items from `todo-list.md` immediately
+
+**Purpose**: Prevents tunnel vision, enables dynamic re-prioritization, provides clear progress tracking, and creates natural stopping points for session management.
+
+## Critical Version Management Rule
+
+**MANDATORY VERSION SCOPE CONTROL**: All version planning and project management MUST follow strict scope boundaries.
+
+### 1. Issue List = Backlog + Completed Work
+- ALL issues (open + closed) represent complete project history
+- Issues and milestones are NEVER removed - only closed when completed
+- Provides permanent historical tracking across all versions
+
+### 2. Milestones = Version Phases  
+- Milestones define phases within specific versions
+- **Pattern**: `[EPIC]-[VERSION]: [EPIC_NAME] - Phase [N]`
+- **Examples**: `SE-1: External Install - Phase 1`, `CAE-1: Core API - Phase 1`
+- Milestones contain only work planned for that specific version
+
+### 3. Project = Current Version Only
+- GitHub Project contains ONLY current version work
+- Issues without milestones = future version candidates
+- Clean project scope enables accurate progress tracking
+
+### 4. Release Reports
+- Version completion triggers comprehensive release report
+- Report includes: completed issues, milestone phases, epic progress
+- Provides full accountability for version deliverables
+
+### 5. Version Transition Protocol
+- Before starting new version: close current project
+- Create new project for next version
+- Assign appropriate milestones to next-version issues
+- Maintain clean separation between version scopes
+
+**Purpose**: Ensures version accountability, accurate progress tracking, comprehensive release reports, and historical preservation of all project work.
 
 ## Critical Branch Management Rule
 

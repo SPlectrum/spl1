@@ -10,7 +10,18 @@
       "Bash(gh project view:*)",
       "Bash(gh project field-list:*)",
       "Bash(gh project item-list:*)",
-      "Bash(gh label:*)"
+      "Bash(gh label:*)",
+      "Bash(gh pr merge:*)",
+      "Bash(git push:*)",
+      "Bash(gh pr create:*)",
+      "Bash(git pull:*)",
+      "Bash(git checkout:*)",
+      "Bash(git merge:*)",
+      "Bash(gh issue view:*)",
+      "Bash(find:*)",
+      "Bash(node:*)",
+      "Bash(gh milestone:*)",
+      "Bash(gh project item-delete:*)"
     ],
     "deny": []
   }
