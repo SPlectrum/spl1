@@ -21,7 +21,9 @@
       "Bash(find:*)",
       "Bash(node:*)",
       "Bash(gh milestone:*)",
-      "Bash(gh project item-delete:*)"
+      "Bash(gh project item-delete:*)",
+      "Bash(gh issue create:*)",
+      "Bash(gh issue close:*)"
     ],
     "deny": []
   }
