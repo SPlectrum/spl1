@@ -21,7 +21,15 @@
       "Bash(find:*)",
       "Bash(node:*)",
       "Bash(gh milestone:*)",
+<<<<<<< Updated upstream
       "Bash(gh project item-delete:*)"
+=======
+      "Bash(gh project item-delete:*)",
+      "Bash(gh issue create:*)",
+      "Bash(gh issue close:*)",
+      "Bash(git commit:*)",
+      "Bash(git stash:*)"
+>>>>>>> Stashed changes
     ],
     "deny": []
   }
