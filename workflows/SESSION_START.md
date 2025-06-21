@@ -1,10 +1,12 @@
 # SESSION_START Workflow
 
-## ⚠️ CRITICAL: IMMEDIATE ACTIONS ⚠️
+## ⚠️ MANDATORY SESSION INITIALIZATION ⚠️
+
+**MANDATORY SESSION INITIALIZATION**: When any new Claude session begins, Claude MUST execute the following initialization sequence to ensure workflow integrity and session continuity.
 
 **TRIGGER**: Any new Claude session initiation
 
-**IMMEDIATELY upon starting ANY session:**
+**MANDATORY ACTIONS upon starting ANY session:**
 1. **CHECK PREVIOUS SESSION**: Read timelog to detect incomplete SESSION_END workflows and complete recovery actions if needed
 2. **CHECK REPOSITORY TODO LIST**: Read `todo-list.md`, show complete list of pending topics (bullet format) with titles and descriptions so user can make informed choice, then ask what from the list (if any) should we start with
 
