@@ -1,10 +1,12 @@
 # SESSION_END Workflow
 
-## ⚠️ CRITICAL: SESSION TERMINATION ACTIONS ⚠️
+## ⚠️ MANDATORY SESSION TERMINATION ⚠️
+
+**MANDATORY SESSION TERMINATION**: When any Claude session ends, Claude MUST execute the following termination sequence to ensure proper workflow completion and session continuity.
 
 **TRIGGER**: End of any Claude session or when user indicates session completion
 
-**SESSION TERMINATION SEQUENCE:**
+**MANDATORY TERMINATION SEQUENCE:**
 
 1. **COMPLETE OUTSTANDING TODOS**: Check TodoRead and mark any completed tasks as completed
 
