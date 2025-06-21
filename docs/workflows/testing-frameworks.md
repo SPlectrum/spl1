@@ -62,3 +62,17 @@ Prevents regressions when adding multi-language support and provides clear valid
 - Parameter names should be descriptive (e.g., "sfx" vs. "selfExtracting")
 - Test both short (-h) and long (--help) help flags
 - Verify alias uniqueness within method scope
+
+## Operational TDD Integration
+
+**Process Quality Testing**: SPlectrum TDD strategy includes **Operational TDD** to validate development workflows and process integrity alongside application code testing.
+
+**See**: [Operational TDD Framework](./operational-tdd-framework.md) for comprehensive operational testing strategy.
+
+**Key Integration Points**:
+- **Workflow Validation**: Development process execution testing
+- **Compliance Testing**: MANDATORY rule adherence validation  
+- **Environment Health**: Development environment reliability checks
+- **Recovery Testing**: Operational failure detection and recovery
+
+**Benefits**: Ensures both **code quality** and **process quality** for comprehensive SPlectrum platform reliability.
