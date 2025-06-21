@@ -2,7 +2,7 @@
 
 ## MUST Rules (Non-Negotiable Requirements)
 - **Discuss, Think, Plan, Start**: For all significant work, follow this methodology - initiate discussions, request planning time, create planning documents, then implement
-- **Time tracking REQUIRED** - Update `/logs/timelog.txt` at every activity transition, issue switch, and session boundary
+- **Audit tracking REQUIRED** - Update current audit log at every activity transition, issue switch, and session boundary
 - **Document learnings REQUIRED** - At session end, capture "What have I learned?" in appropriate docs/ files
 - **Assign issues to milestones** - All issues must be assigned to appropriate epic phase milestone
 - **Always return to repo root** (`/mnt/c/SPlectrum/spl1`) after any subdirectory operations

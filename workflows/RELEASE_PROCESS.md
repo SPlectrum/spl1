@@ -13,30 +13,31 @@ Complete release process for version closure including log archiving, historical
 - Confirm all current version work completed
 - Validate repository clean state
 
-### 2. Log Archiving Phase
+### 2. Audit Log Archiving Phase
 ```bash
-# Create archive directory if needed
-mkdir -p logs/archive
+# Create version archive directory
+mkdir -p audit/v{VERSION}
 
-# Archive logs with version stamps
-cp logs/timelog.txt logs/archive/timelog_v{VERSION}.txt
-cp logs/learnings.md logs/archive/learnings_v{VERSION}.md
+# Move current audit logs to version archive
+mv audit/current/* audit/v{VERSION}/
 
-# Reset logs for next version
-# - Update timelog header to next version
-# - Update learnings header to next version  
-# - Add version transition entries
+# Concatenate all session files into single version audit log
+cat audit/v{VERSION}/*.log > audit/v{VERSION}/audit_v{VERSION}.log
+rm audit/v{VERSION}/*_session*.log
+
+# Ensure current directory is clean for next version
+# (VERSION_TRANSITION workflow will process the archived audit data)
 ```
 
 ### 3. Commit & Integration Phase
 ```bash
 # Commit archiving changes
-git add logs/
-git commit -m "Archive v{VERSION} logs and reset for next version
+git add audit/
+git commit -m "Archive v{VERSION} audit logs and prepare for release
 
-- Archive timelog_v{VERSION}.txt and learnings_v{VERSION}.md
-- Reset current logs for v{NEXT_VERSION} development
-- Preserve complete development history
+- Move audit/current/* to audit/v{VERSION}/
+- Concatenate session logs into audit_v{VERSION}.log
+- Preserve complete development audit trail
 
 🤖 Generated with [Claude Code](https://claude.ai/code)
 
@@ -68,8 +69,8 @@ cd /mnt/c/SPlectrum/spl1 && rm -rf spl-release-test
 git tag v{VERSION}
 git push origin v{VERSION}
 
-# Create GitHub release with archived learnings as release notes
-gh release create v{VERSION} --title "SPlectrum v{VERSION}" --notes-file logs/archive/learnings_v{VERSION}.md SPlectrum.7z INSTALL.md
+# Create GitHub release with version achievements as release notes
+gh release create v{VERSION} --title "SPlectrum v{VERSION}" --notes-file audit/v{VERSION}/learning_v{VERSION}.log SPlectrum.7z INSTALL.md
 ```
 
 ## Release Workflow Execution

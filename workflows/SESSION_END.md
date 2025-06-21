@@ -2,48 +2,48 @@
 
 ## ⚠️ MANDATORY SESSION TERMINATION ⚠️
 
-**MANDATORY SESSION TERMINATION**: When any Claude session ends, Claude MUST execute the following termination sequence to ensure proper workflow completion and session continuity.
+**MANDATORY SESSION TERMINATION**: When any Claude session ends, Claude MUST execute this system check and termination sequence.
 
 **TRIGGER**: End of any Claude session or when user indicates session completion
 
-**MANDATORY TERMINATION SEQUENCE:**
+**MANDATORY SYSTEM CHECK:**
+1. **SCAN ALL MANDATORY RULES**: Review CLAUDE.md and workflow files for all rules marked "MANDATORY"
+2. **VERIFY SESSION COMPLIANCE**: Ensure all MANDATORY rules were followed during session
+3. **EXECUTE REQUIRED WORKFLOWS**: Run any workflows needed to resolve violations
+4. **CONFIRM CLEAN HANDOFF**: Ensure repository meets all MANDATORY requirements for session end
 
-1. **COMPLETE OUTSTANDING TODOS**: Check TodoRead and mark any completed tasks as completed
+**SESSION TERMINATION:**
+1. **COMPLETE OUTSTANDING TODOS**: Mark completed tasks and update todo status
+2. **CAPTURE SESSION LEARNINGS**: Document insights in appropriate files
+3. **EXECUTE GIT_WORKFLOW**: Handle all git operations with proper branching policy
 
-2. **CAPTURE SESSION LEARNINGS**: Ask "What have I learned this session?" and document insights in appropriate files
+## SYSTEM CHECK PROCEDURE
 
-3. **FINALIZE SESSION**: Complete all remaining session termination tasks
+**MANDATORY Rule Verification:**
+- Search CLAUDE.md for all \"**MANDATORY\" labeled rules
+- Search workflow files for MANDATORY requirements  
+- Verify session activities complied with each rule
+- Execute required workflows to resolve any violations
+
+**Common Compliance Checks:**
+- Branch Policy: Repository in clean state for handoff
+- Workflow Logging: All session activities properly documented
+- Todo Management: All created todos have appropriate status
+- Step-by-Step Pattern: Work followed single-step completion rules
 
 ## SESSION COMPLETION CHECKLIST
 
-### **1. Todo Management Cleanup**
-- Review all todos created during session
+### **1. System Compliance Verification**
+- Complete MANDATORY system check procedure above
+- Resolve any violations before session termination
+
+### **2. Todo and Learning Management**
 - Mark completed tasks as completed status
-- Update any in_progress tasks to appropriate status
-- Clean up any unnecessary todo entries
+- Document session learnings in appropriate docs/ files
 
-### **2. Learning Documentation**
-- Review session activities for key insights
-- Document learnings in relevant docs/ files:
-  - Technical insights → `docs/current-development-process.md`
-  - Process improvements → workflow files
-  - Architecture decisions → strategic documents
-  - Development patterns → `docs/code-quality-patterns.md`
-
-### **3. Work Status Assessment**
-- Summarize key accomplishments from session
-- Identify any issues created or closed
-- Note any significant decisions or direction changes
-- Highlight any blockers or next steps for future sessions
-
-### **4. Git Operations**
-- Execute GIT_WORKFLOW to handle all git operations with proper branching policy
-- GIT_WORKFLOW will analyze timelog context to determine planned vs unplanned work
-- Applies appropriate branching strategy (issue branches, unplanned branch, or direct commit)
-
-### **5. Session Completion**
-- Ensure all session work is properly documented
-- Verify all todos are in appropriate status
+### **3. Git Operations and Clean Handoff**
+- Execute GIT_WORKFLOW for proper branching policy compliance
+- Ensure clean repository state for next session
 
 ## SESSION OUTCOME DOCUMENTATION
 
@@ -59,6 +59,8 @@ For sessions with significant outcomes, consider creating brief session summary:
 - **Process Learnings**: Workflow improvements, efficiency gains
 - **Strategic Learnings**: Long-term vision insights, planning approaches
 - **Tool Learnings**: Better ways to use development tools or AI capabilities
+- **Knowledge Gaps**: Prerequisites or concepts new team members would need
+- **Onboarding Insights**: What understanding is required before working on specific components
 
 ## INCOMPLETE WORKFLOW DETECTION
 

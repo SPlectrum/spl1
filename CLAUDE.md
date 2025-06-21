@@ -24,7 +24,7 @@ This file provides essential operational guidance for Claude Code when working w
 **MANDATORY FILE PATH SPECIFICATION**: All file references in workflows, documentation, and instructions MUST specify exact file paths.
 
 **Examples:**
-- ❌ "log in timelog" → ✅ "log in `logs/timelog.txt`"
+- ❌ "log in timelog" → ✅ "log in `audit/current/current.log`"
 - ❌ "update documentation" → ✅ "update `docs/project-overview.md`"
 - ❌ "check the config" → ✅ "check `settings/config.json`"
 
@@ -33,7 +33,7 @@ This file provides essential operational guidance for Claude Code when working w
 
 **MANDATORY WORKFLOW LOGGING**: When any custom workflow is recognized, Claude MUST:
 
-1. **FIRST ACTION**: Log workflow start in `logs/timelog.txt` before executing any workflow steps:
+1. **FIRST ACTION**: Log workflow start in current audit log before executing any workflow steps:
    ```
    ##→YYYY-MM-DDTHH:MM:SSZ | WORKFLOW_NAME | workflow_start: [workflow_context]
    ```
@@ -77,7 +77,7 @@ This enables detection of incomplete workflow executions and ensures proper work
 
 ### 4. Progress Recognition
 - Celebrate each completed step as meaningful progress
-- Update `logs/timelog.txt` with step completion
+- Update current audit log with step completion
 - Remove completed items from `todo-list.md` immediately
 
 **Purpose**: Prevents tunnel vision, enables dynamic re-prioritization, provides clear progress tracking, and creates natural stopping points for session management.
@@ -163,7 +163,7 @@ This enables detection of incomplete workflow executions and ensures proper work
 
 **CRITICAL WORKFLOW INTEGRITY RULE:**
 - **MUST NOT modify any repository files during steps 1-5 above**
-- **NO timelog entries, documentation updates, or any file changes during PR cycle**
+- **NO audit log entries, documentation updates, or any file changes during PR cycle**
 - **File modifications ONLY allowed after successful branch switch**
 - **Workflow tracking happens AFTER transition, never during**
 
@@ -224,6 +224,7 @@ Use natural language with "sesame" suffix:
 - `project sesame` → PROJECT_AUTOMATION
 - `next sesame` → NEXT_ISSUE
 - `recommend sesame` → WORKFLOW_RECOMMENDATION (experimental)
+- `transition sesame` → VERSION_TRANSITION
 
 ### Technical Keywords (for documentation)
 **SESSION_START** → See [workflows/SESSION_START.md](./workflows/SESSION_START.md)
@@ -234,6 +235,7 @@ Use natural language with "sesame" suffix:
 **RELEASE_PROCESS** → See [workflows/RELEASE_PROCESS.md](./workflows/RELEASE_PROCESS.md)
 **PLANNED_VS_UNPLANNED** → See [workflows/PLANNED_VS_UNPLANNED.md](./workflows/PLANNED_VS_UNPLANNED.md)
 **WORKFLOW_RECOMMENDATION** → See [workflows/WORKFLOW_RECOMMENDATION.md](./workflows/WORKFLOW_RECOMMENDATION.md)
+**VERSION_TRANSITION** → See [workflows/VERSION_TRANSITION.md](./workflows/VERSION_TRANSITION.md)
 
 ## spl1 Context
 
