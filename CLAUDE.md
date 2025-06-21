@@ -24,7 +24,7 @@ This file provides essential operational guidance for Claude Code when working w
 **MANDATORY FILE PATH SPECIFICATION**: All file references in workflows, documentation, and instructions MUST specify exact file paths.
 
 **Examples:**
-- ❌ "log in timelog" → ✅ "log in `audit/current/current.log`"
+- ❌ "log in timelog" → ✅ "log in `claude/audit/current/current.log`"
 - ❌ "update documentation" → ✅ "update `docs/project-overview.md`"
 - ❌ "check the config" → ✅ "check `settings/config.json`"
 
@@ -209,7 +209,7 @@ issue-branch: accumulate commits → PR when transitioning → continue or compl
 **Purpose**: Maintains clean separation between planned/unplanned work, prevents conflicts, ensures all work stays current with latest changes.
 ## Workflow Triggers
 
-**KEYWORD_REGISTRY** → See [workflows/KEYWORD_REGISTRY.md](./workflows/KEYWORD_REGISTRY.md) - Complete keyword system
+**KEYWORD_REGISTRY** → See [claude/workflows/KEYWORD_REGISTRY.md](./claude/workflows/KEYWORD_REGISTRY.md) - Complete keyword system
 
 ### User-Friendly Sesame Triggers
 Use natural language with "sesame" suffix:
@@ -225,17 +225,19 @@ Use natural language with "sesame" suffix:
 - `next sesame` → NEXT_ISSUE
 - `recommend sesame` → WORKFLOW_RECOMMENDATION (experimental)
 - `transition sesame` → VERSION_TRANSITION
+- `version planning sesame` → NEW_VERSION_PLANNING
 
 ### Technical Keywords (for documentation)
-**SESSION_START** → See [workflows/SESSION_START.md](./workflows/SESSION_START.md)
-**GITHUB_WORKFLOW** → See [workflows/GITHUB_WORKFLOW.md](./workflows/GITHUB_WORKFLOW.md)  
-**GIT_WORKFLOW** → See [workflows/GIT_WORKFLOW.md](./workflows/GIT_WORKFLOW.md)
-**OPERATIONAL_RULES** → See [workflows/OPERATIONAL_RULES.md](./workflows/OPERATIONAL_RULES.md)
-**ESSENTIAL_COMMANDS** → See [workflows/ESSENTIAL_COMMANDS.md](./workflows/ESSENTIAL_COMMANDS.md)
-**RELEASE_PROCESS** → See [workflows/RELEASE_PROCESS.md](./workflows/RELEASE_PROCESS.md)
-**PLANNED_VS_UNPLANNED** → See [workflows/PLANNED_VS_UNPLANNED.md](./workflows/PLANNED_VS_UNPLANNED.md)
-**WORKFLOW_RECOMMENDATION** → See [workflows/WORKFLOW_RECOMMENDATION.md](./workflows/WORKFLOW_RECOMMENDATION.md)
-**VERSION_TRANSITION** → See [workflows/VERSION_TRANSITION.md](./workflows/VERSION_TRANSITION.md)
+**SESSION_START** → See [claude/workflows/SESSION_START.md](./claude/workflows/SESSION_START.md)
+**GITHUB_WORKFLOW** → See [claude/workflows/GITHUB_WORKFLOW.md](./claude/workflows/GITHUB_WORKFLOW.md)  
+**GIT_WORKFLOW** → See [claude/workflows/GIT_WORKFLOW.md](./claude/workflows/GIT_WORKFLOW.md)
+**OPERATIONAL_RULES** → See [claude/workflows/OPERATIONAL_RULES.md](./claude/workflows/OPERATIONAL_RULES.md)
+**ESSENTIAL_COMMANDS** → See [claude/workflows/ESSENTIAL_COMMANDS.md](./claude/workflows/ESSENTIAL_COMMANDS.md)
+**RELEASE_PROCESS** → See [claude/workflows/RELEASE_PROCESS.md](./claude/workflows/RELEASE_PROCESS.md)
+**PLANNED_VS_UNPLANNED** → See [claude/workflows/PLANNED_VS_UNPLANNED.md](./claude/workflows/PLANNED_VS_UNPLANNED.md)
+**WORKFLOW_RECOMMENDATION** → See [claude/workflows/WORKFLOW_RECOMMENDATION.md](./claude/workflows/WORKFLOW_RECOMMENDATION.md)
+**VERSION_TRANSITION** → See [claude/workflows/VERSION_TRANSITION.md](./claude/workflows/VERSION_TRANSITION.md)
+**NEW_VERSION_PLANNING** → See [claude/workflows/NEW_VERSION_PLANNING.md](./claude/workflows/NEW_VERSION_PLANNING.md)
 
 ## spl1 Context
 
@@ -271,7 +273,7 @@ Use natural language with "sesame" suffix:
 
 ## Persistent Todo Management
 
-**Repository Todo List**: `todo-list.md` - Maintains discussion topics and todos across sessions to ensure continuity.
+**Repository Todo List**: `claude/operational-docs/persistent-todo-list.md` - Maintains discussion topics and todos across sessions to ensure continuity.
 
 ## Learning Rule
 

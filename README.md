@@ -2,7 +2,7 @@
 
 SPlectrum is a modular execution platform designed for Linux environments, providing a comprehensive framework for building and deploying applications through a command-based architecture.
 
-**spl1 Transition Repository**: This iteration focuses on repository restructure, external install workflows, and core API enhancements. See [Federated Monorepo Design](./docs/federated-monorepo-design.md) for transition strategy and [Phase-Based Development Strategy](./docs/phase-based-development-strategy.md) for implementation approach.
+**spl1 Transition Repository**: This iteration focuses on repository restructure, external install workflows, and core API enhancements. See [Federated Monorepo Design](./docs/architecture/federated-monorepo-design.md) for transition strategy and [Phase-Based Development Strategy](./docs/workflows/phase-based-development-strategy.md) for implementation approach.
 
 ## Quick Start
 
@@ -77,63 +77,152 @@ For developers working on SPlectrum:
   - **OPERATIONAL_RULES** - Development rules framework
   - **ESSENTIAL_COMMANDS** - Core SPL execution commands
   - **RELEASE_PROCESS** - GitHub release creation
-- Read [How to](./docs/how-to.md) for essential development guidelines
-- See [Development Workflow Strategy](./docs/development-workflow-strategy.md) for AI-assisted development approach
-- Review [Branching Strategy](./docs/branching-strategy.md) for simplified GitHub Flow with TDD workflow
-- See [Implementing New API](./docs/implementing-new-api.md) for creating new modules
-- Review [Execute API Properties](./docs/execute-api-properties.md) for execution context details
+- Read [How to](./docs/guides/how-to.md) for essential development guidelines
+- Review [Branching Strategy](./docs/workflows/branching-strategy.md) for simplified GitHub Flow with TDD workflow
+- See [Implementing New API](./docs/guides/implementing-new-api.md) for creating new modules
+- Review [Execute API Properties](./docs/api/execute-api-properties.md) for execution context details
 
 ## Documentation
 
 ### Essential Guides
-- [spl1 Epics Overview](./docs/spl1-epics-overview.md) - Seven major work blocks for spl1 transition
-- [Federated Monorepo Design](./docs/federated-monorepo-design.md) - Repository Restructure epic and federation strategy
-- [Container Unified Entity Strategy](./docs/container-unified-entity-strategy.md) - Container-based registry and distribution vision
-- [Prerequisites](./docs/prerequisites.md) - System requirements and dependency setup
+- [spl1 Epics Overview](./docs/management/spl1-epics-overview.md) - Seven major work blocks for spl1 transition
+- [Prerequisites](./docs/reference/prerequisites.md) - System requirements and dependency setup
 - [Installation Guide](./INSTALL.md) - Installing SPlectrum from distributed release archive
-- [Project Overview](./docs/project-overview.md) - Architecture, components, and core concepts
-- [How to](./docs/how-to.md) - Essential development and usage guidelines
-- [Branching Strategy](./docs/branching-strategy.md) - Simplified GitHub Flow with integrated TDD
-- [Phase-Based Development Strategy](./docs/phase-based-development-strategy.md) - PRINCE2-inspired approach to roadmap execution
-- [Phase-Based Implementation Guide](./docs/phase-based-implementation-guide.md) - Step-by-step guide for daily workflow
-- [App Development](./docs/app-development.md) - Application development patterns and workflows
-- [Code Quality Patterns](./docs/code-quality-patterns.md) - Critical coding standards and anti-patterns
-- [Testing Frameworks](./docs/testing-frameworks.md) - Comprehensive testing methodologies
-- [Creating New Apps](./docs/creating-new-apps.md) - Complete guide for building applications
-- [Implementing New API](./docs/implementing-new-api.md) - Guide for creating new modules
-- [Release and Install Process](./docs/release-and-install-process.md) - Comprehensive release and deployment guide
-- [Current Development Process](./docs/current-development-process.md) - Current development workflow and process
+- [Project Overview](./docs/architecture/project-overview.md) - Architecture, components, and core concepts
+- [How to](./docs/guides/how-to.md) - Essential development and usage guidelines
+- [Creating New Apps](./docs/guides/creating-new-apps.md) - Complete guide for building applications
+- [Implementing New API](./docs/guides/implementing-new-api.md) - Guide for creating new modules
+- [App Development](./docs/guides/app-development.md) - Application development patterns and workflows
+- [Release and Install Process](./docs/guides/release-and-install-process.md) - Comprehensive release and deployment guide
+- [Current Development Process](./docs/guides/current-development-process.md) - Current development workflow and process
+
+### Development Workflows
+- [Branching Strategy](./docs/workflows/branching-strategy.md) - Simplified GitHub Flow with integrated TDD
+- [Phase-Based Development Strategy](./docs/workflows/phase-based-development-strategy.md) - PRINCE2-inspired approach to roadmap execution
+- [Phase-Based Implementation Guide](./docs/workflows/phase-based-implementation-guide.md) - Step-by-step guide for daily workflow
+- [Code Quality Patterns](./docs/workflows/code-quality-patterns.md) - Critical coding standards and anti-patterns
+- [Testing Frameworks](./docs/workflows/testing-frameworks.md) - Comprehensive testing methodologies
+- [Operational TDD Framework](./docs/workflows/operational-tdd-framework.md) - Process quality testing methodology
 
 ### API Documentation  
-- [Execute API Properties](./docs/execute-api-properties.md) - Execution context and pipeline properties
-- [Package API Properties](./docs/package-api-properties.md) - Package management system
-- [git API Methods](./docs/git-api-methods.md) - Git wrapper implementation
-- [7zip API Methods](./docs/7zip-api-methods.md) - Archive management wrapper
-- [App API Properties](./docs/app-api-properties.md) - Application framework properties
+- [Execute API Properties](./docs/api/execute-api-properties.md) - Execution context and pipeline properties
+- [Package API Properties](./docs/api/package-api-properties.md) - Package management system
+- [7zip Command Line API](./docs/api/7zip-command-line-api.md) - Archive management wrapper
+- [spl Package API Analysis](./docs/api/spl-package-api-analysis.md) - Package system analysis
+- [API Status](./docs/api/api-status.md) - Current API implementation status
 
 ### System Architecture
-- [Boot App Functionality](./docs/boot-app-functionality.md) - Release and deployment operations
-- [spl Data Layer](./docs/spl-data-layer.md) - Immutable data storage design
-- [Schema and Repo Notes](./docs/schema-and-repo-notes.md) - Data structure design notes
-- [AVRO Service Definitions for SPlectrum Communication](./docs/avro-service-definitions-communication.md) - Type-safe distributed communication
-- [Federated Monorepo Design](./docs/federated-monorepo-design.md) - Future distributed API architecture
-- [Subdirectory CLAUDE.md Evolution Plan](./docs/subdirectory-claude-md-plan.md) - Federated AI guidance architecture
-- [PRINCE2 Integration Approach](./docs/prince2-integration-approach.md) - Lightweight project management methodology
-- [ITIL Integration Approach](./docs/itil-integration-approach.md) - Service management for platform evolution
+- [Project Overview](./docs/architecture/project-overview.md) - Architecture, components, and core concepts
+- [Federated Monorepo Design](./docs/architecture/federated-monorepo-design.md) - Future distributed API architecture
+- [Container Unified Entity Strategy](./docs/architecture/container-unified-entity-strategy.md) - Container-based registry and distribution vision
+- [spl Data Layer](./docs/architecture/spl-data-layer.md) - Immutable data storage design
+- [Schema and Repo Notes](./docs/architecture/schema-and-repo-notes.md) - Data structure design notes
+- [Container Registry Strategy](./docs/architecture/container-registry-strategy.md) - Container distribution strategy
+- [SE1 Container Engine Architecture](./docs/architecture/se1-container-engine-architecture.md) - Container engine design
 
-### Security & Integration
-- [Qubes OS Overview](./docs/qubes-os-overview.md) - Security-focused operating system fundamentals
-- [Qubes OS Integration with SPlectrum](./docs/qubes-splectrum-integration.md) - Security-first development environments
+### External Integrations
+- [AVRO Service Definitions for SPlectrum Communication](./docs/integration/avro-service-definitions-communication.md) - Type-safe distributed communication
+- [AVRO Schema Architecture](./docs/integration/avro-schema-architecture.md) - Schema design and evolution
+- [AVRO Queue-Folder Service Design](./docs/integration/avro-queue-folder-service-design.md) - Message processing service
+- [BARE Minimal Dependency Architecture](./docs/integration/bare-minimal-dependency-architecture.md) - Lightweight serialization approach
+- [Qubes OS Overview](./docs/integration/qubes-os-overview.md) - Security-focused operating system fundamentals
+- [Qubes OS Integration with SPlectrum](./docs/integration/qubes-splectrum-integration.md) - Security-first development environments
+- [PRINCE2 Integration Approach](./docs/integration/prince2-integration-approach.md) - Lightweight project management methodology
+- [ITIL Integration Approach](./docs/integration/itil-integration-approach.md) - Service management for platform evolution
 
-### Tool References
-- [7zip Command Line API](./docs/7zip-command-line-api.md) - Raw 7zip command reference
-- [spl Package API Analysis](./docs/spl-package-api-analysis.md) - Package system analysis
+### Project Management & Knowledge
+- [Decision Log](./docs/management/decision-log.md) - Key architectural and process decisions
+- [Lessons Learned](./docs/knowledge/lessons-learned.md) - Accumulated project insights
+- [GitHub Project Setup](./docs/management/github-project-setup.md) - Project management configuration
+- [Versioning Strategy](./docs/management/versioning-strategy.md) - Version management approach
 
-## Project Status
+### Technical Specifications & References
+- [Quick Reference](./docs/reference/quick-reference.md) - Essential commands and patterns
+- [Boot App Functionality](./docs/reference/boot-app-functionality.md) - Release and deployment operations
+- [Test App Development](./docs/reference/test-app-development.md) - Testing application patterns
+- [Node Dependency Audit](./docs/reference/node-dependency-audit.md) - Dependency management analysis
 
-**Current Phase**: spl1 - Transitional repository for restructure and enhancement
-**Focus Areas**: Repository reorganization, container unified entity strategy, AVRO service definitions, security-first development
-**Target**: Federated repository architecture with container registry and distributed communication
-**Platform**: Linux-first design with container and security isolation support
+## Claude Code Operational Documentation
 
-**Branch Strategy**: Simplified GitHub Flow with feature/* and bugfix/* branches, integrated TDD workflow
+**SPlectrum Innovation**: AI-assisted development with systematic workflow automation and process validation. This operational framework represents a new approach to development workflow management through Claude Code integration.
+
+### **Core Operational Framework**
+- **[CLAUDE.md](./CLAUDE.md)** - Main operational interface with workflow triggers and mandatory rules
+- **[Claude Directory](./claude/)** - Complete operational support infrastructure
+
+### **Development Workflow Automation** (`claude/workflows/`)
+**Session Management:**
+- **[SESSION_START.md](./claude/workflows/SESSION_START.md)** - Session initialization and system checks
+- **[SESSION_END.md](./claude/workflows/SESSION_END.md)** - Session termination and cleanup procedures
+
+**Version Lifecycle Management:**
+- **[RELEASE_PROCESS.md](./claude/workflows/RELEASE_PROCESS.md)** - GitHub release creation and version closure
+- **[VERSION_TRANSITION.md](./claude/workflows/VERSION_TRANSITION.md)** - Knowledge processing and repository cleanup between versions
+- **[NEW_VERSION_PLANNING.md](./claude/workflows/NEW_VERSION_PLANNING.md)** - Project setup, epic selection, and work breakdown for new versions
+
+**Development Operations:**
+- **[GIT_WORKFLOW.md](./claude/workflows/GIT_WORKFLOW.md)** - Branch management and commit procedures with audit integration
+- **[GITHUB_WORKFLOW.md](./claude/workflows/GITHUB_WORKFLOW.md)** - Project management and issue tracking automation
+- **[OPERATIONAL_RULES.md](./claude/workflows/OPERATIONAL_RULES.md)** - Core behavioral rules and compliance requirements
+
+**Work Management:**
+- **[PLANNED_VS_UNPLANNED.md](./claude/workflows/PLANNED_VS_UNPLANNED.md)** - Work categorization and branch management strategy
+- **[NEXT_ISSUE.md](./claude/workflows/NEXT_ISSUE.md)** - Intelligent work prioritization and recommendation system
+- **[PROJECT_AUTOMATION.md](./claude/workflows/PROJECT_AUTOMATION.md)** - GitHub Projects v2 automation and field management
+
+**System Integration:**
+- **[ESSENTIAL_COMMANDS.md](./claude/workflows/ESSENTIAL_COMMANDS.md)** - Core SPL platform commands and usage patterns
+- **[WORKFLOW_RECOMMENDATION.md](./claude/workflows/WORKFLOW_RECOMMENDATION.md)** - AI-driven workflow optimization and suggestion system
+- **[KEYWORD_REGISTRY.md](./claude/workflows/KEYWORD_REGISTRY.md)** - Complete trigger system and workflow integration registry
+
+### **Operational Guidance & Decision Frameworks** (`claude/operational-docs/`)
+**Session Continuity:**
+- **[persistent-todo-list.md](./claude/operational-docs/persistent-todo-list.md)** - Cross-session task continuity and discussion topics
+
+**Project Management Intelligence:**
+- **[project-decision-framework.md](./claude/operational-docs/project-decision-framework.md)** - AI-driven "what next" decision making with kanban optimization
+- **[project-api-research-findings.md](./claude/operational-docs/project-api-research-findings.md)** - GitHub Projects v2 API capabilities and automation constraints
+
+**Documentation Strategy:**
+- **[docs-organization-strategy.md](./claude/operational-docs/docs-organization-strategy.md)** - Systematic documentation organization with concise overview approach leveraging AI for details
+
+### **Workflow Execution Tracking** (`claude/audit/`)
+**Real-Time Accountability:**
+- **[current/current.log](./claude/audit/current/current.log)** - Live workflow execution tracking with structured audit format
+- **Archived Session Logs** - Historical workflow execution records for analysis and learning
+
+**Audit Architecture:**
+- **Enhanced Entry Format**: `timestamp|workflow|action|domains|files|description` with append marker system
+- **Workflow Accountability**: Every workflow step logged for completeness verification
+- **Session Recovery**: Incomplete workflow detection and recovery capabilities
+
+### **Automation & Validation Tools** (`claude/tools/`)
+**Operational TDD Framework** (Planned - [Issue #73](https://github.com/SPlectrum/spl1/issues/73)):
+- **Validators**: Workflow completeness, compliance checking, file integrity validation
+- **Monitors**: Operational health monitoring, environment state validation  
+- **Diagnostics**: Workflow issue detection, session state analysis
+- **Recovery**: Automated session recovery and state restoration tools
+
+### **Key Operational Innovations**
+
+**1. Workflow Trigger System**
+- **Natural Language Triggers**: `start sesame`, `git sesame`, `version planning sesame`
+- **Automated Documentation Reading**: Claude reads relevant workflow docs before execution
+- **Context-Aware Execution**: Workflows adapt based on repository state and history
+
+**2. Process Quality Validation**
+- **Operational TDD**: Testing development processes with same rigor as application code
+- **Compliance Monitoring**: Automated validation of mandatory operational rules
+- **Workflow Completeness**: Systematic verification that workflows executed fully
+
+**3. Institutional Knowledge Management**
+- **Audit-Driven Learning**: Workflow execution history drives process improvements
+- **Cross-Session Continuity**: Persistent state and task management across development sessions
+- **Decision Intelligence**: AI-driven work prioritization and context-aware recommendations
+
+**4. Systematic Development Lifecycle**
+- **Complete Version Management**: End-to-end version lifecycle from development through release to planning
+- **Branch Policy Enforcement**: Automated branch state management and compliance checking
+- **Integration Workflows**: Seamless integration between development tools and AI assistance
+
+This operational framework transforms development from ad-hoc activities into systematic, validated, and continuously improving workflows while maintaining developer productivity and creativity.
