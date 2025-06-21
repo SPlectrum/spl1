@@ -2,18 +2,37 @@
 
 ## ⚠️ MANDATORY SESSION INITIALIZATION ⚠️
 
-**MANDATORY SESSION INITIALIZATION**: When any new Claude session begins, Claude MUST execute the following initialization sequence to ensure workflow integrity and session continuity.
+**MANDATORY SESSION INITIALIZATION**: When any new Claude session begins, Claude MUST execute this system check and initialization sequence.
 
 **TRIGGER**: Any new Claude session initiation
 
-**MANDATORY ACTIONS upon starting ANY session:**
-1. **CHECK PREVIOUS SESSION**: Read timelog to detect incomplete SESSION_END workflows and complete recovery actions if needed
-2. **CHECK REPOSITORY TODO LIST**: Read `todo-list.md`, show complete list of pending topics (bullet format) with titles and descriptions so user can make informed choice, then ask what from the list (if any) should we start with
+**MANDATORY SYSTEM CHECK:**
+1. **SCAN ALL MANDATORY RULES**: Review CLAUDE.md and workflow files for all rules marked "MANDATORY"
+2. **VERIFY COMPLIANCE**: Check current repository state against each MANDATORY rule
+3. **EXECUTE REQUIRED WORKFLOWS**: Run any workflows needed to achieve compliance
+4. **CONFIRM CLEAN STATE**: Ensure all MANDATORY requirements satisfied before proceeding
+
+**SESSION INITIALIZATION:**
+1. **PREVIOUS SESSION RECOVERY**: Complete any incomplete SESSION_END workflows detected
+2. **PRESENT TODO LIST**: Show complete repository todo list and ask for user selection
+
+## SYSTEM CHECK PROCEDURE
+
+**MANDATORY Rule Scanning:**
+- Search CLAUDE.md for all \"**MANDATORY\" labeled rules
+- Search workflow files for MANDATORY requirements
+- Verify current state compliance with each rule
+- Execute workflows automatically to resolve any violations
+
+**Common MANDATORY Rules:**
+- Branch Policy: Clean repository state or completed PR cycle
+- Workflow Logging: Proper timelog format and accountability
+- File Path Specification: All references must specify exact paths
+- Step-by-Step Execution: Single-step completion with choice points
 
 ## SESSION RECOVERY
 
-When detecting incomplete SESSION_END from previous session:
-- Check TodoRead for incomplete todos from previous session
-- Mark appropriate todos as completed based on git history
-- Capture any obvious learnings from previous session's work
-- Stage and commit any uncommitted changes with session summary
+**Previous Session Verification:**
+- Check timelog for complete SESSION_END workflow
+- Complete any incomplete workflows from previous session
+- Resolve any outstanding compliance violations

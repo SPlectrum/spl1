@@ -17,6 +17,7 @@ This file maintains the complete registry of uppercase workflow trigger keywords
 | **PROJECT_AUTOMATION** | `PROJECT_AUTOMATION.md` | GraphQL project management automation | GitHub Projects field population, recommendations | `project sesame` |
 | **NEXT_ISSUE** | `NEXT_ISSUE.md` | Automated next issue selection workflow | Determining which GitHub issue to work on next | `next sesame` |
 | **WORKFLOW_RECOMMENDATION** | `WORKFLOW_RECOMMENDATION.md` | Workflow recommendation system based on historical data | When uncertain which workflow approach to use | `recommend sesame` |
+| **VERSION_TRANSITION** | `VERSION_TRANSITION.md` | Mandatory post-release knowledge processing and next version preparation | After RELEASE_PROCESS completion | `transition sesame` |
 
 ## Built-in Claude Code Keywords
 

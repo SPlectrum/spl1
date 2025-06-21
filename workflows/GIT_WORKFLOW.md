@@ -54,6 +54,13 @@ git checkout -b feature/issue-123               # or bugfix/issue-123
 git merge main                                  # Ensure branch has latest main
 
 # 3. Work on specific issue...
+
+# Archive audit log before commit
+if [ -f audit/current/current.log ]; then
+    mv audit/current/current.log audit/current/session_$(date -u +%Y-%m-%dT%H-%M-%S).log
+    touch audit/current/current.log
+fi
+
 git add .                                       # Stage ALL files (atomic work packages)
 git commit -m "feat: implement feature (#123)" # Reference issue number
 gh pr create --title "Feature title (#123)" --body "Closes #123"
@@ -70,6 +77,13 @@ git checkout unplanned                          # Switch to unplanned branch
 git merge main                                  # Ensure unplanned has latest main
 
 # 2. Make changes...
+
+# Archive audit log before commit
+if [ -f audit/current/current.log ]; then
+    mv audit/current/current.log audit/current/session_$(date -u +%Y-%m-%dT%H-%M-%S).log
+    touch audit/current/current.log
+fi
+
 git add .
 git commit -m "..." # Use unplanned commit format (see below)
 gh pr create --title "Unplanned: description" --body "Unplanned work"
@@ -120,10 +134,25 @@ EOF
 ## TDD Bug Workflow
 ```bash
 git checkout -b bugfix/issue-456               # Bug fix branch
+
 # Write failing test first (Red)
+# Archive audit log before commit
+if [ -f audit/current/current.log ]; then
+    mv audit/current/current.log audit/current/session_$(date -u +%Y-%m-%dT%H-%M-%S).log
+    touch audit/current/current.log
+fi
+git add .
 git commit -m "test: add failing test for bug (#456)"
+
 # Implement fix (Green)  
+# Archive audit log before commit
+if [ -f audit/current/current.log ]; then
+    mv audit/current/current.log audit/current/session_$(date -u +%Y-%m-%dT%H-%M-%S).log
+    touch audit/current/current.log
+fi
+git add .
 git commit -m "fix: resolve issue description (#456)"
+
 gh pr create --title "Fix bug title (#456)" --body "Closes #456"
 ```
 
@@ -140,7 +169,7 @@ gh release create v<version> --title "Version <version>" --notes "Release notes"
 
 ## Timelog Archive Rule
 **CRITICAL**: When creating any new version/release, the timelog must be archived first:
-- Archives `/logs/timelog.txt` to `/logs/archive/timelog_v<version>.txt`
+- Archives current audit logs to `audit/v<version>/audit_v<version>.log`
 - Clears current timelog and adds version boundary marker
 - Preserves complete time tracking history for each version
 - Enables post-release analysis of development time patterns
