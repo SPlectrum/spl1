@@ -2,13 +2,13 @@
 
 ## Overview
 
-SPL1 continues the SPlectrum version lineage from spl0, starting at 0.6.0 and targeting 1.0 as the major milestone when Repository Restructure reaches its end goal state.
+SPL1 continues the SPlectrum version lineage from spl0, starting at 0.6.1 and targeting 1.0 as the major milestone when Repository Restructure reaches its end goal state.
 
 ## Version Progression
 
-### Starting Point: 0.6.0
+### Starting Point: 0.6.1
 - **Continuation**: spl0 ended at 0.5.x series
-- **Fresh start**: spl1 begins development at 0.6.0
+- **Fresh start**: spl1 begins development at 0.6.1
 - **Clean slate**: New epic-based development approach
 
 ### Target Milestone: 1.0.0
@@ -22,9 +22,9 @@ SPL1 continues the SPlectrum version lineage from spl0, starting at 0.6.0 and ta
 Versions follow PRINCE2 "just enough planning" progression:
 
 #### Initial Versions
-- **0.6.0 "Baseline"**: Seven-epic structure + initial analysis/planning issues
+- **0.6.1 "Baseline"**: Seven-epic structure + initial analysis/planning issues
 - **0.6.1 "Sufficient Analysis & Planning"**: First pass analysis enabling implementation
-- **0.6.2+ "Implementation Phases"**: Based on sufficient understanding from 0.6.1
+- **0.6.1+ "Implementation Phases"**: Based on sufficient understanding from 0.6.1
 
 #### Thematic Grouping (Future Versions)
 - **Foundation versions**: RR + TDD phases establishing platform
@@ -40,9 +40,9 @@ Each version must deliver:
 - **Progress toward 1.0** - Advancing Repository Restructure goals
 
 #### Version Types
-- **Minor versions** (0.6.0 → 0.7.0): Significant capability additions
-- **Patch versions** (0.6.0 → 0.6.1): Analysis, planning, and incremental progress
-- **Pre-release** (0.6.0-alpha.1): Testing builds for phase integration
+- **Minor versions** (0.6.1 → 0.7.0): Significant capability additions
+- **Patch versions** (0.6.1 → 0.6.1): Analysis, planning, and incremental progress
+- **Pre-release** (0.6.1-alpha.1): Testing builds for phase integration
 
 ## Epic Phase Integration
 

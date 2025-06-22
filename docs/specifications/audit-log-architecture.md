@@ -15,8 +15,8 @@ audit/
 │   ├── session_2025-06-21T14-30-15.log  # Timestamped session files
 │   ├── session_2025-06-21T16-45-22.log  # From git workflow commits
 │   └── audit_v0.6.1.log                 # Concatenated v0.6.1 audit log
-└── v0.6.0/
-    └── audit_v0.6.0.log                 # Concatenated v0.6.0 audit log
+└── v0.6.1/
+    └── audit_v0.6.1.log                 # Concatenated v0.6.1 audit log
 ```
 
 ### File Naming Convention
