@@ -224,7 +224,7 @@ Use natural language with "sesame" suffix:
 - `project sesame` → PROJECT_AUTOMATION
 - `next sesame` → NEXT_ISSUE
 - `recommend sesame` → WORKFLOW_RECOMMENDATION (experimental)
-- `transition sesame` → VERSION_TRANSITION
+- `transition sesame` → VERSION_TRANSITION (complete 5-step automation)
 - `version planning sesame` → NEW_VERSION_PLANNING
 
 ### Technical Keywords (for documentation)

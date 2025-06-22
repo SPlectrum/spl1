@@ -56,9 +56,9 @@ git merge main                                  # Ensure branch has latest main
 # 3. Work on specific issue...
 
 # Archive audit log before commit
-if [ -f audit/current/current.log ]; then
-    mv audit/current/current.log audit/current/session_$(date -u +%Y-%m-%dT%H-%M-%S).log
-    touch audit/current/current.log
+if [ -f claude/audit/current/current.log ]; then
+    mv claude/audit/current/current.log claude/audit/current/session_$(date -u +%Y-%m-%dT%H-%M-%S).log
+    touch claude/audit/current/current.log
 fi
 
 git add .                                       # Stage ALL files (atomic work packages)
@@ -79,9 +79,9 @@ git merge main                                  # Ensure unplanned has latest ma
 # 2. Make changes...
 
 # Archive audit log before commit
-if [ -f audit/current/current.log ]; then
-    mv audit/current/current.log audit/current/session_$(date -u +%Y-%m-%dT%H-%M-%S).log
-    touch audit/current/current.log
+if [ -f claude/audit/current/current.log ]; then
+    mv claude/audit/current/current.log claude/audit/current/session_$(date -u +%Y-%m-%dT%H-%M-%S).log
+    touch claude/audit/current/current.log
 fi
 
 git add .
@@ -137,24 +137,63 @@ git checkout -b bugfix/issue-456               # Bug fix branch
 
 # Write failing test first (Red)
 # Archive audit log before commit
-if [ -f audit/current/current.log ]; then
-    mv audit/current/current.log audit/current/session_$(date -u +%Y-%m-%dT%H-%M-%S).log
-    touch audit/current/current.log
+if [ -f claude/audit/current/current.log ]; then
+    mv claude/audit/current/current.log claude/audit/current/session_$(date -u +%Y-%m-%dT%H-%M-%S).log
+    touch claude/audit/current/current.log
 fi
 git add .
 git commit -m "test: add failing test for bug (#456)"
 
 # Implement fix (Green)  
 # Archive audit log before commit
-if [ -f audit/current/current.log ]; then
-    mv audit/current/current.log audit/current/session_$(date -u +%Y-%m-%dT%H-%M-%S).log
-    touch audit/current/current.log
+if [ -f claude/audit/current/current.log ]; then
+    mv claude/audit/current/current.log claude/audit/current/session_$(date -u +%Y-%m-%dT%H-%M-%S).log
+    touch claude/audit/current/current.log
 fi
 git add .
 git commit -m "fix: resolve issue description (#456)"
 
 gh pr create --title "Fix bug title (#456)" --body "Closes #456"
 ```
+
+## Audit Log Handling in Git Workflow
+
+### **MANDATORY Pattern for Current.log**
+When executing git workflows, follow this pattern to avoid committing operational audit entries:
+
+```bash
+# 1. Archive current audit log (this gets committed)
+if [ -f claude/audit/current/current.log ]; then
+    mv claude/audit/current/current.log claude/audit/current/session_$(date -u +%Y-%m-%dT%H-%M-%S).log
+    touch claude/audit/current/current.log
+fi
+
+# 2. Make project changes and commit
+git add .
+git commit -m "project changes"
+
+# 3. Add operational audit entries to new current.log
+echo "workflow progress..." >> claude/audit/current/current.log
+
+# 4. Stash audit log before git operations
+git stash push claude/audit/current/current.log -m "workflow audit updates"
+
+# 5. Execute git workflow (push, PR, merge, sync)
+git push origin branch
+gh pr create --title "..." --body "..."
+gh pr merge --squash
+git checkout main && git pull origin main
+git checkout unplanned && git merge main
+
+# 6. Restore audit log (stays local, not committed)
+git stash pop
+```
+
+### **Key Principles:**
+- **Archive gets committed**: Session boundaries are permanent project history
+- **Operational entries stay local**: Current workflow tracking doesn't need to be in git history
+- **Clean git operations**: Stash/unstash prevents operational noise in commits
+- **Session boundaries preserved**: Archived logs maintain accountability without cluttering history
 
 ## Version Release Workflow
 ```bash

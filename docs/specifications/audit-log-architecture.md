@@ -20,12 +20,12 @@ audit/
 ```
 
 ### File Naming Convention
-**Active Development:** Always use `audit/current/current.log`
+**Active Development:** Always use `claude/audit/current/current.log`
 
 **Archived Sessions:** `session_{YYYY-MM-DDTHH-MM-SS}.log` (timestamp when committed)
 
 **Examples:**
-- `audit/current/current.log` (always the same name during development)
+- `claude/audit/current/current.log` (always the same name during development)
 - `session_2025-06-21T14-30-15.log` (archived when git workflow executed)
 - `session_2025-06-21T16-45-22.log` (next session archived)
 
@@ -68,7 +68,7 @@ timestamp|workflow|action|domains|files|description
 ## Benefits
 
 ### 1. Simplified Logging Process
-- Single active file `audit/current/current.log` eliminates naming complexity
+- Single active file `claude/audit/current/current.log` eliminates naming complexity
 - Automatic session archival during git workflows
 - Clean separation between active logging and historical preservation
 
@@ -92,7 +92,7 @@ timestamp|workflow|action|domains|files|description
 ## Integration Points
 
 ### SESSION_START Workflow
-- Always log to `audit/current/current.log`
+- Always log to `claude/audit/current/current.log`
 - Initialize with append marker if file doesn't exist
 - Continue logging all workflow activities using marker-based append
 
@@ -102,9 +102,9 @@ timestamp|workflow|action|domains|files|description
 - Archive session file if needed
 
 ### GIT_WORKFLOW Integration
-- Before commit: If `audit/current/current.log` exists, rename to timestamped session file
+- Before commit: If `claude/audit/current/current.log` exists, rename to timestamped session file
 - Archive timestamped session file with commit
-- After commit: Create fresh empty `audit/current/current.log`
+- After commit: Create fresh empty `claude/audit/current/current.log`
 - Seamless continuation of audit logging across git operations
 
 ### VERSION_TRANSITION Workflow
@@ -112,7 +112,7 @@ timestamp|workflow|action|domains|files|description
 - Identify new domains and components since last version
 - Generate comprehensive knowledge base updates
 - Concatenate all version session files into `audit/v{version}/audit_v{version}.log`
-- Current development continues in `audit/current/current.log`
+- Current development continues in `claude/audit/current/current.log`
 
 ## Migration Strategy
 
