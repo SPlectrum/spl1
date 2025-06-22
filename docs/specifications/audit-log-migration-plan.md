@@ -45,7 +45,7 @@ This document outlines the step-by-step migration from the single `logs/timelog.
 **Objective**: Split existing timelog into appropriate session files
 
 #### Steps:
-1. **Extract Version 0.6.2 Activities**
+1. **Extract Version 0.6.1 Activities**
    - Create session files for current version activities
    - Apply new audit log format to recent entries
    - Add knowledge domains and components where identifiable

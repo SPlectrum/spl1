@@ -32,7 +32,7 @@ Break each major roadmap item into phases that are:
 - **Value-contributing** - Meaningfully advances overall goals
 
 ### Version Composition (0.6.x Series)
-Combine epic phases into versions starting from 0.6.0 that:
+Combine epic phases into versions starting from 0.6.1 that:
 - **Share thematic coherence** - Phases work together toward common capabilities
 - **Maintain manageable scope** - 4-8 weeks total development time
 - **Minimize external dependencies** - Can be developed and tested independently

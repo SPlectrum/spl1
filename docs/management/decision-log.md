@@ -1,6 +1,6 @@
 [← Home](../README.md)
 
-# Decision Log (spl1 v0.6.2)
+# Decision Log (spl1 v0.6.1)
 
 ## Purpose
 
@@ -70,4 +70,4 @@ Decisions should be logged when they meet any of these criteria:
 
 ---
 
-*This decision log will be archived to `/logs/archive/decision-log_v0.6.2.md` when transitioning to the next version, following the same archival process as timelog.*
+*This decision log will be archived to `/logs/archive/decision-log_v0.6.1.md` when transitioning to the next version, following the same archival process as timelog.*
