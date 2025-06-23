@@ -8,33 +8,47 @@ Uses simplified GitHub Flow with issue-per-branch approach integrated with GitHu
 - `bugfix/issue-456` - Bug fixes with TDD workflow tied to GitHub issue
 - `unplanned` - Unplanned work (reused branch, minimize usage)
 
-## Main Branch Synchronization
+## 🚨 CRITICAL: Branch Synchronization Protocol
 
-**CRITICAL**: Always keep main synchronized with remote before branch operations:
+**ROOT CAUSE OF SYNC ISSUES**: Local main never updates automatically after PR merges at origin. This causes progressive branch drift and sync failures.
 
-### MANDATORY RULE: Post-PR Sync
-**EVERY PR merge MUST be followed immediately by:**
-1. `git checkout main && git pull origin main` 
-2. `git checkout unplanned && git merge main`
-
-**NO EXCEPTIONS** - This ensures all branches stay synchronized with merged changes.
-
-### SESSION_START Main Sync (MANDATORY)
+### ⚠️ MANDATORY: Post-PR Synchronization
+**AFTER EVERY SINGLE PR MERGE** (no exceptions):
 ```bash
+# This MUST happen immediately after any PR merge
 git checkout main
-git pull origin main                            # Sync local main with remote
-git checkout unplanned                          # Return to default branch
-git merge main                                  # Update unplanned with latest main
+git pull origin main                    # ← CRITICAL: Sync local main with merged PR
+git checkout unplanned  
+git merge main                          # ← Update unplanned with merged changes
+git push origin unplanned               # ← Keep origin/unplanned synchronized
 ```
 
-**CRITICAL**: This sync step is MANDATORY at session start to ensure all work begins with current codebase.
+**WHY THIS MATTERS**: 
+- PR merges happen at origin/main but don't update local main
+- Without this sync, branches progressively drift apart
+- Multiple missed syncs create complex merge conflicts
+- **This step is NOT optional - it prevents all sync issues**
 
-### Pre-Work Main Sync
-Before creating any issue branch or starting work:
+### 🎯 SESSION_START Synchronization (MANDATORY)
+**FIRST ACTION in every session**:
 ```bash
+git status                              # Check current state
+git fetch origin                        # Get latest remote state
 git checkout main
-git pull origin main                            # Ensure main is current
-# Then proceed with branch creation...
+git pull origin main                    # ← Sync local main (may be behind!)
+git checkout unplanned                  # Return to default working branch
+git merge main                          # Ensure unplanned has latest changes
+```
+
+**VERIFICATION**: After sync, `git branch -vv` should show both branches are up to date with their origins.
+
+### 🔄 Pre-Work Synchronization  
+**Before starting ANY new work**:
+```bash
+git fetch origin                        # Always fetch first
+git checkout main
+git pull origin main                    # Ensure main is current
+# Now safe to create branches or switch to unplanned
 ```
 
 ## Timelog-Driven Branch Selection
@@ -70,11 +84,12 @@ gh pr create --title "Feature title (#123)" --body "Closes #123"
 ```bash
 # Timelog shows: ##→2025-06-17T10:30:00Z | FREESTYLE | development: unassigned
 
-# 1. Ensure unplanned has latest main (if not done in SESSION_START)
-git checkout main
-git pull origin main                            # Sync main if needed
-git checkout unplanned                          # Switch to unplanned branch
-git merge main                                  # Ensure unplanned has latest main
+# 1. ALWAYS sync main first (prevents all issues)
+git fetch origin
+git checkout main  
+git pull origin main                    # ← CRITICAL: Get latest merged PRs
+git checkout unplanned
+git merge main                          # Ensure unplanned has latest main
 
 # 2. Make changes...
 
@@ -89,28 +104,71 @@ git commit -m "..." # Use unplanned commit format (see below)
 gh pr create --title "Unplanned: description" --body "Unplanned work"
 gh pr merge --squash                            # Merge PR immediately
 
-# 3. MANDATORY: Sync branches after PR merge
+# 3. ⚠️ CRITICAL: Post-PR Sync (PREVENTS FUTURE SYNC ISSUES)
 git checkout main
-git pull origin main                            # Sync local main with merged changes
-git checkout unplanned                          # Return to default branch
-git merge main                                  # Update unplanned with latest main
+git pull origin main                    # ← Update local main with the PR we just merged!
+git checkout unplanned
+git merge main                          # Update unplanned with merged changes
+git push origin unplanned               # Keep origin/unplanned synchronized
+
+# 4. Verify clean state
+git branch -vv                          # Should show both branches "up to date"
 ```
 
-## Branch Housekeeping
+## 🧹 Branch Housekeeping & Troubleshooting
 
-### Post-PR Merge Sync
-After any PR is merged to main:
+### 🚨 Emergency Sync Recovery
+If branches are out of sync (common symptoms: "ahead/behind" in `git branch -vv`):
 ```bash
+# 1. Force sync with remote state
+git fetch origin --all
 git checkout main
-git pull origin main                            # Sync local main with merged changes
-git checkout unplanned                          # Return to default branch
-git merge main                                  # Update unplanned with latest main
+git reset --hard origin/main           # ⚠️ Discards local main changes
+
+# 2. Update unplanned
+git checkout unplanned
+git merge main                          # This might have conflicts
+
+# 3. If conflicts, resolve and complete
+# [resolve conflicts in editor]
+git add .
+git commit -m "resolve sync conflicts"
+git push origin unplanned
+
+# 4. Verify clean state
+git branch -vv                          # Should show "up to date"
 ```
+
+### 🔍 Sync Status Verification
+**Run after every sync operation**:
+```bash
+git branch -vv
+# Expected output:
+#   main      abc1234 [origin/main] (up to date)
+# * unplanned def5678 [origin/unplanned] (up to date)
+```
+
+**🚩 Warning Signs** (indicates sync needed):
+- `[origin/main: behind X]` - local main needs `git pull origin main`
+- `[origin/unplanned: ahead X]` - need `git push origin unplanned`
+- `[origin/unplanned: behind X]` - need `git merge main`
 
 ### Branch Cleanup
 - **Issue branches**: Delete when GitHub issue is closed (`git branch -d feature/issue-123`)
 - **Unplanned branch**: Keep active, reuse for all unplanned work
 - **Goal**: Minimize unplanned work to reduce maintenance overhead
+
+### 📋 Sync Checklist (Use This!)
+**Before starting work**:
+- [ ] `git branch -vv` shows clean state
+- [ ] `git fetch origin` completed
+- [ ] Local main synced with `git pull origin main`
+
+**After PR merge**:
+- [ ] Local main updated with `git pull origin main`
+- [ ] Unplanned merged with `git merge main`
+- [ ] Origin synced with `git push origin unplanned`
+- [ ] `git branch -vv` shows "up to date"
 
 ## Unplanned Work Commits
 For unplanned work (no GitHub issue), reference timelog context:

@@ -29,24 +29,52 @@ This file provides essential operational guidance for Claude Code when working w
 - ❌ "check the config" → ✅ "check `settings/config.json`"
 
 **Purpose**: Eliminates ambiguity, prevents errors, enables automation, and improves maintainability.
+
+## Critical Audit Format Enforcement Rule
+
+**MANDATORY AUDIT FORMAT VALIDATION**: Before ANY audit logging, Claude MUST verify correct format usage:
+
+**CORRECT Format**: `TIMESTAMP|WORKFLOW|STEP_TYPE|CONTEXT|FILE_PATH|DESCRIPTION`
+- ✅ `2025-06-23T18:35:00Z|GIT_WORKFLOW|step|branch_sync||Fixed sync issues`
+- ❌ `##→2025-06-23T18:35:00Z | GIT_WORKFLOW | step: Fixed sync issues` (OLD FORMAT)
+
+**Format Validation Checklist**:
+- [ ] Uses pipe separators `|` (not spaces or arrows)
+- [ ] No `##→` prefix (old format) 
+- [ ] Five pipe separators creating six fields
+- [ ] Empty fields use `||` not single `|`
+- [ ] Timestamp in ISO format with Z suffix
+
+**AUTOMATIC CORRECTION**: When encountering old format audit entries, Claude MUST:
+1. Identify format violations
+2. Convert to correct format immediately  
+3. Log the correction activity itself
+4. Reference `claude/workflows/AUDIT_LOGGING.md` for definitive rules
+
+**Purpose**: Prevents audit format drift and ensures consistent operational logging across all sessions.
 ## Critical Workflow Execution Rule
 
 **MANDATORY WORKFLOW LOGGING**: When any custom workflow is recognized, Claude MUST:
 
 1. **FIRST ACTION**: Log workflow start in current audit log before executing any workflow steps:
    ```
-   ##→YYYY-MM-DDTHH:MM:SSZ | WORKFLOW_NAME | workflow_start: [workflow_context]
+   YYYY-MM-DDTHH:MM:SSZ|WORKFLOW_NAME|workflow_start|context|file_path|workflow description
    ```
 
 2. **DURING EXECUTION**: Log each workflow step as it is completed:
    ```
-   ##→YYYY-MM-DDTHH:MM:SSZ | WORKFLOW_NAME | step_description: [step_details]
+   YYYY-MM-DDTHH:MM:SSZ|WORKFLOW_NAME|step|context|file_path|step description
    ```
 
 3. **LAST ACTION**: Log workflow completion after all workflow steps complete:
    ```
-   ##→YYYY-MM-DDTHH:MM:SSZ | WORKFLOW_NAME | workflow_complete: [summary]
+   YYYY-MM-DDTHH:MM:SSZ|WORKFLOW_NAME|workflow_complete|context|file_path|completion summary
    ```
+
+**CRITICAL**: All audit entries MUST follow the format: `TIMESTAMP|WORKFLOW|STEP_TYPE|CONTEXT|FILE_PATH|DESCRIPTION`
+- Use `||` for empty FILE_PATH fields
+- Append entries before `##APPEND_MARKER_UNIQUE##` marker in `claude/audit/current/current.log`
+- See `claude/workflows/AUDIT_LOGGING.md` for complete formatting rules
 
 This enables detection of incomplete workflow executions and ensures proper workflow accountability.
 
@@ -77,7 +105,7 @@ This enables detection of incomplete workflow executions and ensures proper work
 
 ### 4. Progress Recognition
 - Celebrate each completed step as meaningful progress
-- Update current audit log with step completion
+- **MANDATORY**: Update current audit log with step completion using correct format: `TIMESTAMP|WORKFLOW|step|context|file_path|description`
 - Remove completed items from `todo-list.md` immediately
 
 **Purpose**: Prevents tunnel vision, enables dynamic re-prioritization, provides clear progress tracking, and creates natural stopping points for session management.
