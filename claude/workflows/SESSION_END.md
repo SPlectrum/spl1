@@ -41,9 +41,24 @@
 - Mark completed tasks as completed status
 - Document session learnings in appropriate docs/ files
 
-### **3. Git Operations and Clean Handoff**
-- Execute GIT_WORKFLOW for proper branching policy compliance
-- Ensure clean repository state for next session
+### **3. Git Operations and Clean Handoff (MANDATORY SEQUENCE)**
+**MUST execute this exact sequence - NO EXCEPTIONS:**
+
+1. **MUST**: Archive current.log → `session_TIMESTAMP.log`
+2. **MUST**: Create fresh current.log with clean marker  
+3. **MUST**: Stash current.log before git operations
+4. **MUST**: `git add .` (stage all changes)
+5. **MUST**: `git commit` with comprehensive session summary
+6. **MUST**: `git push origin unplanned` 
+7. **MUST**: `gh pr create` with detailed description
+8. **MUST**: `gh pr merge --squash`
+9. **MUST**: `git checkout main && git pull origin main` (sync local main)
+10. **MUST**: `git checkout unplanned && git merge main` (update unplanned)
+11. **MUST**: `git push origin unplanned` (final sync)
+12. **MUST**: `git stash pop` (restore current.log)
+13. **MUST**: Log SESSION_END completion in current.log
+
+**CRITICAL**: This sequence prevents all git sync issues and ensures clean session handoff
 
 ## SESSION OUTCOME DOCUMENTATION
 
@@ -95,9 +110,10 @@ Previous session had incomplete SESSION_END workflow. Completing missing steps:
 - Note any unplanned work that should have been planned
 
 ### **Connection to GIT_WORKFLOW**
-- SESSION_END delegates all git operations to GIT_WORKFLOW
-- Ensures consistent branching policy across all session terminations
-- Maintains separation of concerns: session management vs git operations
+- SESSION_END uses GIT_WORKFLOW patterns for git operations
+- Implements the MANDATORY 13-step sequence to prevent sync issues
+- Includes post-PR synchronization that eliminates branch drift problems
+- Maintains separation of concerns: session management vs detailed git implementation
 
 ### **Connection to GITHUB_WORKFLOW**
 - Ensure any issues created during session are properly configured

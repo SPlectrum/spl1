@@ -2,17 +2,17 @@
 
 ## Current Topics for Discussion
 
-
-
-### AVRO Queue-Folder Service Implementation
-- **Priority: Medium**
-- **Context**: Documented queue-folder AVRO service design for pipe-like message processing
-- **Next Steps**: 
-  - Create GitHub issue for queue-folder service framework prototype
-  - Integrate with existing AVRO roadmap (issue #30)
-  - Consider implementation priority relative to BARE migration
-- **Documentation**: `docs/avro-queue-folder-service-design.md`
-
+### SE Data-Driven Architecture Design
+- **Status**: ✅ CONCEPTUAL PHASE COMPLETE  
+- **Evolution**: Workflow SEs → Trigger-based autonomous execution
+- **Core Insight**: Data patterns drive execution, not orchestration commands
+- **Next Phase**: Step-by-step data architecture design
+- **Focus Areas**:
+  - State representation patterns for trigger conditions
+  - Safety control data structures (kill switches)
+  - Intervention queue and response protocols
+  - Trigger landscape design methodology
+- **Foundation**: Pattern-driven autonomous execution with safety controls
 
 ---
 
