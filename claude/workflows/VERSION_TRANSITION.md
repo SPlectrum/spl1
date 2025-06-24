@@ -29,19 +29,22 @@
 - **Archive Temporary Content**: Move experimental or version-specific content to appropriate archives
 - **Validate Documentation Links**: Verify all cross-references and ensure documentation consistency
 
-### 4. Strategic Analysis and Metrics Generation
+### 4. Strategic Analysis and Operational Reporting
 - **Execute Audit Metrics Analysis**: Run `claude/tools/audit-metrics-analyzer.js` on version audit logs
-- **Generate Comprehensive Report**: Create detailed metrics report in `docs/reports/v{VERSION}-metrics-report.md`
+- **Generate Operational Reports**: Create detailed operational reports in `claude/operational-docs/` with complete technical analytics
 - **Analyze Component Interactions**: Document which components were frequently modified together
 - **Identify Process Improvements**: Extract insights about workflow effectiveness and development patterns
 - **Create Strategic Summary**: Document version achievements, insights, and implications for future development
+- **Reference**: `claude/operational-docs/dual-report-strategy.md`
 
-### 5. Knowledge Base Updates (Data-Driven)
+### 5. User-Facing Reports and Knowledge Base Updates
+- **Generate User-Facing Reports**: Create executive summaries in `docs/reports/` from operational data
 - **Component Interaction Guides**: Create detailed guides based on actual co-modification patterns from strategic analysis
 - **Workflow Effectiveness Documentation**: Document proven workflow patterns and process improvements
 - **Architecture Insights**: Capture architectural evolution and design patterns discovered during development
 - **Development Best Practices**: Extract and formalize successful development approaches and techniques
-- **Tool**: `claude/tools/knowledge-base-updater.js`
+- **Validate Dual Report Completeness**: Ensure both operational and user-facing versions exist
+- **Tools**: `claude/tools/knowledge-base-updater.js`, `claude/operational-docs/dual-report-strategy.md`
 
 ### 6. Get Started Documentation (Onboarding-Focused)
 - **Prerequisites Analysis**: Update onboarding requirements based on actual development experience

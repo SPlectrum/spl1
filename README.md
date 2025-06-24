@@ -2,7 +2,7 @@
 
 SPlectrum is a modular execution platform designed for Linux environments, providing a comprehensive framework for building and deploying applications through a command-based architecture.
 
-**spl1 Transition Repository**: This iteration focuses on repository restructure, external install workflows, and core API enhancements. See [Federated Monorepo Design](./docs/architecture/federated-monorepo-design.md) for transition strategy and [Phase-Based Development Strategy](./docs/workflows/phase-based-development-strategy.md) for implementation approach.
+**spl1 Transition Repository**: This iteration focuses on repository restructure, external install workflows, and core API enhancements. See [Federated Monorepo Design](./docs/architecture/federated-monorepo-design.md) for transition strategy and [Phase-Based Development Strategy](./claude/workflows/phase-based-development-strategy.md) for implementation approach.
 
 ## Quick Start
 
@@ -78,7 +78,7 @@ For developers working on SPlectrum:
   - **ESSENTIAL_COMMANDS** - Core SPL execution commands
   - **RELEASE_PROCESS** - GitHub release creation
 - Read [How to](./docs/guides/how-to.md) for essential development guidelines
-- Review [Branching Strategy](./docs/workflows/branching-strategy.md) for simplified GitHub Flow with TDD workflow
+- Review [Branching Strategy](./claude/workflows/branching-strategy.md) for simplified GitHub Flow with TDD workflow
 - See [Implementing New API](./docs/guides/implementing-new-api.md) for creating new modules
 - Review [Execute API Properties](./docs/api/execute-api-properties.md) for execution context details
 
@@ -94,10 +94,10 @@ For developers working on SPlectrum:
 - [Implementing New API](./docs/guides/implementing-new-api.md) - Guide for creating new modules
 - [App Development](./docs/guides/app-development.md) - Application development patterns and workflows
 - [Release and Install Process](./docs/guides/release-and-install-process.md) - Comprehensive release and deployment guide
-- [Current Development Process](./docs/guides/current-development-process.md) - Current development workflow and process
+- [Current Development Process](./claude/operational-docs/current-development-process.md) - Current development workflow and process
 
 ### Development Workflows
-- [Branching Strategy](./docs/workflows/branching-strategy.md) - Simplified GitHub Flow with integrated TDD
+- [Branching Strategy](./claude/workflows/branching-strategy.md) - Simplified GitHub Flow with integrated TDD
 - [Phase-Based Development Strategy](./docs/workflows/phase-based-development-strategy.md) - PRINCE2-inspired approach to roadmap execution
 - [Phase-Based Implementation Guide](./docs/workflows/phase-based-implementation-guide.md) - Step-by-step guide for daily workflow
 - [Code Quality Patterns](./docs/workflows/code-quality-patterns.md) - Critical coding standards and anti-patterns
