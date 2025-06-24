@@ -271,7 +271,7 @@ Use natural language with "sesame" suffix:
 
 **Transition Repository**: spl1 focuses on repository restructure, external install workflows, and core API enhancements. See [Federated Monorepo Design](./docs/federated-monorepo-design.md) for transition strategy.
 
-**Development Strategy**: Uses [Phase-Based Development](./docs/phase-based-development-strategy.md) - breaking roadmap items into phases that combine efficiently across different areas, following PRINCE2 "just enough planning" principles.
+**Development Strategy**: Uses [Phase-Based Development](./claude/workflows/phase-based-development-strategy.md) - breaking roadmap items into phases that combine efficiently across different areas, following PRINCE2 "just enough planning" principles.
 
 
 ## Essential Development Tools
@@ -293,10 +293,10 @@ Use natural language with "sesame" suffix:
 - `docs/testing-frameworks.md` - Testing methodologies
 
 **spl1 Strategy**:
-- `docs/phase-based-development-strategy.md` - PRINCE2-inspired roadmap execution approach
-- `docs/phase-based-implementation-guide.md` - Step-by-step workflow implementation guide
-- `docs/branching-strategy.md` - Simplified GitHub Flow with integrated TDD
-- `docs/current-development-process.md` - Current development workflow and process
+- `claude/workflows/phase-based-development-strategy.md` - PRINCE2-inspired roadmap execution approach
+- `claude/workflows/phase-based-implementation-guide.md` - Step-by-step workflow implementation guide
+- `claude/workflows/branching-strategy.md` - Simplified GitHub Flow with integrated TDD
+- `claude/operational-docs/current-development-process.md` - Current development workflow and process
 
 
 ## Persistent Todo Management
