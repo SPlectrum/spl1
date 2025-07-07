@@ -2,7 +2,7 @@
 
 SPlectrum is a modular execution platform designed for Linux environments, providing a comprehensive framework for building and deploying applications through a command-based architecture.
 
-**spl1 Transition Repository**: This iteration focuses on repository restructure, external install workflows, and core API enhancements. See [Federated Monorepo Design](./docs/architecture/federated-monorepo-design.md) for transition strategy and [Phase-Based Development Strategy](./claude/workflows/phase-based-development-strategy.md) for implementation approach.
+**spl1 Transition Repository**: This iteration focuses on repository restructure, external install workflows, and core API enhancements. See [Federated Monorepo Design](./docs/architecture/federated-monorepo-design.md) for transition strategy and [Phase-Based Development Strategy](./claude/wow/docs/phase-based-development-strategy.md) for implementation approach.
 
 ## Quick Start
 
@@ -78,7 +78,7 @@ For developers working on SPlectrum:
   - **ESSENTIAL_COMMANDS** - Core SPL execution commands
   - **RELEASE_PROCESS** - GitHub release creation
 - Read [How to](./docs/guides/how-to.md) for essential development guidelines
-- Review [Branching Strategy](./claude/workflows/branching-strategy.md) for simplified GitHub Flow with TDD workflow
+- Review [Branching Strategy](./claude/wow/docs/branching-strategy.md) for simplified GitHub Flow with TDD workflow
 - See [Implementing New API](./docs/guides/implementing-new-api.md) for creating new modules
 - Review [Execute API Properties](./docs/api/execute-api-properties.md) for execution context details
 
@@ -94,10 +94,10 @@ For developers working on SPlectrum:
 - [Implementing New API](./docs/guides/implementing-new-api.md) - Guide for creating new modules
 - [App Development](./docs/guides/app-development.md) - Application development patterns and workflows
 - [Release and Install Process](./docs/guides/release-and-install-process.md) - Comprehensive release and deployment guide
-- [Current Development Process](./claude/operational-docs/current-development-process.md) - Current development workflow and process
+- [Current Development Process](./claude/project/docs/current-development-process.md) - Current development workflow and process
 
 ### Development Workflows
-- [Branching Strategy](./claude/workflows/branching-strategy.md) - Simplified GitHub Flow with integrated TDD
+- [Branching Strategy](./claude/wow/docs/branching-strategy.md) - Simplified GitHub Flow with integrated TDD
 - [Phase-Based Development Strategy](./docs/workflows/phase-based-development-strategy.md) - PRINCE2-inspired approach to roadmap execution
 - [Phase-Based Implementation Guide](./docs/workflows/phase-based-implementation-guide.md) - Step-by-step guide for daily workflow
 - [Code Quality Patterns](./docs/workflows/code-quality-patterns.md) - Critical coding standards and anti-patterns
@@ -148,47 +148,50 @@ For developers working on SPlectrum:
 
 ### **Core Operational Framework**
 - **[CLAUDE.md](./CLAUDE.md)** - Main operational interface with workflow triggers and mandatory rules
-- **[Claude Directory](./claude/)** - Complete operational support infrastructure
+- **[Claude Directory](./claude/)** - Dual-folder architecture:
+  - **[claude/wow/](./claude/wow/)** - Ways of Working framework (workflows, docs, automation)
+  - **[claude/project/](./claude/project/)** - Project-specific content (audit logs, project docs, tools)
 
-### **Development Workflow Automation** (`claude/workflows/`)
+### **Development Workflow Automation** (`claude/wow/workflows/`)
 **Session Management:**
-- **[SESSION_START.md](./claude/workflows/SESSION_START.md)** - Session initialization and system checks
-- **[SESSION_END.md](./claude/workflows/SESSION_END.md)** - Session termination and cleanup procedures
+- **[SESSION_START.md](./claude/wow/workflows/SESSION_START.md)** - Session initialization and system checks
+- **[SESSION_END.md](./claude/wow/workflows/SESSION_END.md)** - Session termination and cleanup procedures
 
 **Version Lifecycle Management:**
-- **[RELEASE_PROCESS.md](./claude/workflows/RELEASE_PROCESS.md)** - GitHub release creation and version closure
-- **[VERSION_TRANSITION.md](./claude/workflows/VERSION_TRANSITION.md)** - Knowledge processing and repository cleanup between versions
-- **[NEW_VERSION_PLANNING.md](./claude/workflows/NEW_VERSION_PLANNING.md)** - Project setup, epic selection, and work breakdown for new versions
+- **[RELEASE_PROCESS.md](./claude/wow/workflows/RELEASE_PROCESS.md)** - GitHub release creation and version closure
+- **[VERSION_TRANSITION.md](./claude/wow/workflows/VERSION_TRANSITION.md)** - Knowledge processing and repository cleanup between versions
+- **[NEW_VERSION_PLANNING.md](./claude/wow/workflows/NEW_VERSION_PLANNING.md)** - Project setup, epic selection, and work breakdown for new versions
 
 **Development Operations:**
-- **[GIT_WORKFLOW.md](./claude/workflows/GIT_WORKFLOW.md)** - Branch management and commit procedures with audit integration
-- **[GITHUB_WORKFLOW.md](./claude/workflows/GITHUB_WORKFLOW.md)** - Project management and issue tracking automation
-- **[OPERATIONAL_RULES.md](./claude/workflows/OPERATIONAL_RULES.md)** - Core behavioral rules and compliance requirements
+- **[GIT_WORKFLOW.md](./claude/wow/workflows/GIT_WORKFLOW.md)** - Branch management and commit procedures with audit integration
+- **[GITHUB_WORKFLOW.md](./claude/wow/workflows/GITHUB_WORKFLOW.md)** - Project management and issue tracking automation
+- **[OPERATIONAL_RULES.md](./claude/wow/workflows/OPERATIONAL_RULES.md)** - Core behavioral rules and compliance requirements
 
 **Work Management:**
-- **[PLANNED_VS_UNPLANNED.md](./claude/workflows/PLANNED_VS_UNPLANNED.md)** - Work categorization and branch management strategy
-- **[NEXT_ISSUE.md](./claude/workflows/NEXT_ISSUE.md)** - Intelligent work prioritization and recommendation system
-- **[PROJECT_AUTOMATION.md](./claude/workflows/PROJECT_AUTOMATION.md)** - GitHub Projects v2 automation and field management
+- **[PLANNED_VS_UNPLANNED.md](./claude/wow/workflows/PLANNED_VS_UNPLANNED.md)** - Work categorization and branch management strategy
+- **[NEXT_ISSUE.md](./claude/wow/workflows/NEXT_ISSUE.md)** - Intelligent work prioritization and recommendation system
+- **[PROJECT_AUTOMATION.md](./claude/wow/workflows/PROJECT_AUTOMATION.md)** - GitHub Projects v2 automation and field management
+- **[REPO_TODO_WORKFLOW.md](./claude/wow/workflows/REPO_TODO_WORKFLOW.md)** - Repository todo list management and cross-session continuity
 
 **System Integration:**
-- **[ESSENTIAL_COMMANDS.md](./claude/workflows/ESSENTIAL_COMMANDS.md)** - Core SPL platform commands and usage patterns
-- **[WORKFLOW_RECOMMENDATION.md](./claude/workflows/WORKFLOW_RECOMMENDATION.md)** - AI-driven workflow optimization and suggestion system
-- **[KEYWORD_REGISTRY.md](./claude/workflows/KEYWORD_REGISTRY.md)** - Complete trigger system and workflow integration registry
+- **[ESSENTIAL_COMMANDS.md](./claude/wow/workflows/ESSENTIAL_COMMANDS.md)** - Core SPL platform commands and usage patterns
+- **[WORKFLOW_RECOMMENDATION.md](./claude/wow/workflows/WORKFLOW_RECOMMENDATION.md)** - AI-driven workflow optimization and suggestion system
+- **[KEYWORD_REGISTRY.md](./claude/wow/KEYWORD_REGISTRY.md)** - Complete trigger system and workflow integration registry
+- **[DOCUMENTATION_WORKFLOW.md](./claude/wow/workflows/DOCUMENTATION_WORKFLOW.md)** - Documentation standards and compliance management
+- **[AUDIT_LOGGING.md](./claude/wow/workflows/AUDIT_LOGGING.md)** - Audit log management rules and procedures
 
-### **Operational Guidance & Decision Frameworks** (`claude/operational-docs/`)
+### **Operational Guidance & Decision Frameworks** (`claude/project/docs/`)
 **Session Continuity:**
-- **[persistent-todo-list.md](./claude/operational-docs/persistent-todo-list.md)** - Cross-session task continuity and discussion topics
+- **[todo.md](./claude/project/todo.md)** - Cross-session task continuity and discussion topics
 
-**Project Management Intelligence:**
-- **[project-decision-framework.md](./claude/operational-docs/project-decision-framework.md)** - AI-driven "what next" decision making with kanban optimization
-- **[project-api-research-findings.md](./claude/operational-docs/project-api-research-findings.md)** - GitHub Projects v2 API capabilities and automation constraints
+**Project Management:**
+- **[spl1-project-context.md](./claude/project/docs/spl1-project-context.md)** - spl1 project context and strategic overview
+- **[current-development-process.md](./claude/project/docs/current-development-process.md)** - Current development workflow and process
+- **[release-and-install-process.md](./claude/project/docs/release-and-install-process.md)** - Release and deployment procedures
 
-**Documentation Strategy:**
-- **[docs-organization-strategy.md](./claude/operational-docs/docs-organization-strategy.md)** - Systematic documentation organization with concise overview approach leveraging AI for details
-
-### **Workflow Execution Tracking** (`claude/audit/`)
+### **Workflow Execution Tracking** (`claude/project/audit/`)
 **Real-Time Accountability:**
-- **[current/current.log](./claude/audit/current/current.log)** - Live workflow execution tracking with structured audit format
+- **[current/current.log](./claude/project/audit/current/current.log)** - Live workflow execution tracking with structured audit format
 - **Archived Session Logs** - Historical workflow execution records for analysis and learning
 
 **Audit Architecture:**
@@ -196,8 +199,8 @@ For developers working on SPlectrum:
 - **Workflow Accountability**: Every workflow step logged for completeness verification
 - **Session Recovery**: Incomplete workflow detection and recovery capabilities
 
-### **Automation & Validation Tools** (`claude/tools/`)
-**Operational TDD Framework** (Planned - [Issue #73](https://github.com/SPlectrum/spl1/issues/73)):
+### **Automation & Validation Tools** (`claude/project/automation/`)
+**Operational Tools**:
 - **Validators**: Workflow completeness, compliance checking, file integrity validation
 - **Monitors**: Operational health monitoring, environment state validation  
 - **Diagnostics**: Workflow issue detection, session state analysis
