@@ -1,2 +1,8 @@
 /spl*/
 .claude/
+# Framework symlinks (local setup only)
+CLAUDE.md
+claude/wow
+
+# Local machine-specific configurations
+claude/local/
