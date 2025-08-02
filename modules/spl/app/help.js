@@ -10,7 +10,7 @@ const help = require("command-line-usage");
 exports.default = function spl_app_help (input) 
 { 
     const appRoot = spl.action ( input, "appRoot");
-    const moduleRoot = spl.context ( input, "modules" );
+    const moduleRoot = "modules";
     const helpURIs = spl.action ( input );
     helpURIs.sort();
     if ( helpURIs[0] != "" ) helpURIs.unshift ( "" );

@@ -164,14 +164,26 @@ exports.history = function ( input, activity )
 // easy functions to invoke actions
 exports.moduleAction = function (input, module)
 {
-    var moduleRoot = spl_context ( input, "modules" );
-    if ( moduleRoot === undefined ) moduleRoot = "modules";
-    var moduleOverlay = spl_context ( input, "moduleOverlay" );
-    if ( moduleOverlay )
-        for ( var i = 0; i < moduleOverlay.length; i++ )
-            if ( module.indexOf ( moduleOverlay[i].prefix ) == 0 )
-                { moduleRoot = moduleOverlay[i].moduleRoot; i = moduleOverlay.length; }
-    return require ( `${ spl_context ( input, "cwd" )}/${moduleRoot}/${module}`).default ( input );
+    var moduleRoot = "modules";
+    var cwd = spl_context ( input, "cwd" );
+    
+    // Parse module path for app overlay
+    const parts = module.split('/');
+    if (parts.length >= 2) {
+        const app = parts[0];
+        const moduleFile = parts.slice(1).join('/');
+        const appPath = `${cwd}/apps/${app}/modules/${moduleFile}`;
+        
+        // Try app version first
+        try {
+            return require(appPath).default(input);
+        } catch (e) {
+            // Fall back to global modules
+        }
+    }
+    
+    // Use global modules (original logic)
+    return require ( `${cwd}/${moduleRoot}/${module}`).default ( input );
 }
 
 // gets a deep clone of a keyvalue in input

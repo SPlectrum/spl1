@@ -3,8 +3,8 @@
     {
         "top" : 
         [
-            { "header": "SPlectrum Test App" },
-            { "content": "A client used to test the current package functionaltiy." }
+            { "header": "SPlectrum Module Commands" },
+            { "content": "Core platform modules providing fundamental SPL functionality." }
         ],
         "bottom": 
         [ 

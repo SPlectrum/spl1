@@ -35,7 +35,9 @@ exports.default = function spl_app_parse (input) {
         while ( counter-- > 0 && result._unknown ) 
         {
             result = app.parse(result._unknown);
-            commandAction += (commandAction === "") ? result.command : "/" + result.command;
+            if (result.command !== undefined) {
+                commandAction += (commandAction === "") ? result.command : "/" + result.command;
+            }
             var getDetails = app.getDetails ( appRoot, moduleRoot, commandAction );
             if ( result._unknown === undefined ) result._unknown = [];
             if(!spl.wsExists ( input, getDetails.getURI, "spl/blob/get", getDetails.args, true )) return;

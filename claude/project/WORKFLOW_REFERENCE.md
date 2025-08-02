@@ -4,11 +4,9 @@ Reference guide to project-specific workflows that extend the base Claude Ways o
 
 ## Project-Specific Workflows
 
-Currently, this project uses only the base WoW workflows with no project-specific extensions.
-
 | Workflow | File | Purpose |
 |----------|------|---------|
-| *(none)* | - | No project-specific workflows defined |
+| SPL_DEVELOPMENT | `workflows/SPL_DEVELOPMENT.md` | Development process for SPL platform code |
 
 ## Base WoW Workflows
 

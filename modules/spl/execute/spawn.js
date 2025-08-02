@@ -19,7 +19,7 @@ exports.default = async function spl_execute_spawn ( input )
         runtimeMode: spl.context ( input, "runtimeMode" ),
         cwd: spl.context ( input, "cwd" ), 
         session: spl.context ( input, "session" ),  
-        modules: spl.context ( input, "modules" ),
+        modules: "modules",
         pipeline:  structuredClone ( spl.context ( spl.wsRef ( input, "spl/execute.set-pipeline" ), "pipeline" ) ),
         graph: { UUID: childUUID, ancestors: structuredClone( graph.ancestors ), children: [] }
     }; 
