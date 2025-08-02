@@ -1,0 +1,12 @@
+spl/blob/get -r apps/test-suite -d data -f test.txt -e text
+spl/blob/put -r apps/test-suite -d data -f test1.txt -c This is test content for file 1
+spl/blob/copy -f apps/test-suite/data/test1.txt -t apps/test-suite/data/test1-copy.txt
+spl/blob/contents -r apps/test-suite -d data
+spl/blob/get -r apps/test-suite -d data -f test1.txt -e text
+spl/blob/move -f apps/test-suite/data/test1-copy.txt -t apps/test-suite/data/test1-moved.txt
+spl/blob/contents -r apps/test-suite -d data
+spl/blob/delete -r apps/test-suite -d data -f test1-moved.txt
+spl/blob/contents -r apps/test-suite -d data
+spl/blob/delete -r apps/test-suite -d data -f test1.txt
+spl/blob/contents -r apps/test-suite -d data
+spl/console/log Blob module tests completed

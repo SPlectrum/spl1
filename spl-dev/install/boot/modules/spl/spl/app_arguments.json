@@ -1,0 +1,15 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "spl/app" },
+            { "content": "The common API available to all apps. It contains a mixture of external and internal actions. The internal actions take care of command parsing and execution." },
+            { "content": "{bold syntax}: {italic ./spl <appOpts> spl/app <apiOpts> <method>}" }
+]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" }
+    ]
+}

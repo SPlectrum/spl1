@@ -1,0 +1,27 @@
+tools/git/commit -h --repo test-repo
+tools/git/commit --help --repo test-repo
+tools/git/commit -m "Initial commit" --repo test-repo
+tools/git/commit --message "Initial commit" --repo test-repo
+tools/git/commit -m "Add new feature" --repo test-repo
+tools/git/commit --message "Fix bug in authentication" --repo test-repo
+tools/git/commit -m "Update documentation" --repo test-repo
+tools/git/commit --all --repo test-repo
+tools/git/commit -a --repo test-repo
+tools/git/commit --all -m "Commit all changes" --repo test-repo
+tools/git/commit -a -m "Commit all changes" --repo test-repo
+tools/git/commit --amend --repo test-repo
+tools/git/commit --amend -m "Updated commit message" --repo test-repo
+tools/git/commit -r test-repo
+tools/git/commit --repo test-repo
+tools/git/commit -r /test/repo
+tools/git/commit --repo /test/repo
+tools/git/commit -m "Test commit" -r test-repo
+tools/git/commit --message "Test commit" --repo test-repo
+tools/git/commit --all -m "Commit all" -r test-repo
+tools/git/commit -a -m "Commit all" --repo test-repo
+tools/git/commit --amend -m "Amended commit" -r test-repo
+tools/git/commit --amend --message "Amended commit" --repo test-repo
+tools/git/commit --all --amend -m "Amend all changes" --repo test-repo
+tools/git/commit -a --amend -m "Amend all changes" --repo test-repo
+tools/git/commit -h -m "This should show help" --repo test-repo
+tools/git/commit --help --all --repo test-repo

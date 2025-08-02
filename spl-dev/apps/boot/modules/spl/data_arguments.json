@@ -1,0 +1,20 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "spl/data" },
+            { "content": "The API Kafka style data operations." },
+            { "content": "{bold syntax}: {italic ./spl <appOpts> spl/data <apiOpts> <method>}" }
+]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help informatiion", "typeLabel": "flag" }, 
+        { "name": "repo", "alias": "r", "description": "The repository the record is in." }, 
+        { "name": "dir", "alias": "d", "description": "The directory the record is in." }, 
+        { "name": "file", "alias": "f", "description": "The record file name." }, 
+        { "name": "path", "alias": "p", "multiple": true, "description": "The record file or folder path in 3 space delimited parts." }, 
+        { "name": "uri", "alias": "u", "description": "The record file or folder path in uri format in one part." }
+    ]
+}

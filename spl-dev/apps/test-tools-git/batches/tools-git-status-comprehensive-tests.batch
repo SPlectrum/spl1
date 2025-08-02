@@ -1,0 +1,24 @@
+tools/git/status -h --repo test-repo
+tools/git/status --help --repo test-repo
+tools/git/status --repo test-repo
+tools/git/status -r test-repo
+tools/git/status --repo test-repo
+tools/git/status -r /test/repo
+tools/git/status --repo /test/repo
+tools/git/status --porcelain --repo test-repo
+tools/git/status -p --repo test-repo
+tools/git/status --short --repo test-repo
+tools/git/status -s --repo test-repo
+tools/git/status --porcelain --short --repo test-repo
+tools/git/status -p -s --repo test-repo
+tools/git/status -r test-repo --porcelain
+tools/git/status -r test-repo -p
+tools/git/status -r test-repo --short
+tools/git/status -r test-repo -s
+tools/git/status -r test-repo --porcelain --short
+tools/git/status -r test-repo -p -s
+tools/git/status --repo /test/repo --porcelain
+tools/git/status --repo /test/repo --short
+tools/git/status --repo /test/repo --porcelain --short
+tools/git/status -h --porcelain --repo test-repo
+tools/git/status --help -s --repo test-repo

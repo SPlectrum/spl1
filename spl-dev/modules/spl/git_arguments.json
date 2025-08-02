@@ -1,0 +1,18 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "tools/git" },
+            { "content": "Git API for repository management. Sets repository context for subsequent git operations." },
+            { "content": "{bold syntax}: {italic ./spl <appOptions> tools/git <options>}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" }, 
+        { "name": "path", "alias": "p", "description": "Repository path (defaults to current working directory)" }, 
+        { "name": "repo", "alias": "r", "description": "Repository path (defaults to current working directory)" }, 
+        { "name": "create", "alias": "c", "type": "Boolean", "description": "Create directory if it doesn't exist", "typeLabel": "flag" }
+    ]
+}

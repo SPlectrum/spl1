@@ -1,0 +1,15 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "spl/avro" },
+            { "content": "The API for AVRO specific actions." },
+            { "content": "{bold syntax}: {italic ./spl <appOpts> spl/avro <apiOpts> <method>}" }
+]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" }
+    ]
+}

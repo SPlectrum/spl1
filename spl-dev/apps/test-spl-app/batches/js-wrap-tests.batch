@@ -1,0 +1,12 @@
+spl/console/log "=== Testing spl/app/wrap with JavaScript scripts ==="
+
+spl/console/log "Test 1: Wrap simple JS script"
+spl/app/wrap -f simple-test.js
+
+spl/console/log "Test 2: Wrap JS script with arguments"  
+spl/app/wrap -f args-test.js
+
+spl/console/log "Test 3: Wrap SPL context script"
+spl/app/wrap -f spl-context-test.js
+
+spl/console/log "=== spl/app/wrap JS tests completed ==="

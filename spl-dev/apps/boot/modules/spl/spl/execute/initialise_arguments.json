@@ -1,0 +1,15 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "spl/execute/initialise" },
+            { "content": "This is the first action ." },
+            { "content": "{bold syntax}: {italic ./spl <appOptions> spl/execute/initialise <options>}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help informatiion", "typeLabel": "flag" }
+    ]
+}

@@ -1,0 +1,15 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "spl/execute/spawn" },
+            { "content": "This creates a child request with a new execution record and spawns it." },
+            { "content": "{bold syntax}: {italic ./spl <appOptions> spl/execute/spawn <options>}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help informatiion", "typeLabel": "flag" }
+    ]
+}

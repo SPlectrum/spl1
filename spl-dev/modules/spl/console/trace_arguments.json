@@ -1,0 +1,16 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "spl/console/trace" },
+            { "content": "Writes a trace message with stack to the console." },
+            { "content": "{bold syntax}: {italic ./spl <appOpts> spl/console/trace <opts>}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help informatiion", "typeLabel": "flag" }, 
+        { "name": "message", "alias": "m", "multiple": true, "defaultOption": true }
+    ]
+}

@@ -1,0 +1,15 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "spl/command/execute" },
+            { "content": "Entry point for command execution. DEPRECATED" },
+            { "content": "{bold syntax}: {italic ./spl <appOptions> spl/command/execute <options>}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help informatiion", "typeLabel": "flag" }
+    ]
+}

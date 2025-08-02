@@ -1,0 +1,23 @@
+{
+    "headers": 
+    {
+        "top" : [
+            { "header": "SPlectrum 7zip Tool Test App" },
+            { "content": "Test application for the tools/7zip API implementation." }
+        ],
+        "header": [
+            { "content": "Test comprehensive 7zip archive operations." },
+            { "content": "{bold syntax}: {italic ./spl_execute test-tools-7zip <method> [options]}" }
+        ],
+        "bottom": [ 
+            { "content": "Project home: {underline https://github.com/SPlectrum/spl}" } ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" }, 
+        { "name": "test", "alias": "t", "type": "Boolean", "description": "test - parse commands but do not execute.", "typeLabel": "flag" }, 
+        { "name": "steps", "alias": "s", "type": "Number", "description": "TTL of the command execution."},
+        { "name": "verbose", "alias": "v", "type": "Boolean", "description": "Do verbose output on completion."},
+        { "name": "debug", "alias": "d", "type": "Boolean", "description": "Do debug output on completion."}
+    ]
+}

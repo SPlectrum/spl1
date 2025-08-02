@@ -1,0 +1,17 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "spl/app/process" },
+            { "content": "Internal action. Process a multiline commandline input. This is the entry command for app execution." },
+            { "content": "{bold syntax}: {italic ./spl <appOpts> spl/app/process <opts>}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help informatiion" }, 
+        { "name": "appRoot", "alias": "a", "description": "The root folder of the app." },
+        { "name": "batch", "alias": "b", "description": "The batch of commands to be processed / executed." }
+    ]
+}

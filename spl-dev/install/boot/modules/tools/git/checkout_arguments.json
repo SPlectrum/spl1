@@ -1,0 +1,19 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "tools/git/checkout" },
+            { "content": "Switch branches or restore files." },
+            { "content": "{bold syntax}: {italic ./spl <appOptions> tools/git/checkout <options>}" }
+        ]
+    },
+    "value": 
+    [
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
+        { "name": "branch", "alias": "b", "type": "String", "description": "branch name to checkout", "typeLabel": "name" },
+        { "name": "create", "alias": "c", "type": "Boolean", "description": "create new branch", "typeLabel": "flag" },
+        { "name": "files", "type": "String", "description": "specific files to checkout", "typeLabel": "pattern" },
+        { "name": "repo", "alias": "r", "type": "String", "description": "specify the git repository root folder path", "typeLabel": "path" }
+    ]
+}

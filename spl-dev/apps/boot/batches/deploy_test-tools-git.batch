@@ -1,0 +1,1 @@
+spl/package/load -r install -d packages -f apps_test-tools-git.json @@ spl/package/deploy -r apps -d . -f apps_test-tools-git.json

@@ -1,0 +1,29 @@
+tools/git/remote -h --repo test-repo
+tools/git/remote --help --repo test-repo
+tools/git/remote --list --repo test-repo
+tools/git/remote -l --repo test-repo
+tools/git/remote --list --verbose --repo test-repo
+tools/git/remote -l -v --repo test-repo
+tools/git/remote --list --verbose --repo test-repo
+tools/git/remote -l --verbose --repo test-repo
+tools/git/remote --add origin --url https://github.com/user/repo.git --repo test-repo
+tools/git/remote --add upstream --url https://github.com/upstream/repo.git --repo test-repo
+tools/git/remote --add origin --url git@github.com:user/repo.git --repo test-repo
+tools/git/remote --add backup --url /path/to/backup/repo.git --repo test-repo
+tools/git/remote --remove origin --repo test-repo
+tools/git/remote --remove upstream --repo test-repo
+tools/git/remote --remove backup --repo test-repo
+tools/git/remote -r test-repo
+tools/git/remote --repo test-repo
+tools/git/remote -r /test/repo
+tools/git/remote --repo /test/repo
+tools/git/remote --list -r test-repo
+tools/git/remote -l --repo test-repo
+tools/git/remote --list --verbose -r test-repo
+tools/git/remote -l -v --repo test-repo
+tools/git/remote --add origin --url https://github.com/user/repo.git -r test-repo
+tools/git/remote --add origin --url https://github.com/user/repo.git --repo test-repo
+tools/git/remote --remove origin -r test-repo
+tools/git/remote --remove origin --repo test-repo
+tools/git/remote -h --list --repo test-repo
+tools/git/remote --help --add origin --repo test-repo

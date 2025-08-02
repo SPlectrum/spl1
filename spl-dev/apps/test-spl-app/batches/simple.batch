@@ -1,0 +1,2 @@
+spl/console/log "Hello from simple batch file"
+spl/console/log "Testing parameter: $1"

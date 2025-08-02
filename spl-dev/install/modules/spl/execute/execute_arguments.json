@@ -1,0 +1,15 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "spl/execute/complete" },
+            { "content": "The action is the entry point for request execution and manages the flow." },
+            { "content": "{bold syntax}: {italic ./spl <appOptions> spl/execute/execution <options>}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help informatiion", "typeLabel": "flag" }
+    ]
+}

@@ -1,0 +1,26 @@
+tools/git/add -h --repo test-repo
+tools/git/add --help --repo test-repo
+tools/git/add --files . --repo test-repo
+tools/git/add --files "*.js" --repo test-repo
+tools/git/add --files "src/*.ts" --repo test-repo
+tools/git/add --files "test.txt" --repo test-repo
+tools/git/add --files "file1.txt file2.txt" --repo test-repo
+tools/git/add --all --repo test-repo
+tools/git/add -A --repo test-repo
+tools/git/add --force --repo test-repo
+tools/git/add -f --repo test-repo
+tools/git/add -r test-repo
+tools/git/add --repo test-repo
+tools/git/add -r /test/repo
+tools/git/add --repo /test/repo
+tools/git/add --files . -r test-repo
+tools/git/add --files "*.js" --repo test-repo
+tools/git/add --all -r test-repo
+tools/git/add -A --repo test-repo
+tools/git/add --force --files "ignored.txt" --repo test-repo
+tools/git/add -f --files "ignored.txt" --repo test-repo
+tools/git/add --all --force --repo test-repo
+tools/git/add -A -f --repo test-repo
+tools/git/add --files . --all --force -r test-repo
+tools/git/add -h --files . --repo test-repo
+tools/git/add --help -A --repo test-repo

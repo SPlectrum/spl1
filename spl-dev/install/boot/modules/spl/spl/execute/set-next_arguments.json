@@ -1,0 +1,15 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "spl/execute/set-next" },
+            { "content": "This action sets the new action to be executed, taken from the pipeline." },
+            { "content": "{bold syntax}: {italic ./spl <appOptions> spl/execute/set-next <options>}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help informatiion", "typeLabel": "flag" }
+    ]
+}

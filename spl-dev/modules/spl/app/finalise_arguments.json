@@ -1,0 +1,15 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "spl/app/pipeline" },
+            { "content": "Internal action. Creates execution pipelines of a batch of commands that was parsed by spl/app/parse. It expects its input in the spl/app workspace entry." },
+            { "content": "{bold syntax}: {italic ./spl <appOpts> spl/app/pipeline <opts>}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help informatiion" }
+    ]
+}

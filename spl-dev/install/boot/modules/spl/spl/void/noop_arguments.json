@@ -1,0 +1,15 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "spl/void/noop" },
+            { "content": "The null operation." },
+            { "content": "{bold syntax}: {italic ./spl <appOptions> spl/void/noop <options>}" }
+]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help informatiion", "typeLabel": "flag" }
+    ]
+}

@@ -1,0 +1,2 @@
+spl/package/create -r apps -d test-suite -f apps_test-suite.json
+spl/package/save -r ../release/install/packages -d . -f apps_test-suite.json

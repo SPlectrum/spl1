@@ -1,0 +1,20 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "spl/package/load" },
+            { "content": "Loads a package from the filesystem in the workspace." },
+            { "content": "{bold syntax}: {italic ./spl <appOptions> spl/package/load <options>}" }
+]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help informatiion", "typeLabel": "flag" }, 
+        { "name": "repo", "alias": "r", "description": "The repository of the package source." }, 
+        { "name": "dir", "alias": "d", "description": "The directory of the package source." }, 
+        { "name": "file", "alias": "f", "description": "The file name of the package source." }, 
+        { "name": "path", "alias": "p", "multiple": true, "description": "The path of the package source in 3 space delimited parts." }, 
+        { "name": "uri", "alias": "u", "description": "The path of the package source in uri format in one part." }
+    ]
+}

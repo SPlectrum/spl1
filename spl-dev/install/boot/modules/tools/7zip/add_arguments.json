@@ -1,0 +1,25 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "tools/7zip/add" },
+            { "content": "Create new archive or add files to existing archive using 7zip 'a' command." },
+            { "content": "{bold syntax}: {italic ./spl <appOptions> tools/7zip/add <options> <files>}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
+        { "name": "archive", "alias": "a", "type": "String", "description": "archive file name (required)", "required": true },
+        { "name": "files", "type": "String", "description": "files/directories to add (supports patterns)", "defaultOption": true },
+        { "name": "type", "alias": "t", "type": "String", "description": "archive format (7z, zip, tar, etc.)" },
+        { "name": "compression", "alias": "c", "type": "Number", "description": "compression level (0-9, 0=store, 9=ultra)" },
+        { "name": "sfx", "alias": "s", "type": "Boolean", "description": "create self-extracting archive", "typeLabel": "flag" },
+        { "name": "password", "alias": "p", "type": "String", "description": "set password protection" },
+        { "name": "exclude", "alias": "x", "type": "String", "description": "exclude file patterns" },
+        { "name": "recurse", "alias": "r", "type": "Boolean", "description": "recurse subdirectories", "typeLabel": "flag" },
+        { "name": "working", "alias": "w", "type": "String", "description": "working directory" },
+        { "name": "yes", "alias": "y", "type": "Boolean", "description": "assume yes on all queries", "typeLabel": "flag" }
+    ]
+}

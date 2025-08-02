@@ -1,0 +1,20 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "tools/git/clone" },
+            { "content": "Clone a remote repository." },
+            { "content": "{bold syntax}: {italic ./spl <appOptions> tools/git/clone <options>}" }
+        ]
+    },
+    "value": 
+    [
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
+        { "name": "url", "type": "String", "description": "repository URL to clone", "typeLabel": "url" },
+        { "name": "directory", "alias": "d", "type": "String", "description": "target directory name", "typeLabel": "path" },
+        { "name": "branch", "alias": "b", "type": "String", "description": "specific branch to clone", "typeLabel": "name" },
+        { "name": "depth", "type": "Number", "description": "shallow clone depth", "typeLabel": "number" },
+        { "name": "repo", "alias": "r", "type": "String", "description": "specify the git repository root folder path", "typeLabel": "path" }
+    ]
+}

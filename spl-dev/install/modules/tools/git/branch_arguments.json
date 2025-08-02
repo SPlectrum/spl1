@@ -1,0 +1,20 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "tools/git/branch" },
+            { "content": "Create, delete, or list branches." },
+            { "content": "{bold syntax}: {italic ./spl <appOptions> tools/git/branch <options>}" }
+        ]
+    },
+    "value": 
+    [
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
+        { "name": "name", "type": "String", "description": "branch name to create", "typeLabel": "name" },
+        { "name": "delete", "alias": "d", "type": "String", "description": "branch name to delete", "typeLabel": "name" },
+        { "name": "list", "alias": "l", "type": "Boolean", "description": "list all branches", "typeLabel": "flag" },
+        { "name": "remote", "type": "Boolean", "description": "include remote branches", "typeLabel": "flag" },
+        { "name": "repo", "alias": "r", "type": "String", "description": "specify the git repository root folder path", "typeLabel": "path" }
+    ]
+}

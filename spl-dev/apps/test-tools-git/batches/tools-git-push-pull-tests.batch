@@ -1,0 +1,58 @@
+tools/git/push -h --repo test-repo
+tools/git/push --help --repo test-repo
+tools/git/push --repo test-repo
+tools/git/push --remote origin --repo test-repo
+tools/git/push --remote upstream --repo test-repo
+tools/git/push --branch main --repo test-repo
+tools/git/push -b main --repo test-repo
+tools/git/push --branch develop --repo test-repo
+tools/git/push -b feature-branch --repo test-repo
+tools/git/push --remote origin --branch main --repo test-repo
+tools/git/push --remote origin -b main --repo test-repo
+tools/git/push --remote upstream --branch develop --repo test-repo
+tools/git/push --remote upstream -b develop --repo test-repo
+tools/git/push --force --repo test-repo
+tools/git/push -f --repo test-repo
+tools/git/push --force --remote origin --repo test-repo
+tools/git/push -f --remote origin --repo test-repo
+tools/git/push --force --branch main --repo test-repo
+tools/git/push -f -b main --repo test-repo
+tools/git/push --tags --repo test-repo
+tools/git/push -t --repo test-repo
+tools/git/push --tags --remote origin --repo test-repo
+tools/git/push -t --remote origin --repo test-repo
+tools/git/push --remote origin --branch main --tags --repo test-repo
+tools/git/push --remote origin -b main -t --repo test-repo
+tools/git/push --force --tags --repo test-repo
+tools/git/push -f -t --repo test-repo
+tools/git/push -r test-repo
+tools/git/push --repo test-repo
+tools/git/push --remote origin -r test-repo
+tools/git/push --remote origin --repo test-repo
+tools/git/pull -h --repo test-repo
+tools/git/pull --help --repo test-repo
+tools/git/pull --repo test-repo
+tools/git/pull --remote origin --repo test-repo
+tools/git/pull --remote upstream --repo test-repo
+tools/git/pull --branch main --repo test-repo
+tools/git/pull -b main --repo test-repo
+tools/git/pull --branch develop --repo test-repo
+tools/git/pull -b feature-branch --repo test-repo
+tools/git/pull --remote origin --branch main --repo test-repo
+tools/git/pull --remote origin -b main --repo test-repo
+tools/git/pull --remote upstream --branch develop --repo test-repo
+tools/git/pull --remote upstream -b develop --repo test-repo
+tools/git/pull --rebase --repo test-repo
+tools/git/pull --rebase --remote origin --repo test-repo
+tools/git/pull --rebase --branch main --repo test-repo
+tools/git/pull --rebase --remote origin --branch main --repo test-repo
+tools/git/pull -r test-repo
+tools/git/pull --repo test-repo
+tools/git/pull --remote origin -r test-repo
+tools/git/pull --remote origin --repo test-repo
+tools/git/pull --rebase -r test-repo
+tools/git/pull --rebase --repo test-repo
+tools/git/push -h --force --repo test-repo
+tools/git/push --help --tags --repo test-repo
+tools/git/pull -h --rebase --repo test-repo
+tools/git/pull --help --remote origin --repo test-repo

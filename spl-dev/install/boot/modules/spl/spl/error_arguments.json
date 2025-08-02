@@ -1,0 +1,15 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "spl/error" },
+            { "content": "Internal API for error handling." },
+            { "content": "{bold syntax}: {italic ./spl <appOpts> spl/error <apiOpts> <method>}" }
+]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" }
+    ]
+}

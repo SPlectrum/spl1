@@ -1,0 +1,15 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "spl Package" },
+            { "content": "Implements the core functionality of the SPlectrum platform." },
+            { "content": "{bold syntax}: {italic ./spl <appOpts> <package> <options> <api>}" }
+]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" }
+    ]
+}

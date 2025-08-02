@@ -1,0 +1,21 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "spl/blob/get" },
+            { "content": "Reads a file from the filesystem." },
+            { "content": "{bold syntax}: {italic ./spl <appOptions> spl/blob/get <options>}" }
+]
+    },
+    "value":
+    [
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help informatiion", "typeLabel": "flag" },
+        { "name": "repo", "alias": "r", "description": "The repository the file is in." },
+        { "name": "dir", "alias": "d", "description": "The directory the file is in." },
+        { "name": "file", "alias": "f", "description": "The file name." },
+        { "name": "path", "alias": "p", "multiple": true, "description": "The file or folder path in 3 space delimited parts." },
+        { "name": "uri", "alias": "u", "description": "The file or folder path in uri format in one part." },
+        { "name": "encoding", "alias": "e", "type": "String", "description": "File format: 'json' to parse as JSON (default), 'text' to read as plain text." }
+]
+}

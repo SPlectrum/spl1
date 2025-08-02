@@ -1,0 +1,16 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "spl/app/prepare" },
+            { "content": "Internal action.  Prepares teh raw multiline commandline input for parsing." },
+            { "content": "{bold syntax}: {italic ./spl <appOpts> spl/app/prepare <opts>}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help informatiion" }, 
+        { "name": "batch", "alias": "b", "description": "The batch of commands.." }
+    ]
+}

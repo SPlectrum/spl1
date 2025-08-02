@@ -1,0 +1,18 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "tools/git/init" },
+            { "content": "Initialize a new git repository." },
+            { "content": "{bold syntax}: {italic ./spl <appOptions> tools/git/init <options>}" }
+        ]
+    },
+    "value": 
+    [
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
+        { "name": "repo", "alias": "r", "type": "String", "description": "specify the git repository root folder path", "typeLabel": "path" },
+        { "name": "bare", "type": "Boolean", "description": "create a bare repository", "typeLabel": "flag" },
+        { "name": "template", "type": "String", "description": "template directory to use", "typeLabel": "path" }
+    ]
+}

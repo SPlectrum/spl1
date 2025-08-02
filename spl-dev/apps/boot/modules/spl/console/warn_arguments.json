@@ -1,0 +1,16 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "spl/console/warn" },
+            { "content": "Writes a warning message to the console." },
+            { "content": "{bold syntax}: {italic ./spl <appOpts> spl/console/warn <opts>}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help informatiion", "typeLabel": "flag" }, 
+        { "name": "message", "alias": "m", "multiple": true, "defaultOption": true }
+    ]
+}

@@ -1,0 +1,9 @@
+spl/console/log "=== Testing help functionality for JS script commands ==="
+
+spl/console/log "Test 1: spl/app/run help"
+spl/app/run --help
+
+spl/console/log "Test 2: spl/app/wrap help"
+spl/app/wrap --help
+
+spl/console/log "=== JS script help tests completed ==="

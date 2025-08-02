@@ -1,0 +1,17 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "spl/app/run" },
+            { "content": "Runs a JS script file." },
+            { "content": "{bold syntax}: {italic ./spl <appOpts> spl/app/exec <opts>}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help informatiion" }, 
+        { "name": "file", "alias": "f", "description": "The file containing the JS scripts to run. It must reside in the scripts folder." },
+        { "name": "args", "alias": "a", "multiple": true, "description": "Optional argument for batch file." }
+    ]
+}

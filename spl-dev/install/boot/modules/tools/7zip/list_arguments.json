@@ -1,0 +1,18 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "tools/7zip/list" },
+            { "content": "Display archive contents and information using 7zip 'l' command." },
+            { "content": "{bold syntax}: {italic ./spl <appOptions> tools/7zip/list <options>}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
+        { "name": "archive", "alias": "a", "type": "String", "description": "archive file to list (required)", "required": true },
+        { "name": "technical", "alias": "t", "type": "Boolean", "description": "show technical information", "typeLabel": "flag" },
+        { "name": "password", "alias": "p", "type": "String", "description": "archive password if encrypted" }
+    ]
+}

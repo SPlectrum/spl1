@@ -1,0 +1,17 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "tools/7zip/test" },
+            { "content": "Test archive integrity and verify files using 7zip 't' command." },
+            { "content": "{bold syntax}: {italic ./spl <appOptions> tools/7zip/test <options>}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
+        { "name": "archive", "alias": "a", "type": "String", "description": "archive file to test (required)", "required": true },
+        { "name": "password", "alias": "p", "type": "String", "description": "archive password if encrypted" }
+    ]
+}

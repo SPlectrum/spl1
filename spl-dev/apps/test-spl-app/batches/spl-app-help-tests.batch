@@ -1,0 +1,6 @@
+spl/app/create --help
+spl/app/exec --help
+spl/app/generate --help
+spl/app/parse --help
+spl/app/pipeline --help
+spl/app/process --help

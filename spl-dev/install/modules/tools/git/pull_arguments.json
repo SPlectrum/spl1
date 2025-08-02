@@ -1,0 +1,19 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "tools/git/pull" },
+            { "content": "Pull changes from remote repository." },
+            { "content": "{bold syntax}: {italic ./spl <appOptions> tools/git/pull <options>}" }
+        ]
+    },
+    "value": 
+    [
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
+        { "name": "remote", "type": "String", "description": "remote name (defaults to 'origin')", "typeLabel": "name" },
+        { "name": "branch", "alias": "b", "type": "String", "description": "branch name (defaults to current branch)", "typeLabel": "name" },
+        { "name": "rebase", "type": "Boolean", "description": "use rebase instead of merge", "typeLabel": "flag" },
+        { "name": "repo", "alias": "r", "type": "String", "description": "specify the git repository root folder path", "typeLabel": "path" }
+    ]
+}

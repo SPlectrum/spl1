@@ -1,0 +1,15 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "spl/error/catch" },
+            { "content": "The action that registers caught errors." },
+            { "content": "{bold syntax}: {italic ./spl <appOptions> spl/error/catch <options>}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help informatiion", "typeLabel": "flag" }
+    ]
+}

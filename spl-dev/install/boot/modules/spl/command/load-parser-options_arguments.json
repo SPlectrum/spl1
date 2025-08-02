@@ -1,0 +1,15 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "spl/command/load-parser-options" },
+            { "content": "Parses the command. DEPRECATED" },
+            { "content": "{bold syntax}: {italic ./spl <appOptions> spl/command/load-parser-options <options>}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help informatiion", "typeLabel": "flag" }
+    ]
+}

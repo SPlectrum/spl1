@@ -1,0 +1,63 @@
+tools/git/reset -h --repo test-repo
+tools/git/reset --help --repo test-repo
+tools/git/reset --repo test-repo
+tools/git/reset --mode soft --repo test-repo
+tools/git/reset --mode mixed --repo test-repo
+tools/git/reset --mode hard --repo test-repo
+tools/git/reset --commit HEAD~1 --repo test-repo
+tools/git/reset --commit abc123 --repo test-repo
+tools/git/reset --commit HEAD~2 --repo test-repo
+tools/git/reset --mode soft --commit HEAD~1 --repo test-repo
+tools/git/reset --mode mixed --commit HEAD~1 --repo test-repo
+tools/git/reset --mode hard --commit HEAD~1 --repo test-repo
+tools/git/reset --mode soft --commit abc123 --repo test-repo
+tools/git/reset --mode mixed --commit abc123 --repo test-repo
+tools/git/reset --mode hard --commit abc123 --repo test-repo
+tools/git/reset --files "src/app.js" --repo test-repo
+tools/git/reset --files "*.js" --repo test-repo
+tools/git/reset --files "src/*.ts" --repo test-repo
+tools/git/reset --files "file1.txt file2.txt" --repo test-repo
+tools/git/reset --mode soft --files "*.js" --repo test-repo
+tools/git/reset --commit HEAD~1 --files "src/app.js" --repo test-repo
+tools/git/reset -r test-repo
+tools/git/reset --repo test-repo
+tools/git/reset -r /test/repo
+tools/git/reset --repo /test/repo
+tools/git/reset --mode hard -r test-repo
+tools/git/reset --mode hard --repo test-repo
+tools/git/reset --commit HEAD~1 -r test-repo
+tools/git/reset --commit HEAD~1 --repo test-repo
+tools/git/stash -h --repo test-repo
+tools/git/stash --help --repo test-repo
+tools/git/stash --save "Work in progress" --repo test-repo
+tools/git/stash --save "Temporary changes" --repo test-repo
+tools/git/stash --save "Feature development" --repo test-repo
+tools/git/stash --pop --repo test-repo
+tools/git/stash --list --repo test-repo
+tools/git/stash -l --repo test-repo
+tools/git/stash --apply stash@{0} --repo test-repo
+tools/git/stash --apply stash@{1} --repo test-repo
+tools/git/stash --apply "stash@{2}" --repo test-repo
+tools/git/stash --drop stash@{0} --repo test-repo
+tools/git/stash --drop stash@{1} --repo test-repo
+tools/git/stash --drop "stash@{2}" --repo test-repo
+tools/git/stash --save "Changes" --pop --repo test-repo
+tools/git/stash --list --pop --repo test-repo
+tools/git/stash -r test-repo
+tools/git/stash --repo test-repo
+tools/git/stash -r /test/repo
+tools/git/stash --repo /test/repo
+tools/git/stash --save "Work in progress" -r test-repo
+tools/git/stash --save "Work in progress" --repo test-repo
+tools/git/stash --pop -r test-repo
+tools/git/stash --pop --repo test-repo
+tools/git/stash --list -r test-repo
+tools/git/stash -l --repo test-repo
+tools/git/stash --apply stash@{0} -r test-repo
+tools/git/stash --apply stash@{0} --repo test-repo
+tools/git/stash --drop stash@{0} -r test-repo
+tools/git/stash --drop stash@{0} --repo test-repo
+tools/git/reset -h --mode hard --repo test-repo
+tools/git/reset --help --commit HEAD~1 --repo test-repo
+tools/git/stash -h --save "test" --repo test-repo
+tools/git/stash --help --pop --repo test-repo

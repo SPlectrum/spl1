@@ -1,0 +1,3 @@
+spl/console/log "Testing basic spl/app functionality"
+spl/app/exec -f simple.batch -a "test-parameter"
+spl/console/log "Basic spl/app tests completed"

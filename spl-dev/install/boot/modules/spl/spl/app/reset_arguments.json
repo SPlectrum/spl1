@@ -1,0 +1,17 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "spl/app/reset" },
+            { "content": "Resets an app configuration keyvalue to its default." },
+            { "content": "{bold syntax}: {italic ./spl <appOpts> spl/app/reset <opts>}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help informatiion" }, 
+        { "name": "key", "alias": "k", "description": "The key of the configuration keyvalue." },
+        { "name": "value", "alias": "v", "description": "The value of the configuration keyvalue." }
+    ]
+}

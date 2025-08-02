@@ -1,0 +1,15 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "spl/void" },
+            { "content": "The API miscellaneous actions that operate on no specific data structure." },
+            { "content": "{bold syntax}: {italic ./spl <appOpts> spl/void <apiOpts> <method>}" }
+]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" }
+    ]
+}

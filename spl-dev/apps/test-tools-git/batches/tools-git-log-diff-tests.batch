@@ -1,0 +1,65 @@
+tools/git/log -h --repo test-repo
+tools/git/log --help --repo test-repo
+tools/git/log --repo test-repo
+tools/git/log --count 5 --repo test-repo
+tools/git/log -n 5 --repo test-repo
+tools/git/log --count 10 --repo test-repo
+tools/git/log -n 10 --repo test-repo
+tools/git/log --count 1 --repo test-repo
+tools/git/log -n 1 --repo test-repo
+tools/git/log --oneline --repo test-repo
+tools/git/log --oneline --count 5 --repo test-repo
+tools/git/log --oneline -n 5 --repo test-repo
+tools/git/log --graph --repo test-repo
+tools/git/log --graph --oneline --repo test-repo
+tools/git/log --graph --count 10 --repo test-repo
+tools/git/log --graph -n 10 --repo test-repo
+tools/git/log --graph --oneline --count 5 --repo test-repo
+tools/git/log --graph --oneline -n 5 --repo test-repo
+tools/git/log --since "2023-01-01" --repo test-repo
+tools/git/log --since "last week" --repo test-repo
+tools/git/log --since "2 days ago" --repo test-repo
+tools/git/log --until "2023-12-31" --repo test-repo
+tools/git/log --until "yesterday" --repo test-repo
+tools/git/log --since "2023-01-01" --until "2023-12-31" --repo test-repo
+tools/git/log --since "last week" --until "yesterday" --repo test-repo
+tools/git/log --since "2023-01-01" --count 5 --repo test-repo
+tools/git/log --since "last week" -n 5 --repo test-repo
+tools/git/log --oneline --since "last week" --repo test-repo
+tools/git/log --graph --since "2023-01-01" --repo test-repo
+tools/git/log -r test-repo
+tools/git/log --repo test-repo
+tools/git/log -r /test/repo
+tools/git/log --repo /test/repo
+tools/git/log --count 5 -r test-repo
+tools/git/log -n 5 --repo test-repo
+tools/git/log --oneline --graph -r test-repo
+tools/git/log --oneline --graph --repo test-repo
+tools/git/diff -h --repo test-repo
+tools/git/diff --help --repo test-repo
+tools/git/diff --repo test-repo
+tools/git/diff --staged --repo test-repo
+tools/git/diff --files "src/app.js" --repo test-repo
+tools/git/diff --files "*.js" --repo test-repo
+tools/git/diff --files "src/*.ts" --repo test-repo
+tools/git/diff --files "file1.txt file2.txt" --repo test-repo
+tools/git/diff --commit HEAD~1 --repo test-repo
+tools/git/diff --commit abc123 --repo test-repo
+tools/git/diff --commit HEAD~2 --repo test-repo
+tools/git/diff --staged --files "*.js" --repo test-repo
+tools/git/diff --commit HEAD~1 --files "src/app.js" --repo test-repo
+tools/git/diff --staged --commit HEAD~1 --repo test-repo
+tools/git/diff -r test-repo
+tools/git/diff --repo test-repo
+tools/git/diff -r /test/repo
+tools/git/diff --repo /test/repo
+tools/git/diff --staged -r test-repo
+tools/git/diff --staged --repo test-repo
+tools/git/diff --files "*.js" -r test-repo
+tools/git/diff --files "*.js" --repo test-repo
+tools/git/diff --commit HEAD~1 -r test-repo
+tools/git/diff --commit HEAD~1 --repo test-repo
+tools/git/log -h --count 5 --repo test-repo
+tools/git/log --help --oneline --repo test-repo
+tools/git/diff -h --staged --repo test-repo
+tools/git/diff --help --files "*.js" --repo test-repo

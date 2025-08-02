@@ -1,0 +1,19 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "tools/git/diff" },
+            { "content": "Show changes between commits, commit and working tree, etc." },
+            { "content": "{bold syntax}: {italic ./spl <appOptions> tools/git/diff <options>}" }
+        ]
+    },
+    "value": 
+    [
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
+        { "name": "staged", "type": "Boolean", "description": "show staged changes", "typeLabel": "flag" },
+        { "name": "files", "type": "String", "description": "specific files to diff", "typeLabel": "pattern" },
+        { "name": "commit", "type": "String", "description": "compare with specific commit", "typeLabel": "hash" },
+        { "name": "repo", "alias": "r", "type": "String", "description": "specify the git repository root folder path", "typeLabel": "path" }
+    ]
+}

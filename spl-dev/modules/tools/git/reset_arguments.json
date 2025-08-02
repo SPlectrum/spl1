@@ -1,0 +1,19 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "tools/git/reset" },
+            { "content": "Reset current HEAD to the specified state." },
+            { "content": "{bold syntax}: {italic ./spl <appOptions> tools/git/reset <options>}" }
+        ]
+    },
+    "value": 
+    [
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
+        { "name": "mode", "type": "String", "description": "reset mode (soft, mixed, hard)", "typeLabel": "mode" },
+        { "name": "commit", "type": "String", "description": "target commit", "typeLabel": "hash" },
+        { "name": "files", "type": "String", "description": "specific files to reset", "typeLabel": "pattern" },
+        { "name": "repo", "alias": "r", "type": "String", "description": "specify the git repository root folder path", "typeLabel": "path" }
+    ]
+}

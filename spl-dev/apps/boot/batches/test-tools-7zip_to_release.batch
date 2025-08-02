@@ -1,0 +1,2 @@
+spl/package/create -r apps -d test-tools-7zip -f apps_test-tools-7zip.json
+spl/package/save -r ../release/install/packages -d . -f apps_test-tools-7zip.json

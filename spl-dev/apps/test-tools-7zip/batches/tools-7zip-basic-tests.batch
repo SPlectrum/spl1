@@ -1,0 +1,7 @@
+tools/7zip/add --archive test-basic.7z --files apps/test-tools-7zip/data/test.txt
+tools/7zip/list --archive test-basic.7z
+tools/7zip/test --archive test-basic.7z
+tools/7zip/extract --archive test-basic.7z --output apps/test-tools-7zip/data/extracted/
+tools/7zip/add --archive test-zip.zip --files apps/test-tools-7zip/data/test.txt --type zip
+tools/7zip/list --archive test-zip.zip
+tools/7zip/extract-flat --archive test-zip.zip --output apps/test-tools-7zip/data/extracted-flat/

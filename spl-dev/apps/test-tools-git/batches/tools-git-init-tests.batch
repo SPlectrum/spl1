@@ -1,0 +1,15 @@
+tools/git/init -h --repo test-repo
+tools/git/init --help --repo test-repo
+tools/git/init --repo test-repo
+tools/git/init -r test-repo
+tools/git/init --repo test-repo
+tools/git/init -r /test/new-repo
+tools/git/init --repo /test/new-repo
+tools/git/init --bare --repo test-repo
+tools/git/init -r /test/bare-repo --bare
+tools/git/init --repo /test/bare-repo --bare
+tools/git/init --template /path/to/template --repo test-repo
+tools/git/init -r /test/template-repo --template /path/to/template
+tools/git/init --repo /test/template-repo --template /path/to/template --bare
+tools/git/init -h --bare --repo test-repo
+tools/git/init --help --template /path/to/template --repo test-repo

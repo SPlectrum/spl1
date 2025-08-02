@@ -1,0 +1,61 @@
+tools/git --path "" --repo test-repo
+tools/git --path "/nonexistent/path" --repo test-repo
+tools/git --repo ""
+tools/git --repo "/invalid/path"
+tools/git --create --path "/tmp/test-repo" --repo test-repo
+tools/git -c -p "/tmp/test-repo" --repo test-repo
+tools/git/init --repo ""
+tools/git/init --repo "/nonexistent/path"
+tools/git/init --bare --template "/nonexistent/template" --repo test-repo
+tools/git/status --repo "/not/a/git/repo"
+tools/git/status --porcelain --short --repo "/not/a/git/repo"
+tools/git/add --files "" --repo test-repo
+tools/git/add --all --force --repo "/nonexistent/repo"
+tools/git/commit --message "" --repo test-repo
+tools/git/commit --all --amend --repo "/nonexistent/repo"
+tools/git/branch --name "" --repo test-repo
+tools/git/branch --delete "" --repo test-repo
+tools/git/branch --list --remote --repo "/nonexistent/repo"
+tools/git/checkout --branch "" --repo test-repo
+tools/git/checkout --create --files "*.js" --repo test-repo
+tools/git/checkout --branch "nonexistent-branch" --repo test-repo
+tools/git/remote --add "" --url "" --repo test-repo
+tools/git/remote --add "origin" --url "invalid-url" --repo test-repo
+tools/git/remote --remove "nonexistent-remote" --repo test-repo
+tools/git/remote --list --verbose --repo "/nonexistent/repo"
+tools/git/clone --url "" --directory "test" --repo test-repo
+tools/git/clone --url "invalid-url" --directory "test" --repo test-repo
+tools/git/clone --url "https://github.com/nonexistent/repo.git" --directory "" --repo test-repo
+tools/git/clone --url "https://github.com/user/repo.git" --branch "nonexistent-branch" --repo test-repo
+tools/git/clone --url "https://github.com/user/repo.git" --depth 0 --repo test-repo
+tools/git/clone --url "https://github.com/user/repo.git" --depth -1 --repo test-repo
+tools/git/push --remote "" --branch "" --repo test-repo
+tools/git/push --remote "nonexistent-remote" --repo test-repo
+tools/git/push --branch "nonexistent-branch" --repo test-repo
+tools/git/push --force --tags --repo "/nonexistent/repo"
+tools/git/pull --remote "" --branch "" --repo test-repo
+tools/git/pull --remote "nonexistent-remote" --repo test-repo
+tools/git/pull --branch "nonexistent-branch" --repo test-repo
+tools/git/pull --rebase --repo "/nonexistent/repo"
+tools/git/log --count 0 --repo test-repo
+tools/git/log --count -1 --repo test-repo
+tools/git/log --since "" --until "" --repo test-repo
+tools/git/log --since "invalid-date" --repo test-repo
+tools/git/log --oneline --graph --repo "/nonexistent/repo"
+tools/git/diff --files "" --repo test-repo
+tools/git/diff --commit "" --repo test-repo
+tools/git/diff --commit "invalid-hash" --repo test-repo
+tools/git/diff --staged --repo "/nonexistent/repo"
+tools/git/reset --mode "" --repo test-repo
+tools/git/reset --mode "invalid-mode" --repo test-repo
+tools/git/reset --commit "" --repo test-repo
+tools/git/reset --commit "invalid-hash" --repo test-repo
+tools/git/reset --files "" --repo test-repo
+tools/git/reset --mode hard --repo "/nonexistent/repo"
+tools/git/stash --save "" --repo test-repo
+tools/git/stash --apply "" --repo test-repo
+tools/git/stash --apply "invalid-stash" --repo test-repo
+tools/git/stash --drop "" --repo test-repo
+tools/git/stash --drop "invalid-stash" --repo test-repo
+tools/git/stash --pop --repo "/nonexistent/repo"
+tools/git/stash --list --repo "/not/a/git/repo"
