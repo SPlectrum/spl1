@@ -2,6 +2,7 @@
 type: task
 github_id: null
 title: ""
+short_summary: ""  # One-line summary (max 80 chars) for collaboration lists
 state: open
 milestone: unassigned
 labels: [task]

@@ -1,13 +1,13 @@
 ---
 type: "feature"
-github_id: null
+github_id: 88
 title: "seed to split work plan"
 state: open
 milestone: unassigned
 labels: [feature]
 priority: "HIGH"
 estimated_effort: TBD
-github_updated_at: null
+github_updated_at: "2025-07-29T17:53:24Z"
 local_updated_at: "2025-07-27T19:47:04.745Z"
 imported_from: "claude/inbox/2025-07-16T06-24-46-722Z_spl1_seed-to-split-work-plan.md"
 source: "jules-tenbos/splectrum"

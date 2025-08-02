@@ -1,13 +1,13 @@
 ---
 type: feature
-github_id: null
+github_id: 89
 title: "Create carambah/spl-dev repository with installable engine for splectrum app development"
 state: open
 milestone: v0.8.0
 labels: ["feature", "v0.8.0", "spl-dev", "architecture"]
 priority: high
 estimated_effort: TBD
-github_updated_at: null
+github_updated_at: "2025-07-29T17:53:27Z"
 local_updated_at: "2025-07-29T15:13:04.466Z"
 ---
 

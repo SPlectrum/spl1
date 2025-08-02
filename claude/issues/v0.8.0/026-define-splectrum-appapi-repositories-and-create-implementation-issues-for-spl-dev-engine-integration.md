@@ -1,13 +1,13 @@
 ---
 type: feature
-github_id: null
+github_id: 90
 title: "Define splectrum app/api repositories and create implementation issues for spl-dev engine integration"
 state: open
 milestone: v0.8.0
 labels: ["feature", "v0.8.0", "app-repos", "planning"]
 priority: high
 estimated_effort: M
-github_updated_at: null
+github_updated_at: "2025-07-29T17:53:31Z"
 local_updated_at: "2025-07-29T15:17:40.947Z"
 ---
 

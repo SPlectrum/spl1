@@ -1,7 +1,60 @@
-#!/bin/bash
-cd $1/apps/$2
-echo $@
-shift 2
-echo $@
-./spl $@
-cd ../../..
+#!/usr/bin/env node
+
+/**
+ * SPL Repository Router
+ * Routes commands to specific SPL install folders
+ * 
+ * Usage: ./spl <install> <command> [args...]
+ * Example: ./spl dev manage/issue/create --title="test issue"
+ */
+
+const { spawn } = require('child_process');
+const { existsSync } = require('fs');
+const path = require('path');
+
+// Get command line arguments
+const args = process.argv.slice(2);
+
+// Validate arguments
+if (args.length === 0) {
+    console.error('Usage: ./spl <install> <command> [args...]');
+    console.error('Example: ./spl dev manage/issue/create --title="test issue"');
+    process.exit(1);
+}
+
+// Parse install target and remaining arguments
+const installTarget = args[0];           // "dev"
+const installPath = `spl-${installTarget}`; // "spl-dev"
+const remainingArgs = args.slice(1);     // ["manage/issue/create", "--title=test issue"]
+
+// Validate install folder exists
+const installDir = path.join(__dirname, installPath);
+if (!existsSync(installDir)) {
+    console.error(`Error: Install folder '${installPath}' not found`);
+    console.error(`Expected: ${installDir}`);
+    process.exit(1);
+}
+
+// Validate spl executable exists in install folder
+const splExecutable = path.join(installDir, 'spl');
+if (!existsSync(splExecutable)) {
+    console.error(`Error: SPL executable not found in '${installPath}'`);
+    console.error(`Expected: ${splExecutable}`);
+    process.exit(1);
+}
+
+// Route command to target SPL install
+const child = spawn('node', [splExecutable, ...remainingArgs], {
+    stdio: 'inherit',
+    cwd: installDir
+});
+
+// Handle process exit
+child.on('error', (error) => {
+    console.error(`Error executing SPL: ${error.message}`);
+    process.exit(1);
+});
+
+child.on('exit', (code) => {
+    process.exit(code || 0);
+});

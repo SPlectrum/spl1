@@ -1,13 +1,13 @@
 ---
 type: feature
-github_id: null
+github_id: 91
 title: "Implement app overlay pattern for command precedence over module commands"
 state: open
 milestone: v0.8.0
 labels: ["feature", "v0.8.0", "architecture", "command-system"]
 priority: high
 estimated_effort: M
-github_updated_at: null
+github_updated_at: "2025-07-29T17:53:34Z"
 local_updated_at: "2025-07-29T15:37:33.680Z"
 ---
 
