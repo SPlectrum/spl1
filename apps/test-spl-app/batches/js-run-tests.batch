@@ -1,0 +1,12 @@
+spl/console/log "=== Testing spl/app/run with JavaScript scripts ==="
+
+spl/console/log "Test 1: Simple JS script execution"
+spl/app/run -f simple-test.js
+
+spl/console/log "Test 2: JS script with arguments"
+spl/app/run -f args-test.js -a hello world
+
+spl/console/log "Test 3: SPL context access in JS script"
+spl/app/run -f spl-context-test.js
+
+spl/console/log "=== spl/app/run JS tests completed ==="

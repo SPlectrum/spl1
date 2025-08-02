@@ -1,0 +1,23 @@
+{
+    "headers": 
+    {
+        "top" : [
+            { "header": "SPL Platform - Model App" },
+            { "content": "Data modeling and template application for SPL platform." }
+        ],
+        "header": [
+            { "content": "Overview 1." },
+            { "content": "{bold syntax}: {italic ./spl <options> <package>}" }
+        ],
+        "bottom": [ 
+            { "content": "Project home: {underline https://github.com/SPlectrum/spl}" } ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" }, 
+        { "name": "test", "alias": "t", "type": "Boolean", "description": "test - parse commands but do not execute.", "typeLabel": "flag" }, 
+        { "name": "steps", "alias": "s", "type": "Number", "description": "TTL of the command execution."},
+        { "name": "verbose", "alias": "v", "type": "Boolean", "description": "Do verbose output on completion."},
+        { "name": "debug", "alias": "d", "type": "Boolean", "description": "Do debug output on completion."}
+    ]
+}

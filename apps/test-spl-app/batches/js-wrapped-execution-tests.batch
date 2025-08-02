@@ -1,0 +1,12 @@
+spl/console/log "=== Testing execution of wrapped JS scripts ==="
+
+spl/console/log "Test 1: Execute wrapped simple script"
+usr/simple-test
+
+spl/console/log "Test 2: Execute wrapped args script with parameters"
+usr/args-test -a hello world
+
+spl/console/log "Test 3: Execute wrapped SPL context script"
+usr/spl-context-test
+
+spl/console/log "=== Wrapped JS execution tests completed ==="

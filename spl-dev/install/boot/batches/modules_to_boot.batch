@@ -1,1 +1,0 @@
-spl/package/create -r install/modules -d spl -f modules_spl.json @@ spl/package/deploy -r apps/boot/modules -d spl -f modules_spl.json

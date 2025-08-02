@@ -1,0 +1,11 @@
+{
+    "headers": { "header": [
+        { "header": "usr/args-test" },
+        { "content": "Auto-generated wrapper for args-test.js." },
+        { "content": "{bold syntax}: {italic ./spl <appOpts> usr/args-test <opts>}" }
+    ]},
+    "value": [
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
+        { "name": "args", "alias": "a", "multiple": true, "description": "Arguments to pass to the wrapped script." }
+    ]
+}

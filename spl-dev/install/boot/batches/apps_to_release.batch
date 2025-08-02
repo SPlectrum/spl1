@@ -1,7 +1,0 @@
-spl/package/create -r apps -d test-suite -f apps_test-suite.json @@ spl/package/save -r ../release/install/packages -d . -f apps_test-suite.json
-spl/package/create -r apps -d test-tools-git -f apps_test-tools-git.json @@ spl/package/save -r ../release/install/packages -d . -f apps_test-tools-git.json
-spl/package/create -r apps -d test-tools-7zip -f apps_test-tools-7zip.json @@ spl/package/save -r ../release/install/packages -d . -f apps_test-tools-7zip.json
-spl/package/create -r apps -d test-spl-app -f apps_test-spl-app.json @@ spl/package/save -r ../release/install/packages -d . -f apps_test-spl-app.json
-spl/package/create -r apps -d test-boot -f apps_test-boot.json @@ spl/package/save -r ../release/install/packages -d . -f apps_test-boot.json
-spl/package/create -r apps -d watcher -f apps_watcher.json @@ spl/package/save -r ../release/install/packages -d . -f apps_watcher.json
-spl/package/create -r apps -d model -f apps_model.json @@ spl/package/save -r ../release/install/packages -d . -f apps_model.json

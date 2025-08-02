@@ -1,0 +1,11 @@
+{
+    "headers": { "header": [
+        { "header": "usr/js-run-tests" },
+        { "content": "Auto-generated command from batch file js-run-tests.batch." },
+        { "content": "{bold syntax}: {italic ./spl <appOpts> usr/js-run-tests <opts>}" }
+    ]},
+    "value": [
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
+        { "name": "args", "alias": "a", "multiple": true, "description": "Arguments to pass to the batch commands." }
+    ]
+}

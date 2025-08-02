@@ -19,7 +19,7 @@ exports.parsed = function ( splApp, current )
     else  return structuredClone ( splApp.value.parsed[`line_${current.line}`][`part_${current.part}`] );
 }
 
-exports.getDetails = function ( appRoot, moduleRoot, URI ) 
+exports.getDetails = function ( URI ) 
 {
     const spl = require("../spl.js");
     const fs = require('fs');
@@ -44,13 +44,32 @@ exports.getDetails = function ( appRoot, moduleRoot, URI )
         } catch (e) {
             // Fall back to global modules
             getRoot = "";
-            getDir = moduleRoot;
+            getDir = "modules";
+            prefix = `${URI}_`;
+        }
+    } else if (parts.length === 1 && URI.length > 0) {
+        // Single-part URI - try app overlay first
+        const app = parts[0];
+        const cwd = process.cwd();
+        
+        // Try app version first
+        const appArgPath = `${cwd}/apps/${app}/modules/${app}_arguments.json`;
+        try {
+            fs.accessSync(appArgPath, fs.constants.F_OK);
+            // App arguments file exists, use app path
+            getRoot = `apps/${app}/modules`;
+            getDir = "";
+            prefix = `${app}_`;
+        } catch (e) {
+            // Fall back to global modules
+            getRoot = "";
+            getDir = "modules";
             prefix = `${URI}_`;
         }
     } else {
-        // Original logic for single-part URIs (spl, tools, etc.)
+        // Empty URI - use global modules
         getRoot = "";
-        getDir = moduleRoot;
+        getDir = "modules";
         if ( URI.length > 0 ) prefix = `${URI}_`;
     }
     

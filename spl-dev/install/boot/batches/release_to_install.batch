@@ -1,2 +1,0 @@
-spl/package/create -r ../release -d . -f release_files.json @@ spl/package/deploy -r .. -d $1 -f release_files.json
-spl/package/create -r .. -d modules -f modules_spl.json @@ spl/package/deploy -r ../$1/install -d . -f modules_spl.json

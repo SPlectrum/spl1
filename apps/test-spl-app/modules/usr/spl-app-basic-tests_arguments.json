@@ -1,0 +1,11 @@
+{
+    "headers": { "header": [
+        { "header": "usr/spl-app-basic-tests" },
+        { "content": "Auto-generated command from batch file spl-app-basic-tests.batch." },
+        { "content": "{bold syntax}: {italic ./spl <appOpts> usr/spl-app-basic-tests <opts>}" }
+    ]},
+    "value": [
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
+        { "name": "args", "alias": "a", "multiple": true, "description": "Arguments to pass to the batch commands." }
+    ]
+}

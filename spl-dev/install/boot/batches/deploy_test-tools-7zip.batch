@@ -1,1 +1,0 @@
-spl/package/load -r install -d packages -f apps_test-tools-7zip.json @@ spl/package/deploy -r apps -d . -f apps_test-tools-7zip.json

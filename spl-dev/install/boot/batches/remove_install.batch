@@ -1,1 +1,0 @@
-spl/package/load -r install -d packages -f dirs_toplevel.json @@ spl/package/remove -r . -d . -f dirs_toplevel.json
