@@ -1,11 +1,11 @@
-//  name        spl-app-basic-tests
-//  URI         usr/spl-app-basic-tests
+//  name        js-help-tests
+//  URI         usr/js-help-tests
 //  type        API Method
-//  description Auto-generated command from batch file spl-app-basic-tests.batch
+//  description Auto-generated command from batch file js-help-tests.batch
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../spl.js")
+const spl = require("../../spl.js")
 ///////////////////////////////////////////////////////////////////////////////
-exports.default = function usr_spl_app_basic_tests (input)
+exports.default = function usr_js_help_tests (input)
 {
     // Set the appRoot configuration
     const appRoot = spl.context ( input, "appRoot" );
@@ -20,19 +20,15 @@ exports.default = function usr_spl_app_basic_tests (input)
                 "action": "spl/console/log",
                 "spl/console/log": {
                         "message": [
-                                "\"Testing",
-                                "basic",
-                                "spl/app",
-                                "functionality\""
-                        ]
-                }
-        },
-        {
-                "action": "spl/app/exec",
-                "spl/app/exec": {
-                        "file": "simple.batch",
-                        "args": [
-                                "\"test-parameter\""
+                                "\"===",
+                                "Testing",
+                                "help",
+                                "functionality",
+                                "for",
+                                "JS",
+                                "script",
+                                "commands",
+                                "===\""
                         ]
                 }
         },
@@ -40,16 +36,44 @@ exports.default = function usr_spl_app_basic_tests (input)
                 "action": "spl/console/log",
                 "spl/console/log": {
                         "message": [
-                                "\"Basic",
-                                "spl/app",
+                                "\"Test",
+                                "1:",
+                                "spl/app/run",
+                                "help\""
+                        ]
+                }
+        },
+        {
+                "action": "spl/console/log",
+                "spl/console/log": {
+                        "message": [
+                                "\"Test",
+                                "2:",
+                                "spl/app/wrap",
+                                "help\""
+                        ]
+                }
+        },
+        {
+                "action": "spl/console/log",
+                "spl/console/log": {
+                        "message": [
+                                "\"===",
+                                "JS",
+                                "script",
+                                "help",
                                 "tests",
-                                "completed\""
+                                "completed",
+                                "===\""
                         ]
                 }
         }
 ];
     const globalOptions = {
-        "help": []
+        "help": [
+                "spl/app/run",
+                "spl/app/wrap"
+        ]
 };
     
     // Apply argument replacements to the pipeline
