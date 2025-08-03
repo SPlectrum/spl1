@@ -5,3 +5,6 @@ claude/wow
 
 # Local machine-specific configurations
 claude/local/
+
+# SPL development workspaces (synced to canonical modules/ and apps/ before commits)
+spl-*/
