@@ -1,55 +1,30 @@
-//  name        spl-app-basic-tests
-//  URI         usr/spl-app-basic-tests
+//  name        spl-app-help-tests
+//  URI         usr/spl-app-help-tests
 //  type        API Method
-//  description Auto-generated command from batch file spl-app-basic-tests.batch
+//  description Auto-generated command from batch file spl-app-help-tests.batch
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../spl.js")
+const spl = require("../../spl.js")
 ///////////////////////////////////////////////////////////////////////////////
-exports.default = function usr_spl_app_basic_tests (input)
+exports.default = function usr_spl_app_help_tests (input)
 {
     // Set the appRoot configuration
-    const appRoot = spl.context ( input, "appRoot" );
+    const appRoot = spl.action ( input, "appRoot" );
     spl.setConfig ( input, "spl/app", "appRoot", appRoot );
     
     // Get arguments passed to this action
     const actionArgs = spl.action(input, "args") || [];
     
     // Get the pre-parsed pipeline
-    let pipeline = [
-        {
-                "action": "spl/console/log",
-                "spl/console/log": {
-                        "message": [
-                                "\"Testing",
-                                "basic",
-                                "spl/app",
-                                "functionality\""
-                        ]
-                }
-        },
-        {
-                "action": "spl/app/exec",
-                "spl/app/exec": {
-                        "file": "simple.batch",
-                        "args": [
-                                "\"test-parameter\""
-                        ]
-                }
-        },
-        {
-                "action": "spl/console/log",
-                "spl/console/log": {
-                        "message": [
-                                "\"Basic",
-                                "spl/app",
-                                "tests",
-                                "completed\""
-                        ]
-                }
-        }
-];
+    let pipeline = [];
     const globalOptions = {
-        "help": []
+        "help": [
+                "spl/app/create",
+                "spl/app/exec",
+                "spl/app/generate",
+                "spl/app/parse",
+                "spl/app/pipeline",
+                "spl/app/process"
+        ]
 };
     
     // Apply argument replacements to the pipeline

@@ -4,7 +4,7 @@
 //  description This command does not execute any action.
 //              It is included to facilitate testing.
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../spl.js")
+const spl = require("../../spl.js")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_usr_noop (input) { 
     console.log ( "This command does nothing." );

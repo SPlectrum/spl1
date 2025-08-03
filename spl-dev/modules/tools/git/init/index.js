@@ -3,12 +3,12 @@
 //  type        API Method
 //  description Initialize a new git repository
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../../spl/spl.js")
+const spl = require("../../../spl/spl.js")
 const fs = require('fs');
 const path = require('path');
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function tools_git_init(input) {
-    const git = require("./git");
+    const git = require("../git");
     
     // Get repository path from --repo argument, now relative to app root
     const repo = spl.action(input, 'repo');

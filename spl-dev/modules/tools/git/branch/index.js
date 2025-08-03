@@ -3,14 +3,14 @@
 //  type        API Method
 //  description Create, delete, or list branches
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../../spl/spl.js")
+const spl = require("../../../spl/spl.js")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function tools_git_branch(input) {
     // Get repository path from --repo argument, now relative to app root
     const repo = spl.action(input, 'repo');
     const appRoot = spl.context(input, 'appRoot');
     const cwd = spl.context(input, 'cwd');
-    const git = require("./git");
+    const git = require("../git");
     const repoPath = git.getAppRelativeRepoPath(repo, appRoot, cwd);
     
     // Build git branch command arguments

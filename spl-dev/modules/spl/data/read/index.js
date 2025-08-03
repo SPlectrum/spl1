@@ -4,8 +4,8 @@
 //  description Reads one or more data records, by default the latest.
 //              This means the latest for a specific (primary) key.
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../spl.js")
-const data = require("./data.js")
+const spl = require("../../spl.js")
+const data = require("../data.js")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_data_read ( input ) {
     const cwd = spl.context ( input, "cwd" );

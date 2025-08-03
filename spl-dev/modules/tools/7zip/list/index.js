@@ -4,8 +4,8 @@
 //  description Display archive contents and information using 7zip 'l' command.
 //              Shows files, sizes, dates, and archive structure.
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../../spl/spl.js")
-const zip = require("./7zip.js")
+const spl = require("../../../spl/spl.js")
+const zip = require("../7zip.js")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function tools_7zip_list(input) {
     const archive = spl.action(input, 'archive');

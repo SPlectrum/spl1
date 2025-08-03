@@ -3,7 +3,7 @@
 //  type        API Method
 //  description Evaluates JavaScript content that was prepared by spl/app/prepare
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../spl.js")
+const spl = require("../../spl.js")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_app_eval (input)
 {

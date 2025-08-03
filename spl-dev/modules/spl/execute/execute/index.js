@@ -5,7 +5,7 @@
 //              It starts with an initialise action and finishes with a complete action.
 //              Output of bot actions is logged. 
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../spl.js")
+const spl = require("../../spl.js")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_execute_execute ( input ) {
 

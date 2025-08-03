@@ -3,7 +3,7 @@
 //  type        API Method
 //  description Auto-generated command from batch file js-wrapped-execution-tests.batch
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../spl.js")
+const spl = require("../../spl.js")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function usr_js_wrapped_execution_tests (input)
 {

@@ -4,8 +4,8 @@
 //  description This action runs a JS script
 //              API internal command
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../spl.js")
-const app = require("./app.js")
+const spl = require("../../spl.js")
+const app = require("../app.js")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_app_parse (input) { 
 

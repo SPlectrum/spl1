@@ -4,7 +4,7 @@
 //  description This action reads commands from a file and executes them.
 //              Creates a pipeline that first reads the file, then processes the commands.
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../spl.js")
+const spl = require("../../spl.js")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_app_exec (input)
 {

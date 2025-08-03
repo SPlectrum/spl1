@@ -5,7 +5,7 @@
 //              This offers a flexible mechanism to set the execution plan 
 //              of an action at runtime. 
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../spl")
+const spl = require("../../spl.js")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = async function spl_execute_set_pipeline ( input )
 {

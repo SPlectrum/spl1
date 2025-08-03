@@ -4,8 +4,8 @@
 //  description Extract files ignoring directory structure using 7zip 'e' command.
 //              Flattens directory structure during extraction.
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../../spl/spl.js")
-const zip = require("./7zip.js")
+const spl = require("../../../spl/spl.js")
+const zip = require("../7zip.js")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function tools_7zip_extract_flat(input) {
     const archive = spl.action(input, 'archive');

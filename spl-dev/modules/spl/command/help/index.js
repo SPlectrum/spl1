@@ -4,7 +4,7 @@
 //  description Generates commandline help.
 //              Uses the parser.json file to store details.
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../spl.js");
+const spl = require("../../spl.js");
 const command = require("./command");
 const help = require("command-line-usage");
 ///////////////////////////////////////////////////////////////////////////////

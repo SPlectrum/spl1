@@ -3,14 +3,14 @@
 //  type        API Method
 //  description Pull changes from remote repository
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../../spl/spl.js")
+const spl = require("../../../spl/spl.js")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function tools_git_pull(input) {
     // Get repository path from --repo argument, now relative to app root
     const repo = spl.action(input, 'repo');
     const appRoot = spl.context(input, 'appRoot');
     const cwd = spl.context(input, 'cwd');
-    const git = require("./git");
+    const git = require("../git");
     const repoPath = git.getAppRelativeRepoPath(repo, appRoot, cwd);
     
     // Build git pull command arguments

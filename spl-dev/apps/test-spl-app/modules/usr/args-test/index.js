@@ -1,17 +1,18 @@
-//  name        spl-context-test
-//  URI         usr/spl-context-test
+//  name        args-test
+//  URI         usr/args-test
 //  type        API Method
-//  description Auto-generated wrapper for spl-context-test.js
+//  description Auto-generated wrapper for args-test.js
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../spl.js")
+const spl = require("../../spl.js")
 ///////////////////////////////////////////////////////////////////////////////
-exports.default = function usr_spl_context_test (input)
+exports.default = function usr_args_test (input)
 {
     const actionArgs = spl.action(input, "args") || [];
-    let scriptContent = `// Test SPL integration in JS scripts
-const spl = require("../spl.js");
-console.log("Testing SPL context access from JS script");
-console.log("AppRoot from script:", spl.context(input, "appRoot"));`;
+    let scriptContent = `console.log("Arguments test:");
+console.log("Arg 1: \$1");
+console.log("Arg 2: \$2");  
+console.log("All args array: \$@");
+console.log("All args string: \$*");`;
     
     // Apply argument replacements
     if (scriptContent.indexOf("\$@") > -1) scriptContent = scriptContent.replaceAll("\$@", actionArgs.toString());

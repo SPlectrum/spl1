@@ -4,8 +4,8 @@
 //  description Writes a new data record to a dir.
 //              It creates a timestamp filename.
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../spl.js")
-const data = require("./data.js")
+const spl = require("../../spl.js")
+const data = require("../data.js")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_data_write ( input ) {
     const cwd = input.headers.spl.execute.cwd;

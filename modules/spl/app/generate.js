@@ -24,7 +24,7 @@ exports.default = function spl_app_generate (input)
     // Check for name clashes and add number suffix if needed
     let counter = 1;
     let finalActionName = actionName;
-    while (existingFiles.includes(`${finalActionName}.js`)) {
+    while (existingFiles.includes(`${finalActionName}`)) {
         finalActionName = `${actionName}${counter}`;
         counter++;
     }
@@ -49,7 +49,7 @@ exports.default = function spl_app_generate (input)
 //  type        API Method
 //  description Auto-generated command from batch file ${filePath}
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../spl.js")
+const spl = require("../../spl.js")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function usr_${actionName.replace(/[^a-zA-Z0-9]/g, '_')} (input)
 {
@@ -108,17 +108,17 @@ exports.default = function usr_${actionName.replace(/[^a-zA-Z0-9]/g, '_')} (inpu
 }`;
 
     // Store and write files
-    spl.wsSet(input, `spl/blob.${spl.fURI(appRoot, "modules/usr", `${actionName}.js`)}`, { headers: {}, value: wrappedActionJs });
-    spl.wsSet(input, `spl/blob.${spl.fURI(appRoot, "modules/usr", `${actionName}_arguments.json`)}`, { headers: {}, value: wrappedArgumentsJson });
+    spl.wsSet(input, `spl/blob.${spl.fURI(appRoot, "modules/usr", `${actionName}/index.js`)}`, { headers: {}, value: wrappedActionJs });
+    spl.wsSet(input, `spl/blob.${spl.fURI(appRoot, "modules/usr", `${actionName}/index_arguments.json`)}`, { headers: {}, value: wrappedArgumentsJson });
 
     console.log(`Successfully created command from batch ${filePath} as usr/${actionName}`);
-    console.log(`Created: modules/usr/${actionName}.js`);
-    console.log(`Created: modules/usr/${actionName}_arguments.json`);
+    console.log(`Created: modules/usr/${actionName}/index.js`);
+    console.log(`Created: modules/usr/${actionName}/index_arguments.json`);
     console.log(`Pipeline contains ${pipeline.length} command(s)`);
 
     spl.gotoExecute(input, "spl/blob/put", [
-        { repo: appRoot, dir: "modules/usr", file: `${actionName}.js`, encoding: "text" },
-        { repo: appRoot, dir: "modules/usr", file: `${actionName}_arguments.json`, encoding: "text" }
+        { repo: appRoot, dir: "modules/usr", file: `${actionName}/index.js`, encoding: "text" },
+        { repo: appRoot, dir: "modules/usr", file: `${actionName}/index_arguments.json`, encoding: "text" }
     ]);
 }
 ///////////////////////////////////////////////////////////////////////////////

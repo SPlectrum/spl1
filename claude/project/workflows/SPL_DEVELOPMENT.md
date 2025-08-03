@@ -79,6 +79,8 @@ This workflow defines the development process for SPL platform code within the s
 - **ALWAYS** use `spl_execute dev` for development testing
 - **ALWAYS** validate changes before syncing to canonical
 - **ALWAYS** test both development and canonical after sync
+- **MANDATORY** work from project root directory (`/home/herma/splectrum/spl1/`)
+- **MANDATORY** use absolute paths in all file operations - never relative paths
 
 ## App Overlay Development
 

@@ -3,8 +3,8 @@
 //  type        API Method
 //  description Saves a package to file.
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../spl")
-const package = require("./package.js")
+const spl = require("../../spl.js")
+const package = require("../package.js")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_package_save ( input ) {
     const cwd = spl.context ( input, "cwd" );

@@ -3,7 +3,7 @@
 //  type        API Method
 //  description Loads the parser options file
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../spl.js");
+const spl = require("../../spl.js");
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_command_load_parser_options ( input ) {
     const splCommand = spl.wsRef ( input, "spl/command" ).headers.spl.command.parser;

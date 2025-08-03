@@ -3,7 +3,7 @@
 //  type        API Method
 //  description This action wraps a JS script into an action
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../spl.js")
+const spl = require("../../spl.js")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_app_wrap (input)
 {
@@ -32,7 +32,7 @@ exports.default = function spl_app_wrap (input)
 //  type        API Method
 //  description Auto-generated wrapper for ${filePath}
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../spl.js")
+const spl = require("../../spl.js")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function usr_${actionName.replace(/[^a-zA-Z0-9]/g, '_')} (input)
 {
@@ -71,7 +71,7 @@ exports.default = function usr_${actionName.replace(/[^a-zA-Z0-9]/g, '_')} (inpu
 //  type        API Method
 //  description Auto-generated wrapper for ${filePath}
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../spl.js")
+const spl = require("../../spl.js")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function usr_${actionName.replace(/[^a-zA-Z0-9]/g, '_')} (input)
 {

@@ -32,7 +32,7 @@ exports.default = function spl_app_wrap (input)
 //  type        API Method
 //  description Auto-generated wrapper for ${filePath}
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../spl.js")
+const spl = require("../../spl.js")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function usr_${actionName.replace(/[^a-zA-Z0-9]/g, '_')} (input)
 {
@@ -71,7 +71,7 @@ exports.default = function usr_${actionName.replace(/[^a-zA-Z0-9]/g, '_')} (inpu
 //  type        API Method
 //  description Auto-generated wrapper for ${filePath}
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../spl.js")
+const spl = require("../../spl.js")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function usr_${actionName.replace(/[^a-zA-Z0-9]/g, '_')} (input)
 {
@@ -105,16 +105,16 @@ exports.default = function usr_${actionName.replace(/[^a-zA-Z0-9]/g, '_')} (inpu
 }`;
 
     // Store and write files
-    spl.wsSet(input, `spl/blob.${spl.fURI(appRoot, "modules/usr", `${actionName}.js`)}`, { headers: {}, value: wrappedActionJs });
-    spl.wsSet(input, `spl/blob.${spl.fURI(appRoot, "modules/usr", `${actionName}_arguments.json`)}`, { headers: {}, value: wrappedArgumentsJson });
+    spl.wsSet(input, `spl/blob.${spl.fURI(appRoot, "modules/usr", `${actionName}/index.js`)}`, { headers: {}, value: wrappedActionJs });
+    spl.wsSet(input, `spl/blob.${spl.fURI(appRoot, "modules/usr", `${actionName}/index_arguments.json`)}`, { headers: {}, value: wrappedArgumentsJson });
 
     console.log(`Successfully wrapped ${filePath} as usr/${actionName}`);
-    console.log(`Created: modules/usr/${actionName}.js`);
-    console.log(`Created: modules/usr/${actionName}_arguments.json`);
+    console.log(`Created: modules/usr/${actionName}/index.js`);
+    console.log(`Created: modules/usr/${actionName}/index_arguments.json`);
 
     spl.gotoExecute(input, "spl/blob/put", [
-        { repo: appRoot, dir: "modules/usr", file: `${actionName}.js`, encoding: "text" },
-        { repo: appRoot, dir: "modules/usr", file: `${actionName}_arguments.json`, encoding: "text" }
+        { repo: appRoot, dir: "modules/usr", file: `${actionName}/index.js`, encoding: "text" },
+        { repo: appRoot, dir: "modules/usr", file: `${actionName}/index_arguments.json`, encoding: "text" }
     ]);
 }
 ///////////////////////////////////////////////////////////////////////////////

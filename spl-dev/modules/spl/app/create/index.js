@@ -4,7 +4,7 @@
 //  description This action creates an action from a batch of commands.
 //              Creates a pipeline that first reads the file, then processes the commands, and creates a new command.
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../spl.js")
+const spl = require("../../spl.js")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_app_create (input)
 {

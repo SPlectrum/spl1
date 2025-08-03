@@ -3,7 +3,7 @@
 //  type        API Method
 //  description Prints a warning message to the Console
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../spl")
+const spl = require("../../spl.js")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_console_warn (input) { 
     var message = spl.action ( input, "message" );

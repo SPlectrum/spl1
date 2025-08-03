@@ -4,8 +4,8 @@
 //  description Remove files from existing archive using 7zip 'd' command.
 //              Permanently removes specified files from archive.
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../../spl/spl.js")
-const zip = require("./7zip.js")
+const spl = require("../../../spl/spl.js")
+const zip = require("../7zip.js")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function tools_7zip_delete(input) {
     const archive = spl.action(input, 'archive');

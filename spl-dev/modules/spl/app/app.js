@@ -23,7 +23,6 @@ exports.getDetails = function ( URI )
 {
     const spl = require("../spl.js");
     const fs = require('fs');
-    var prefix = "";
     var getRoot = "", getDir = "";
     
     // Parse URI for app overlay (same try/catch logic as moduleAction)
@@ -34,18 +33,16 @@ exports.getDetails = function ( URI )
         const cwd = process.cwd(); // Get current working directory
         
         // Try app version first
-        const appArgPath = `${cwd}/apps/${app}/modules/${moduleFile}_arguments.json`;
+        const appArgPath = `${cwd}/apps/${app}/modules/${moduleFile}/index_arguments.json`;
         try {
             fs.accessSync(appArgPath, fs.constants.F_OK);
             // App arguments file exists, use app path
             getRoot = `apps/${app}/modules`;
             getDir = "";
-            prefix = `${moduleFile}_`;
         } catch (e) {
             // Fall back to global modules
             getRoot = "";
             getDir = "modules";
-            prefix = `${URI}_`;
         }
     } else if (parts.length === 1 && URI.length > 0) {
         // Single-part URI - try app overlay first
@@ -53,27 +50,35 @@ exports.getDetails = function ( URI )
         const cwd = process.cwd();
         
         // Try app version first
-        const appArgPath = `${cwd}/apps/${app}/modules/${app}_arguments.json`;
+        const appArgPath = `${cwd}/apps/${app}/modules/index_arguments.json`;
         try {
             fs.accessSync(appArgPath, fs.constants.F_OK);
             // App arguments file exists, use app path
             getRoot = `apps/${app}/modules`;
             getDir = "";
-            prefix = `${app}_`;
         } catch (e) {
             // Fall back to global modules
             getRoot = "";
             getDir = "modules";
-            prefix = `${URI}_`;
         }
     } else {
         // Empty URI - use global modules
         getRoot = "";
         getDir = "modules";
-        if ( URI.length > 0 ) prefix = `${URI}_`;
     }
     
-    const fileURI = `${(URI==="")?"":prefix}arguments.json`;
+    // For app overlays, fileURI should exclude app name since it's in getRoot
+    let fileURI;
+    if (URI === "") {
+        fileURI = "index_arguments.json";
+    } else if (getRoot.includes("apps/")) {
+        // App overlay: use module path without app name (parts[1:])
+        const modulePath = parts.slice(1).join('/');
+        fileURI = `${modulePath}/index_arguments.json`;
+    } else {
+        // Global modules: use full URI
+        fileURI = `${URI}/index_arguments.json`;
+    }
     const getURI = `spl/blob.${spl.fURI ( getRoot, getDir.replace("../",""), fileURI )}`;
     const wsURI = `spl/app.options.${spl.fURI ( fileURI )}`;
     const args = [ { repo: getRoot, dir: getDir, file: fileURI, reference: [ wsURI ] } ];

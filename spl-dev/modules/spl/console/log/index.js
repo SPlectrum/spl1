@@ -3,7 +3,7 @@
 //  type        API Method
 //  description Log a message to the Console
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../spl")
+const spl = require("../../spl.js")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_console_log (input) { 
     var message = spl.action ( input, "message" );

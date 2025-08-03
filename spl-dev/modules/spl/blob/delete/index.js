@@ -4,8 +4,8 @@
 //  description This method deletes one or more files or dirs
 //              This method executes asynchrounously.
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../spl.js")
-const blob = require("./blob.js")
+const spl = require("../../spl.js")
+const blob = require("../blob.js")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_blob_delete ( input ) {
     const cwd = spl.context ( input, "cwd" );
