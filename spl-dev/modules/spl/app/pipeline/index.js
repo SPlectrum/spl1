@@ -45,6 +45,12 @@ exports.default = function spl_app_pipeline (input)
                     // if steps were set, add to the first request in the pipeline
                     if ( steps ) { if ( args === undefined ) args = {}; args.TTL = steps; steps = undefined; }
                     if ( args != undefined ) request[key] = args;
+                    
+                    // Add appRoot to request if it exists in parsed details
+                    if ( parsed[key].appRoot !== undefined ) {
+                        request.appRoot = parsed[key].appRoot;
+                    }
+                    
                     splApp.pipeline.push ( request );
                 }
             }

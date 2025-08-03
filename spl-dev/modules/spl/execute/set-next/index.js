@@ -16,6 +16,12 @@ exports.default = function spl_execute_set_next ( input ) {
         const requestArgs = spl.request ( input, requestAction );
         if ( requestArgs ) spl.rcSet( input.headers, requestAction.replaceAll("/","."), requestArgs );
         if( spl.request ( input, "TTL" ) > 0 ) spl.setContext( input, "TTL", spl.request ( input, "TTL" ) );
+        
+        // Push appRoot from request to context if present
+        if( spl.request ( input, "appRoot" ) !== undefined ) {
+            spl.setContext( input, "appRoot", spl.request ( input, "appRoot" ) );
+        }
+        
         spl.setContext ( input, "action", "spl/execute/next" );
     } 
     else spl.setContext ( input, "action", "spl/execute/complete" );
