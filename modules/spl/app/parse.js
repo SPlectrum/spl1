@@ -23,7 +23,7 @@ exports.default = function spl_app_parse (input) {
         var parsed = {};
 
         // next parse command / argument pairs until finished
-        var getDetails = app.getDetails ( appRoot, moduleRoot, "" );
+        var getDetails = app.getDetails ( "" );
         if(!spl.wsExists ( input, getDetails.getURI, "spl/blob/get", getDetails.args, true )) return;
         var parseOptions = app.activateTypes( spl.wsRef ( input, getDetails.URI ).value );
         // first parse global arguments
@@ -38,7 +38,7 @@ exports.default = function spl_app_parse (input) {
             if (result.command !== undefined) {
                 commandAction += (commandAction === "") ? result.command : "/" + result.command;
             }
-            var getDetails = app.getDetails ( appRoot, moduleRoot, commandAction );
+            var getDetails = app.getDetails ( commandAction );
             if ( result._unknown === undefined ) result._unknown = [];
             if(!spl.wsExists ( input, getDetails.getURI, "spl/blob/get", getDetails.args, true )) return;
             parseOptions = app.activateTypes( spl.wsRef ( input, getDetails.URI ).value );

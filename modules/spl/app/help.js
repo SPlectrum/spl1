@@ -16,7 +16,7 @@ exports.default = function spl_app_help (input)
     if ( helpURIs[0] != "" ) helpURIs.unshift ( "" );
     console.log ( helpURIs );
 
-    var currentArgs = app.getDetails ( appRoot, moduleRoot, helpURIs[0] );
+    var currentArgs = app.getDetails ( helpURIs[0] );
     if(!spl.wsExists ( input, currentArgs.getURI, "spl/blob/get", currentArgs.args, true )) return;
     var helpData = [];
     var parseOptions = spl.wsRef ( input, currentArgs.URI );
@@ -25,7 +25,7 @@ exports.default = function spl_app_help (input)
 
     for ( var i = 0; i < helpURIs.length; i++ )
     {
-        currentArgs = app.getDetails ( appRoot, moduleRoot, helpURIs[i] );
+        currentArgs = app.getDetails ( helpURIs[i] );
         if(!spl.wsExists ( input, currentArgs.getURI, "spl/blob/get", currentArgs.args, true )) return;
         parseOptions = spl.wsRef ( input, currentArgs.URI );
         helpData = helpData.concat ( parseOptions.headers.header );

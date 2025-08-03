@@ -4,6 +4,11 @@
 
 This workflow defines the development process for SPL platform code within the spl1 transitional repository.
 
+### Operational Principles
+- **Optimize for accuracy, not speed** - Thorough verification over rapid execution
+- **Complete verification** - Check all components systematically rather than sampling
+- **Collaborative transparency** - Provide full views for shared understanding
+
 ## Development Architecture
 
 ### Repository Structure
@@ -46,8 +51,15 @@ This workflow defines the development process for SPL platform code within the s
    - Code quality
 3. **Canonical Update**: 
    ```bash
+   # Full sync for modules (complete replacement)
    rsync -av --delete spl-dev/modules/ modules/
-   rsync -av --delete spl-dev/apps/ apps/
+   
+   # Full sync for each app present in spl-dev (add, update, delete within each app)
+   # Preserves other canonical apps not in spl-dev
+   for app in spl-dev/apps/*/; do
+     app_name=$(basename "$app")
+     rsync -av --delete "spl-dev/apps/$app_name/" "apps/$app_name/"
+   done
    ```
 
 ### Phase 3: Verification
