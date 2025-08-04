@@ -129,6 +129,21 @@ diff -r modules spl-dev/modules | head -20
 diff modules/spl/app/app.js spl-dev/modules/spl/app/app.js
 ```
 
+## Essential Development Documentation
+
+### Required Reading for SPL API Development
+- **[SPL API Development Gotchas](../../docs/guides/spl-api-development-gotchas.md)** - Critical issues and solutions from collaborative AI development experience
+- **[Implementing New API](../../docs/guides/implementing-new-api.md)** - General API implementation guidance
+- **[App Development Guide](../../docs/guides/app-development.md)** - App-specific development patterns
+
+### API Development Checklist
+Before starting API development, review:
+- [ ] App structure vs global module structure requirements
+- [ ] Correct require path calculations from app modules  
+- [ ] SPL moduleAction function export requirements (`.default`)
+- [ ] SPL execution document structure and accessor patterns
+- [ ] Proper testing approach for scaffolding validation
+
 ## Integration with Claude Workflows
 
 This workflow integrates with:
