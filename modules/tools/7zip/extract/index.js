@@ -4,8 +4,8 @@
 //  description Extract files from archive preserving directory structure using 7zip 'x' command.
 //              Maintains full path information during extraction.
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../../../spl/spl.js")
-const zip = require("../7zip.js")
+const spl = require("spl")
+const zip = require("tools_7zip")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function tools_7zip_extract(input) {
     const archive = spl.action(input, 'archive');

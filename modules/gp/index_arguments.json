@@ -1,0 +1,15 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "gp" },
+            { "content": "General Purpose API package for common development tasks. Provides filesystem operations, testing frameworks, and other reusable tools designed for cross-app compatibility and AI-assisted development." },
+            { "content": "{bold syntax}: {italic ./spl <appOptions> gp <options>}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" }
+    ]
+}

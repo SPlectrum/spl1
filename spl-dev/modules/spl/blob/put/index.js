@@ -5,8 +5,8 @@
 //              This method executes asynchronously.
 //              Currenlty only implemented for utf8.
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../../spl.js")
-const blob = require("../blob.js")
+const spl = require("spl")
+const blob = require("spl_blob")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_blob_put ( input ) {
     const cwd = spl.context ( input, "cwd" );

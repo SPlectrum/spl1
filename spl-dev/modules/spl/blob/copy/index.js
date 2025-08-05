@@ -4,8 +4,8 @@
 //  description This method copies one or more files or dirs.
 //              This method executes asynchrounously.
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../../spl.js")
-const blob = require("../blob.js")
+const spl = require("spl")
+const blob = require("spl_blob")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_blob_copy ( input ) {
     const cwd = spl.context ( input, "cwd" );

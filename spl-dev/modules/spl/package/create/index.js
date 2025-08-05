@@ -4,7 +4,7 @@
 //  description Creates a new package from an existing data or module install
 //              It creates a package of parts of an existing install.
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../../spl.js")
+const spl = require("spl")
 const package = require("./package")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_package_create ( input ) {

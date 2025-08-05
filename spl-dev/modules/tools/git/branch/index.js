@@ -3,7 +3,7 @@
 //  type        API Method
 //  description Create, delete, or list branches
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../../../spl/spl.js")
+const spl = require("spl")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function tools_git_branch(input) {
     // Get repository path from --repo argument, now relative to app root

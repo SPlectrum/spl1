@@ -4,7 +4,7 @@
 //  description This action generates a command from a parsed pipeline.
 //              Takes the pipeline created by the parser and creates a reusable command.
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../../spl.js")
+const spl = require("spl")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_app_generate (input)
 {
@@ -49,7 +49,7 @@ exports.default = function spl_app_generate (input)
 //  type        API Method
 //  description Auto-generated command from batch file ${filePath}
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../../spl.js")
+const spl = require("spl")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function usr_${actionName.replace(/[^a-zA-Z0-9]/g, '_')} (input)
 {

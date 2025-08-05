@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const spl = require("../../spl.js");
+const spl = require("spl");
 
 module.exports.default = function(input) {
     const appRoot = spl.context(input, "appRoot");

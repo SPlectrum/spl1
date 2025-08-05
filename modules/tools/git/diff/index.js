@@ -3,7 +3,7 @@
 //  type        API Method
 //  description Show changes between commits, commit and working tree, etc.
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../../../spl/spl.js")
+const spl = require("spl")
 const git = require("../git")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function tools_git_diff(input) {

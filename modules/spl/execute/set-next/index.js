@@ -3,7 +3,7 @@
 //  type        API Method
 //  description Sets the next request action to execute from the execution pipeline.
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../../spl.js");
+const spl = require("spl");
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_execute_set_next ( input ) {
     if(spl.context ( input, "repeatRequest" ) ) {

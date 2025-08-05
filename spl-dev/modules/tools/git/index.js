@@ -3,7 +3,7 @@
 //  type        API Module
 //  description Set repository path context for all subsequent git operations
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../../../spl/spl.js")
+const spl = require("spl")
 const git = require("../git")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function tools_git(input) {

@@ -4,8 +4,8 @@
 //  description This action prepares the command line entry for parsing.
 //              API internal command
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../../spl.js")
-const app = require("../app.js")
+const spl = require("spl")
+const app = require("spl_app")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_app_prepare (input) { 
 

@@ -1,0 +1,19 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "gp/fs/grep" },
+            { "content": "Searches file contents for patterns within app data boundary." },
+            { "content": "{bold syntax}: {italic ./spl_execute <app> fs/grep <options>}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" }, 
+        { "name": "pattern", "alias": "p", "description": "Search pattern (string or regex) to find in file contents" },
+        { "name": "path", "description": "Starting directory or file path for search (relative to app data boundary)", "defaultValue": "." },
+        { "name": "caseSensitive", "alias": "c", "type": "Boolean", "description": "Perform case-sensitive search", "defaultValue": false },
+        { "name": "recursive", "alias": "r", "type": "Boolean", "description": "Search recursively through subdirectories", "defaultValue": true }
+    ]
+}

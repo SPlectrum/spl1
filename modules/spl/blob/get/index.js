@@ -4,8 +4,8 @@
 //  description Gets the contenst of one or more files.
 //              Currently only implemented for urf8
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../../spl.js")
-const blob = require("../blob.js")
+const spl = require("spl")
+const blob = require("spl_blob")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_blob_get ( input ) {
     const cwd = spl.context ( input, "cwd" );

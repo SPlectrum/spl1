@@ -4,7 +4,7 @@
 //  description Loads the command template with client settings
 //              and sets the command.
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../../spl.js");
+const spl = require("spl");
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_command_set ( input ) {
 

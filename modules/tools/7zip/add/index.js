@@ -4,8 +4,8 @@
 //  description Create new archive or add files to existing archive using 7zip 'a' command.
 //              Supports all archive formats, compression levels, passwords, and self-extracting archives.
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../../../spl/spl.js")
-const zip = require("../7zip.js")
+const spl = require("spl")
+const zip = require("tools_7zip")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function tools_7zip_add(input) {
     const archive = spl.action(input, 'archive');

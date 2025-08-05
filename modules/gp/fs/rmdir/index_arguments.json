@@ -1,0 +1,18 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "gp/fs/rmdir" },
+            { "content": "rmdir operation within app data boundary." },
+            { "content": "{bold syntax}: {italic ./spl_execute <app> fs/rmdir <options>}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
+        { "name": "path", "alias": "p", "type": "String", "description": "Directory path to remove (relative to app data boundary)" },
+        { "name": "recursive", "alias": "r", "type": "Boolean", "description": "Remove directory and all contents recursively", "typeLabel": "flag" },
+        { "name": "force", "alias": "F", "type": "Boolean", "description": "Force removal (ignore non-existent files)", "typeLabel": "flag" }
+    ]
+}

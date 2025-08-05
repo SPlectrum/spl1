@@ -5,7 +5,7 @@
 //              It creates a timestamp filename.
 //              This method is used to log the initial and completed command.
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../../spl.js");
+const spl = require("spl");
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_command_write ( input ) {
     

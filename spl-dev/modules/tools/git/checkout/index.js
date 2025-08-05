@@ -3,7 +3,7 @@
 //  type        API Method
 //  description Switch branches or restore files
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../../../spl/spl.js")
+const spl = require("spl")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function tools_git_checkout(input) {
     // Get repository path from --repo argument, now relative to app root

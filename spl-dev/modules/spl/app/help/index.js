@@ -3,8 +3,8 @@
 //  type        API Method
 //  description The help function of the app API
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../../spl.js")
-const app = require("../app.js")
+const spl = require("spl")
+const app = require("spl_app")
 const help = require("command-line-usage");
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_app_help (input) 

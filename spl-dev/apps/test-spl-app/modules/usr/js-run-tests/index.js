@@ -3,7 +3,7 @@
 //  type        API Method
 //  description Auto-generated command from batch file js-run-tests.batch
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../../spl.js")
+const spl = require("spl")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function usr_js_run_tests (input)
 {

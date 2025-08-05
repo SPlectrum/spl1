@@ -4,7 +4,7 @@
 //  description This is the entry point for commandline command execution.
 //              It sets the execution pipeline.
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../../spl.js")
+const spl = require("spl")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_command_execute (input) { 
 

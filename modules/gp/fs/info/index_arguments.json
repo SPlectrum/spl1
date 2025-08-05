@@ -1,0 +1,16 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "gp/fs/info" },
+            { "content": "info operation within app data boundary." },
+            { "content": "{bold syntax}: {italic ./spl_execute <app> fs/info <options>}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
+        { "name": "path", "alias": "p", "type": "String", "description": "File or directory path to get info for (relative to app data boundary)" }
+    ]
+}

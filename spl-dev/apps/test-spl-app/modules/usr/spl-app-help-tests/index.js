@@ -3,7 +3,7 @@
 //  type        API Method
 //  description Auto-generated command from batch file spl-app-help-tests.batch
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../../spl.js")
+const spl = require("spl")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function usr_spl_app_help_tests (input)
 {

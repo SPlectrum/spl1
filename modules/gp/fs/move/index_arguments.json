@@ -1,0 +1,17 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "gp/fs/move" },
+            { "content": "move operation within app data boundary." },
+            { "content": "{bold syntax}: {italic ./spl_execute <app> fs/move <options>}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
+        { "name": "from", "alias": "f", "type": "String", "description": "Source file path (relative to app data boundary)" },
+        { "name": "to", "alias": "t", "type": "String", "description": "Destination file path (relative to app data boundary)" }
+    ]
+}

@@ -5,7 +5,7 @@
 //              set in the execution header.
 //              It writes it in Kafka record mode.
 ///////////////////////////////////////////////////////////////////////////////
-const data = require("../data.js")
+const data = require("spl_data")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_data_queue ( input ) {
     const cwd = spl.context ( input, "cwd" );

@@ -4,7 +4,7 @@
 //  description Parses the commandline and sets the requested action.
 //              Uses the command-line-args module
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../../spl.js");
+const spl = require("spl");
 const command = require("./command");
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_command_parse (input) { 

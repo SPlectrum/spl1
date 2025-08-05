@@ -3,7 +3,7 @@
 //  type        API Method
 //  description Reset current HEAD to the specified state
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../../../spl/spl.js")
+const spl = require("spl")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function tools_git_reset(input) {
     // Get repository path from --repo argument, now relative to app root

@@ -1,0 +1,22 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "gp/fs/find" },
+            { "content": "Finds files/directories with glob patterns and filters within app data boundary." },
+            { "content": "{bold syntax}: {italic ./spl_execute <app> fs/find <options>}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" }, 
+        { "name": "pattern", "alias": "p", "description": "Glob pattern to match files/directories (e.g., '*.js', '**/*.md')", "defaultValue": "*" },
+        { "name": "path", "description": "Starting directory path for search (relative to app data boundary)", "defaultValue": "." },
+        { "name": "type", "alias": "t", "description": "Filter by file type: 'file', 'directory', or omit for both" },
+        { "name": "size", "alias": "s", "description": "Filter by file size (e.g., '>1MB', '<100KB', '=0')" },
+        { "name": "recursive", "alias": "r", "type": "Boolean", "description": "Search recursively through subdirectories", "defaultValue": true },
+        { "name": "maxDepth", "alias": "d", "description": "Maximum directory depth to search" },
+        { "name": "empty", "alias": "e", "type": "Boolean", "description": "Find only empty files or directories", "defaultValue": false }
+    ]
+}

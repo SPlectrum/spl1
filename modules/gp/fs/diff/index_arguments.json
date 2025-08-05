@@ -1,0 +1,18 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "gp/fs/diff" },
+            { "content": "Compares files or directories for differences within app data boundary." },
+            { "content": "{bold syntax}: {italic ./spl_execute <app> fs/diff <options>}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" }, 
+        { "name": "from", "alias": "f", "description": "Source file or directory path to compare" },
+        { "name": "to", "alias": "t", "description": "Target file or directory path to compare against" },
+        { "name": "content", "alias": "c", "type": "Boolean", "description": "Compare file contents (for small text files under 1MB)", "defaultValue": false }
+    ]
+}

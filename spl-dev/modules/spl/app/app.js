@@ -4,7 +4,7 @@
 //  description Auxiliary functions for the app API.
 ///////////////////////////////////////////////////////////////////////////////
 const parser = require('command-line-args');
-const spl = require("../spl.js")
+const spl = require("spl")
 ///////////////////////////////////////////////////////////////////////////////
 
 exports.commandString = function ( splApp, current ) 
@@ -21,7 +21,7 @@ exports.parsed = function ( splApp, current )
 
 exports.getDetails = function ( URI ) 
 {
-    const spl = require("../spl.js");
+    const spl = require("spl");
     const fs = require('fs');
     var getRoot = "", getDir = "";
     

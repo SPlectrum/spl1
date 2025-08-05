@@ -4,8 +4,8 @@
 //  description Creates pipelines from the parsed commands
 //              API internal command
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../../spl.js")
-const app = require("../app.js")
+const spl = require("spl")
+const app = require("spl_app")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_app_pipeline (input)
 { 

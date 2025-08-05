@@ -4,7 +4,7 @@
 //  description Reads commands from a specified file and stores them for processing.
 //              This method only reads the file, it does not process the commands.
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../../spl.js")
+const spl = require("spl")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_app_process_file (input)
 { 

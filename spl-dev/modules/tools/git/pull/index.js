@@ -3,7 +3,7 @@
 //  type        API Method
 //  description Pull changes from remote repository
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../../../spl/spl.js")
+const spl = require("spl")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function tools_git_pull(input) {
     // Get repository path from --repo argument, now relative to app root

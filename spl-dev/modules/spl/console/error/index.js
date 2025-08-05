@@ -3,7 +3,7 @@
 //  type        API Method
 //  description Prints an error message to the Console
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../../spl.js")
+const spl = require("spl")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_console_error (input) { 
     var message = spl.action ( input, "message" );

@@ -1,0 +1,17 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "gp/fs/mkdir" },
+            { "content": "mkdir operation within app data boundary." },
+            { "content": "{bold syntax}: {italic ./spl_execute <app> fs/mkdir <options>}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
+        { "name": "path", "alias": "p", "type": "String", "description": "Directory path to create (relative to app data boundary)" },
+        { "name": "recursive", "alias": "r", "type": "Boolean", "description": "Create parent directories as needed", "typeLabel": "flag", "defaultValue": true }
+    ]
+}

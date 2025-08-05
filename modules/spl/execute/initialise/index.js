@@ -4,7 +4,7 @@
 //  description Initialises the execution of a pipeline segemnt.
 //              The output of this action is logged.
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("../../spl.js")
+const spl = require("spl")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_execute_initialise ( input ) {
     if ( spl.request ( input, "action" ) == "spl/execute/spawn" ) {
