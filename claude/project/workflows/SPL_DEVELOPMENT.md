@@ -26,17 +26,24 @@ This workflow defines the development process for SPL platform code within the s
 ## Development Process
 
 ### Phase 1: Development Work
-1. **Code Changes**: Make ALL code changes only within `spl-dev/` folders
-   - Core modules: `spl-dev/modules/`
-   - App modules: `spl-dev/apps/`
-2. **Testing**: Use dev router for all testing
+1. **Development Context**: ALL development happens within app context
+   - **New APIs**: Develop in `spl-dev/apps/{app}/modules/{api}/`
+   - **Core module changes**: Still develop within relevant app context
+   - **Why**: Lifts out only the code that matters, avoids coding amidst unrelated modules
+   - **Benefits**: Focused scope, cleaner iteration, immediate app overlay testing
+
+2. **Code Changes**: Make ALL code changes only within `spl-dev/` folders
+   - **Preferred**: App modules: `spl-dev/apps/{app}/modules/`
+   - **Legacy**: Core modules: `spl-dev/modules/` (only when app context not applicable)
+
+3. **Testing**: Use dev router for all testing
    ```bash
    spl_execute dev [options] <command>
    spl_execute dev -d <command>  # Debug mode
    spl_execute dev -v <command>  # Verbose mode
    spl_execute dev -t <command>  # Test mode
    ```
-3. **Validation**: Ensure functionality works correctly in development environment
+4. **Validation**: Ensure functionality works correctly in development environment
 
 ### Phase 2: Canonical Sync
 1. **Change Analysis**: 

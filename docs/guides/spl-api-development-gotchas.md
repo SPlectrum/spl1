@@ -207,6 +207,34 @@ TypeError: require(...).default is not a function
 **Cause**: Module doesn't export function as `.default`
 **Solution**: Use `exports.default = function name(input) {...}`
 
+## 7. Parameter Extraction Best Practices
+
+### **Issue**: Bulk parameter extraction vs individual parameter handling
+
+**The Problem**:
+Using `const params = spl.action(input)` to get all parameters at once reduces readability and prevents proper default handling.
+
+**Wrong Approach** (Less Readable):
+```javascript
+const params = spl.action(input);
+const file = params.file;
+const encoding = params.encoding || 'utf8';  // Manual default handling
+```
+
+**Correct Approach** (Individual Parameters):
+```javascript
+// Extract parameters individually for better readability and default handling
+const file = spl.action(input, 'file');
+const encoding = spl.action(input, 'encoding') || 'utf8';  // Clear default
+const recursive = spl.action(input, 'recursive') !== false; // Boolean default
+```
+
+**Benefits of Individual Parameter Extraction**:
+1. **Readability**: Each parameter is clearly defined and visible
+2. **Default Handling**: Explicit default values are obvious
+3. **Type Safety**: Individual extraction makes type expectations clear
+4. **Maintainability**: Easy to see which parameters are used
+
 ## Best Practices for Future Development
 
 1. **Always test scaffolding** before implementing complex logic
@@ -214,7 +242,8 @@ TypeError: require(...).default is not a function
 3. **Test help commands first** to verify argument parsing
 4. **Count directory levels carefully** for require paths
 5. **Follow SPL accessor pattern** - never manipulate input JSON directly
-6. **Document gotchas immediately** when encountered during development
+6. **Use individual parameter extraction** - `spl.action(input, 'param')` not `spl.action(input)`
+7. **Document gotchas immediately** when encountered during development
 
 ---
 

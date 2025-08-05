@@ -1,0 +1,47 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "gp/test" },
+            { "content": "Universal Testing Framework for SPL Platform - Provides quality gates and systematic API validation." },
+            { "content": "{bold syntax}: {italic ./spl_execute <app> test <options>}" },
+            { "content": "" },
+            { "content": "{bold Core Operations}: run, suite, assert, coverage" },
+            { "content": "{bold Test Discovery}: Auto-discovers tests in module/tests/ folders" },
+            { "content": "{bold SPL Integration}: Full workspace and debug output integration" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
+        
+        { "name": "batch", "alias": "b", "type": "String", "description": "JSON array of batch test operations for pipeline execution" },
+        
+        { "name": "mode", "alias": "m", "type": "String", "description": "Test operation mode (run, suite, assert, coverage)", "defaultValue": "run" },
+        
+        { "name": "module", "type": "String", "description": "Target module for testing (e.g., gp/fs, gp/fs/read)" },
+        
+        { "name": "recursive", "alias": "r", "type": "Boolean", "description": "Recursively test all submodules", "typeLabel": "flag" },
+        
+        { "name": "tags", "alias": "t", "type": "String", "description": "Filter tests by tags (comma-separated: smoke,critical,integration)" },
+        
+        { "name": "step", "alias": "s", "type": "Boolean", "description": "Step-by-step execution with debugging controls", "typeLabel": "flag" },
+        
+        { "name": "debug", "alias": "d", "type": "Boolean", "description": "Enable detailed debug output during test execution", "typeLabel": "flag" },
+        
+        { "name": "discover", "type": "Boolean", "description": "Auto-discover and run all tests in specified app/module", "typeLabel": "flag" },
+        
+        { "name": "app", "alias": "a", "type": "String", "description": "Target app for test discovery (e.g., gp, spl)" },
+        
+        { "name": "coverage", "alias": "c", "type": "Boolean", "description": "Generate coverage analysis report", "typeLabel": "flag" },
+        
+        { "name": "filter", "alias": "f", "type": "String", "description": "Filter test cases by name pattern" },
+        
+        { "name": "timeout", "type": "Number", "description": "Test execution timeout in milliseconds", "defaultValue": 30000 },
+        
+        { "name": "failfast", "type": "Boolean", "description": "Stop execution on first test failure", "typeLabel": "flag" },
+        
+        { "name": "isolated", "alias": "i", "type": "Boolean", "description": "Run tests in isolated workspace environments", "typeLabel": "flag" }
+    ]
+}

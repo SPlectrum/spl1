@@ -1,4 +1,0 @@
-[
-  {"method": "read", "params": {"file": "test.txt"}},
-  {"method": "list", "params": {"path": "."}}
-]
