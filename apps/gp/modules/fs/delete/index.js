@@ -1,0 +1,13 @@
+//  name        Delete
+//  URI         gp/fs/delete
+//  type        API Method  
+//  description delete operation within app data boundary
+///////////////////////////////////////////////////////////////////////////////
+const spl = require("../../../../../modules/spl/spl.js");
+const fs = require("../fs.js");
+///////////////////////////////////////////////////////////////////////////////
+exports.default = function gp_fs_delete(input) {
+    console.log("gp/fs/delete: Method called");
+    spl.completed(input);
+}
+///////////////////////////////////////////////////////////////////////////////

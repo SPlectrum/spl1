@@ -1,0 +1,19 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "gp/fs/write" },
+            { "content": "Writes file contents within app data boundary." },
+            { "content": "{bold syntax}: {italic ./spl_execute <app> fs/write <options>}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" }, 
+        { "name": "file", "alias": "f", "type": "String", "description": "The file path to write (relative to app data boundary)" }, 
+        { "name": "content", "alias": "c", "type": "String", "multiple": true, "description": "Content to write to the file" },
+        { "name": "source", "alias": "s", "description": "Workspace key containing content to write (alternative to --content)" },
+        { "name": "encoding", "alias": "e", "description": "File encoding (utf8, binary, base64, etc.)", "defaultValue": "utf8" }
+    ]
+}

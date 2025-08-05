@@ -178,7 +178,16 @@ exports.moduleAction = function (input, module)
         try {
             return require(appPath).default(input);
         } catch (e) {
-            // Fall back to global modules
+            // TODO: Remove this enhanced error handling when gp/test API is implemented (Issue #061)
+            // The gp/test API will provide comprehensive pre-execution module validation
+            // Only fall back to global modules for MODULE_NOT_FOUND
+            // Bubble up all other errors (syntax, import, runtime errors)
+            if (e.code === 'MODULE_NOT_FOUND') {
+                // App module doesn't exist, fall back to global modules
+            } else {
+                // App module exists but has errors - bubble up the real error
+                throw e;
+            }
         }
     }
     

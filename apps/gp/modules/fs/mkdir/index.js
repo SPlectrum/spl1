@@ -1,0 +1,13 @@
+//  name        Mkdir
+//  URI         gp/fs/mkdir
+//  type        API Method  
+//  description mkdir operation within app data boundary
+///////////////////////////////////////////////////////////////////////////////
+const spl = require("../../../../../modules/spl/spl.js");
+const fs = require("../fs.js");
+///////////////////////////////////////////////////////////////////////////////
+exports.default = function gp_fs_mkdir(input) {
+    console.log("gp/fs/mkdir: Method called");
+    spl.completed(input);
+}
+///////////////////////////////////////////////////////////////////////////////

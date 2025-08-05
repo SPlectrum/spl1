@@ -1,0 +1,18 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "gp/fs/copy" },
+            { "content": "Copies files within app data boundary." },
+            { "content": "{bold syntax}: {italic ./spl_execute <app> fs/copy <options>}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" }, 
+        { "name": "from", "description": "Source file path (relative to app data boundary)" }, 
+        { "name": "to", "description": "Destination file path (relative to app data boundary)" },
+        { "name": "overwrite", "type": "Boolean", "description": "Allow overwriting existing files", "typeLabel": "flag" }
+    ]
+}

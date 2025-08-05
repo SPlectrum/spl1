@@ -1,0 +1,17 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "gp/fs/list" },
+            { "content": "Lists files and directories within app data boundary." },
+            { "content": "{bold syntax}: {italic ./spl_execute <app> fs/list <options>}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
+        { "name": "path", "alias": "p", "type": "String", "description": "Directory path to list (relative to app data boundary)", "defaultValue": "." },
+        { "name": "stats", "alias": "s", "type": "Boolean", "description": "Include detailed file statistics", "typeLabel": "flag" }
+    ]
+}

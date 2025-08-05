@@ -1,0 +1,28 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "gp/fs" },
+            { "content": "General-purpose filesystem API with batch orchestration capability." },
+            { "content": "{bold syntax}: {italic ./spl_execute <app> fs <options>}" },
+            { "content": "" },
+            { "content": "{bold API-Level Defaults}: Parameters set at API level inherit to all methods in batch pipeline" },
+            { "content": "{bold Batch Mode}: Use --batch with array of operations for pipeline execution" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
+        
+        { "name": "batch", "alias": "b", "type": "String", "description": "JSON array of batch operations to execute in pipeline" },
+        
+        { "name": "encoding", "alias": "e", "type": "String", "description": "Default file encoding for read/write operations (utf8, binary, base64, etc.)", "defaultValue": "utf8" },
+        
+        { "name": "stats", "alias": "s", "type": "Boolean", "description": "Default flag for including detailed file statistics in list operations", "typeLabel": "flag" },
+        
+        { "name": "overwrite", "alias": "o", "type": "Boolean", "description": "Default flag for allowing file overwriting in copy/move operations", "typeLabel": "flag" },
+        
+        { "name": "errorMode", "type": "String", "description": "Error handling mode for batch operations (fail-fast, continue)", "defaultValue": "fail-fast" }
+    ]
+}

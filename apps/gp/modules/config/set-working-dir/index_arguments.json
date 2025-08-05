@@ -1,0 +1,23 @@
+{
+  "headers": {
+    "header": [
+      { "header": "fs/config/set-working-dir" },
+      { "content": "Configure the working directory for fs operations." },
+      { "content": "{bold syntax}: {italic ./spl <appOpts> fs/config/set-working-dir <path>}" }
+    ]
+  },
+  "value": [
+    {
+      "name": "help",
+      "alias": "h",
+      "type": "Boolean",
+      "description": "show help information"
+    },
+    {
+      "name": "path",
+      "type": "String",
+      "defaultOption": true,
+      "description": "Path (relative or absolute) for working directory. Use 'local' for normal directory"
+    }
+  ]
+}

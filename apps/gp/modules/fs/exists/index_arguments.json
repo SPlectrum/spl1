@@ -1,0 +1,16 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "gp/fs/exists" },
+            { "content": "Checks if file or directory exists within app data boundary." },
+            { "content": "{bold syntax}: {italic ./spl_execute <app> fs/exists <options>}" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
+        { "name": "path", "alias": "p", "type": "String", "description": "File or directory path to check (relative to app data boundary)" }
+    ]
+}

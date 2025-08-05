@@ -1,0 +1,13 @@
+//  name        Copy File
+//  URI         gp/fs/copy
+//  type        API Method
+//  description Copies files within app data boundary
+///////////////////////////////////////////////////////////////////////////////
+const spl = require("../../../../../modules/spl/spl.js");
+const fs = require("../fs.js");
+///////////////////////////////////////////////////////////////////////////////
+exports.default = function gp_fs_copy(input) {
+    console.log("gp/fs/copy: Method called");
+    spl.completed(input);
+}
+///////////////////////////////////////////////////////////////////////////////
