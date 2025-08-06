@@ -55,31 +55,9 @@ exports.default = function gp_test_api(input) {
         spl.gotoExecute(input, "spl/execute/set-pipeline");
         
     } else {
-        // Single operation mode
-        const testModule = spl.action(input, "module");
-        const mode = spl.action(input, "mode") || "run";
-        
-        spl.history(input, `gp/test: Universal Testing Framework activated`);
-        spl.history(input, `gp/test: Mode=${mode}, Module=${testModule || 'all'}`);
-        
-        // Route to appropriate test operation based on mode
-        switch (mode) {
-            case "run":
-                spl.gotoExecute(input, "gp/test/run");
-                break;
-            case "suite":
-                spl.gotoExecute(input, "gp/test/suite");
-                break;
-            case "assert":
-                spl.gotoExecute(input, "gp/test/assert");
-                break;
-            case "coverage":
-                spl.gotoExecute(input, "gp/test/coverage");
-                break;
-            default:
-                spl.history(input, `gp/test: Running default test execution`);
-                spl.gotoExecute(input, "gp/test/run");
-        }
+        // API config mode - arguments automatically set by method instantiation
+        spl.history(input, `gp/test: API config mode`);
+        spl.completed(input);
     }
 }
 ///////////////////////////////////////////////////////////////////////////////

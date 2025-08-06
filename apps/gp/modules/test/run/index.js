@@ -1,201 +1,127 @@
-//  name        Test Runner
+//  name        Test Work Package Execution
 //  URI         gp/test/run
 //  type        API Method
-//  description Execute test suites with full SPL integration
-//              Provides systematic testing with workspace isolation and debug output
+//  description Executes work packages created by plan method (instantiation, json-validation, test-execution)
+//              Pipeline continuation: discover → plan → run → report
 ///////////////////////////////////////////////////////////////////////////////
 const spl = require("spl");
-const test = require("../test.js");
+const fs = require('fs');
 ///////////////////////////////////////////////////////////////////////////////
 
-// IMPLEMENTATION - Universal Test Runner with SPL Integration
+// IMPLEMENTATION - Work Package Execution
 exports.default = function gp_test_run(input) {
+    const failfast = spl.action(input, 'failfast') === true;
+    
+    spl.history(input, `test/run: Starting work package execution`);
+    spl.history(input, `test/run: Failfast=${failfast}`);
+    
     try {
-        // Get app context and method parameters using individual extraction
-        const cwd = spl.context(input, "cwd");
-        const appRoot = spl.context(input, "appRoot") || "apps/gp";
-        const fullAppPath = `${cwd}/${appRoot}`;
-        
-        const targetModule = spl.action(input, 'module');
-        const recursive = spl.action(input, 'recursive') !== false;
-        const tags = spl.action(input, 'tags');
-        const step = spl.action(input, 'step') === true;
-        const debug = spl.action(input, 'debug') === true;
-        const discover = spl.action(input, 'discover') === true;
-        const app = spl.action(input, 'app') || 'gp';
-        const filter = spl.action(input, 'filter');
-        const timeout = spl.action(input, 'timeout') || 30000;
-        const failfast = spl.action(input, 'failfast') === true;
-        const isolated = spl.action(input, 'isolated') !== false;
-        
-        spl.history(input, `test/run: Starting test execution`);
-        spl.history(input, `test/run: Module=${targetModule || 'all'}, Recursive=${recursive}, Tags=${tags || 'none'}`);
-        
-        // Set execution time in request context
-        spl.rcSet(input.headers, "spl.request.executionTime", Date.now());
-        
-        // Discover tests based on parameters
-        let testSuites = [];
-        
-        if (discover) {
-            spl.history(input, `test/run: Auto-discovering tests in app="${app}"`);
-            testSuites = test.discoverTests(fullAppPath, null, { recursive: true });
-        } else if (targetModule) {
-            spl.history(input, `test/run: Discovering tests for module="${targetModule}"`);
-            testSuites = test.discoverTests(fullAppPath, targetModule, { recursive });
-        } else {
-            spl.history(input, `test/run: No specific target - discovering all tests`);
-            testSuites = test.discoverTests(fullAppPath, null, { recursive });
+        // Get work packages from pattern-based workspace
+        const testApiRecord = spl.wsRef(input, "gp/test");
+        if (!testApiRecord || !testApiRecord.value) {
+            throw new Error("No test data available - run gp/test/discover and gp/test/plan first");
         }
         
-        spl.history(input, `test/run: Found ${testSuites.length} test suites`);
-        
-        // Filter by tags if specified
-        if (tags) {
-            const originalCount = testSuites.length;
-            testSuites = test.filterTestsByTags(testSuites, tags);
-            spl.history(input, `test/run: Filtered by tags "${tags}": ${originalCount} → ${testSuites.length} suites`);
+        // Find the current request record  
+        const currentRequestRecord = spl.wsRef(input, "gp/test/current-request");
+        if (!currentRequestRecord || !currentRequestRecord.value) {
+            throw new Error("No current request found - run gp/test/discover first");
         }
         
-        // Filter by name pattern if specified
-        if (filter) {
-            const originalCount = testSuites.length;
-            const filterRegex = new RegExp(filter, 'i');
-            testSuites = testSuites.filter(suite => 
-                filterRegex.test(suite.testFile) || 
-                filterRegex.test(suite.suite.name || '')
-            );
-            spl.history(input, `test/run: Filtered by pattern "${filter}": ${originalCount} → ${testSuites.length} suites`);
+        const requestKey = currentRequestRecord.value;
+        const requestRecord = testApiRecord.value[requestKey];
+        
+        if (!requestRecord || !requestRecord.value.plan) {
+            throw new Error("No work packages found - run gp/test/plan first");
         }
         
-        if (testSuites.length === 0) {
-            spl.history(input, `test/run: No test suites found matching criteria`);
-            spl.completed(input);
-            return;
-        }
+        const workPackages = requestRecord.value.plan.workPackages || [];
+        spl.history(input, `test/run: Executing ${workPackages.length} work packages`);
         
-        // Execute test suites
         const allResults = [];
-        let totalTests = 0;
-        let passedTests = 0;
-        let failedTests = 0;
+        let executionStopped = false;
         
-        for (const suiteInfo of testSuites) {
-            spl.history(input, `test/run: Executing suite "${suiteInfo.testFile}" for module "${suiteInfo.module}"`);
+        // Execute each work package
+        for (const workPackage of workPackages) {
+            if (executionStopped) break;
             
-            const suite = suiteInfo.suite;
-            const suiteResults = [];
+            spl.history(input, `test/run: Executing ${workPackage.type} package`);
             
-            if (!suite.tests || !Array.isArray(suite.tests)) {
-                spl.history(input, `test/run: WARNING - Invalid test suite format in ${suiteInfo.testFile}`);
-                continue;
-            }
+            let packageResults = [];
             
-            // Execute individual tests in the suite
-            for (const testCase of suite.tests) {
-                totalTests++;
-                
-                if (step) {
-                    spl.history(input, `test/run: STEP MODE - Press Enter to execute "${testCase.name}"`);
-                    // In real implementation, this would wait for user input
-                }
-                
-                spl.history(input, `test/run: → Running test "${testCase.name}"`);
-                
-                try {
-                    const testResult = test.executeTest(spl, input, testCase, { 
-                        isolated, 
-                        timeout, 
-                        debug 
-                    });
-                    
-                    suiteResults.push(testResult);
-                    
-                    if (testResult.result === test.TestResult.PASS) {
-                        passedTests++;
-                        spl.history(input, `test/run: ✓ PASS - ${testCase.name} (${testResult.duration}ms)`);
-                    } else {
-                        failedTests++;
-                        spl.history(input, `test/run: ✗ FAIL - ${testCase.name}: ${testResult.message}`);
-                        
-                        if (failfast) {
-                            spl.history(input, `test/run: FAIL-FAST mode - stopping execution`);
-                            break;
-                        }
-                    }
-                    
-                } catch (error) {
-                    failedTests++;
-                    const testResult = {
-                        name: testCase.name,
-                        result: test.TestResult.ERROR,
-                        duration: 0,
-                        message: `Test execution error: ${error.message}`,
-                        error: error
-                    };
-                    
-                    suiteResults.push(testResult);
-                    spl.history(input, `test/run: ✗ ERROR - ${testCase.name}: ${error.message}`);
-                    
-                    if (failfast) {
-                        spl.history(input, `test/run: FAIL-FAST mode - stopping execution`);
+            try {
+                switch (workPackage.type) {
+                    case 'instantiation':
+                        packageResults = executeInstantiationPackage(input, workPackage);
                         break;
-                    }
+                    case 'json-validation':
+                        packageResults = executeJsonValidationPackage(input, workPackage);
+                        break;
+                    case 'test-execution':
+                        packageResults = executeTestExecutionPackage(input, workPackage);
+                        break;
+                    default:
+                        throw new Error(`Unknown work package type: ${workPackage.type}`);
+                }
+                
+                allResults.push(...packageResults);
+                
+                // Check for failures if failfast is enabled
+                if (failfast && packageResults.some(r => r.status === 'FAIL' || r.status === 'ERROR')) {
+                    spl.history(input, `test/run: Stopping execution due to failfast mode`);
+                    executionStopped = true;
+                }
+                
+            } catch (error) {
+                const errorResult = {
+                    type: workPackage.type,
+                    status: 'ERROR',
+                    message: error.message,
+                    duration: 0,
+                    timestamp: new Date().toISOString()
+                };
+                
+                allResults.push(errorResult);
+                
+                if (failfast) {
+                    spl.history(input, `test/run: Stopping execution due to error in failfast mode`);
+                    executionStopped = true;
                 }
             }
-            
-            // Add suite results to overall results
-            allResults.push({
-                module: suiteInfo.module,
-                suite: suiteInfo.testFile,
-                results: suiteResults
-            });
-            
-            if (failfast && failedTests > 0) break;
         }
         
-        // Generate comprehensive test report
-        const flatResults = allResults.flatMap(suite => suite.results);
-        const report = test.generateReport(flatResults, { verbose: debug });
+        // Generate summary
+        const summary = generateExecutionSummary(allResults);
         
-        spl.history(input, `test/run: SUMMARY - Total: ${totalTests}, Passed: ${passedTests}, Failed: ${failedTests}`);
-        spl.history(input, `test/run: Success Rate: ${report.summary.successRate}%, Duration: ${report.summary.totalDuration}ms`);
+        spl.history(input, `test/run: Executed ${allResults.length} tests - ${summary.passed} passed, ${summary.failed} failed, ${summary.errors} errors`);
         
-        // Store results in workspace following API record pattern
-        // STEP 1: Get the API record (gp/test)
-        let apiRecord = spl.wsRef(input, "gp/test");
-        if (!apiRecord) {
-            apiRecord = {
-                headers: { gp: { test: { api: "gp/test", timestamp: new Date().toISOString() } } },
-                value: {}
-            };
-        }
-        
-        // STEP 2: Work within the API record - add test results
-        const resultKey = spl.fURI("run", targetModule || "all");
-        apiRecord.value[resultKey] = test.createTestRecord(targetModule || "all", {
-            report: report,
-            suites: allResults,
-            configuration: {
-                recursive, tags, filter, isolated, failfast,
-                timeout, step, debug, discover
+        // Store run results in the same request record
+        requestRecord.value.run = {
+            results: allResults,
+            summary: summary,
+            metadata: {
+                totalTests: allResults.length,
+                executionStopped: executionStopped,
+                timestamp: new Date().toISOString()
             }
-        });
+        };
         
-        // Save the updated API record back to workspace
-        spl.wsSet(input, "gp/test", apiRecord);
+        // Update workflow to include run
+        requestRecord.headers.workflow = Array.from(new Set([...requestRecord.headers.workflow, 'run']));
         
-        // Set overall execution result
-        if (failedTests === 0) {
-            spl.history(input, `test/run: All tests passed successfully`);
-        } else {
+        // Save updated record
+        spl.wsSet(input, "gp/test", testApiRecord);
+        
+        // Set error if any tests failed
+        if (summary.failed > 0 || summary.errors > 0) {
             spl.rcSet(input.headers, "spl.execute.error", {
-                message: `${failedTests} test(s) failed`,
-                code: 'TEST_FAILURES',
-                details: report.summary
+                message: `Test execution failed: ${summary.failed} failed, ${summary.errors} errors`,
+                code: 'TEST_EXECUTION_FAILED',
+                details: summary
             });
-            spl.history(input, `test/run: ${failedTests} test(s) failed - check results for details`);
         }
+        
+        spl.history(input, `test/run: Work package execution completed`);
         
     } catch (error) {
         spl.rcSet(input.headers, "spl.execute.error", {
@@ -209,4 +135,160 @@ exports.default = function gp_test_run(input) {
     
     spl.completed(input);
 }
+
+// Execute instantiation work package - test that modules can be required
+function executeInstantiationPackage(input, workPackage) {
+    const results = [];
+    
+    spl.history(input, `test/run: Testing instantiation of ${workPackage.filePaths.length} modules`);
+    
+    for (const filePath of workPackage.filePaths) {
+        const startTime = Date.now();
+        
+        try {
+            // Clear require cache to ensure fresh require
+            delete require.cache[require.resolve(filePath)];
+            
+            // Attempt to require the module
+            const module = require(filePath);
+            
+            // Check that module exports something
+            if (module === undefined || module === null) {
+                throw new Error('Module exports undefined or null');
+            }
+            
+            results.push({
+                type: 'instantiation',
+                filePath: filePath,
+                status: 'PASS',
+                message: 'Module instantiated successfully',
+                duration: Date.now() - startTime,
+                timestamp: new Date().toISOString()
+            });
+            
+            spl.history(input, `test/run: ✓ ${filePath}`);
+            
+        } catch (error) {
+            results.push({
+                type: 'instantiation',
+                filePath: filePath,
+                status: 'FAIL',
+                message: `Instantiation failed: ${error.message}`,
+                error: error.toString(),
+                duration: Date.now() - startTime,
+                timestamp: new Date().toISOString()
+            });
+            
+            spl.history(input, `test/run: ✗ ${filePath} - ${error.message}`);
+        }
+    }
+    
+    return results;
+}
+
+// Execute JSON validation work package - test that JSON files are valid
+function executeJsonValidationPackage(input, workPackage) {
+    const results = [];
+    
+    spl.history(input, `test/run: Validating JSON for ${workPackage.filePaths.length} files`);
+    
+    for (const filePath of workPackage.filePaths) {
+        const startTime = Date.now();
+        
+        try {
+            // Read file content
+            const fileContent = fs.readFileSync(filePath, 'utf8');
+            
+            // Attempt to parse JSON
+            const jsonData = JSON.parse(fileContent);
+            
+            // Check that parsed data is not null/undefined
+            if (jsonData === undefined || jsonData === null) {
+                throw new Error('JSON parsed to null or undefined');
+            }
+            
+            results.push({
+                type: 'json-validation',
+                filePath: filePath,
+                status: 'PASS',
+                message: 'JSON validation successful',
+                duration: Date.now() - startTime,
+                timestamp: new Date().toISOString()
+            });
+            
+            spl.history(input, `test/run: ✓ ${filePath}`);
+            
+        } catch (error) {
+            results.push({
+                type: 'json-validation',
+                filePath: filePath,
+                status: 'FAIL',
+                message: `JSON validation failed: ${error.message}`,
+                error: error.toString(),
+                duration: Date.now() - startTime,
+                timestamp: new Date().toISOString()
+            });
+            
+            spl.history(input, `test/run: ✗ ${filePath} - ${error.message}`);
+        }
+    }
+    
+    return results;
+}
+
+// Execute test execution work package - stub for now
+function executeTestExecutionPackage(input, workPackage) {
+    const results = [];
+    
+    spl.history(input, `test/run: Stubbing test execution for ${workPackage.commands?.length || 0} commands`);
+    
+    // For now, just create stub results
+    for (const command of workPackage.commands || []) {
+        results.push({
+            type: 'test-execution',
+            testFile: command.testFile,
+            targetModule: command.targetModule,
+            syntax: command.syntax,
+            status: 'STUB',
+            message: 'Test execution stubbed - not yet implemented',
+            duration: 0,
+            timestamp: new Date().toISOString()
+        });
+        
+        spl.history(input, `test/run: STUB ${command.testFile} (${command.syntax})`);
+    }
+    
+    return results;
+}
+
+// Generate execution summary
+function generateExecutionSummary(results) {
+    const summary = {
+        total: results.length,
+        passed: 0,
+        failed: 0,
+        errors: 0,
+        stubbed: 0
+    };
+    
+    for (const result of results) {
+        switch (result.status) {
+            case 'PASS':
+                summary.passed++;
+                break;
+            case 'FAIL':
+                summary.failed++;
+                break;
+            case 'ERROR':
+                summary.errors++;
+                break;
+            case 'STUB':
+                summary.stubbed++;
+                break;
+        }
+    }
+    
+    return summary;
+}
+
 ///////////////////////////////////////////////////////////////////////////////

@@ -1,0 +1,60 @@
+{
+    "name": "Basic filesystem operations",
+    "description": "Tests core read, write, exists, and info operations for gp/fs API",
+    "tags": ["smoke", "critical", "fs"],
+    "tests": [
+        {
+            "name": "read existing file",
+            "description": "Test reading a file that exists in app data boundary",
+            "action": "gp/fs/read",
+            "params": {
+                "file": "test.txt"
+            },
+            "expect": {
+                "workspace": "contains 'test.txt'",
+                "history": "contains 'Successfully read'",
+                "error": "none"
+            }
+        },
+        {
+            "name": "write new file",
+            "description": "Test writing content to a new file",
+            "action": "gp/fs/write",
+            "params": {
+                "file": "new-test.txt",
+                "content": "Hello from test"
+            },
+            "expect": {
+                "workspace": "contains 'new-test.txt'",
+                "history": "contains 'Successfully wrote'",
+                "error": "none"
+            }
+        },
+        {
+            "name": "check file exists",
+            "description": "Test existence check for a known file",
+            "action": "gp/fs/exists",
+            "params": {
+                "path": "test.txt"
+            },
+            "expect": {
+                "workspace": "contains 'exists'",
+                "history": "contains 'exists'",
+                "error": "none"
+            }
+        },
+        {
+            "name": "get file info",
+            "description": "Test retrieving file metadata information",
+            "action": "gp/fs/info",
+            "params": {
+                "path": "test.txt"
+            },
+            "expect": {
+                "workspace": "contains 'size'",
+                "history": "contains 'Retrieved info'",
+                "error": "none"
+            }
+        }
+    ]
+}

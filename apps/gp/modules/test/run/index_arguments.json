@@ -4,38 +4,20 @@
         "header": 
         [
             { "header": "gp/test/run" },
-            { "content": "Execute test suites with full SPL integration - Provides systematic testing with workspace isolation." },
+            { "content": "Work package execution - executes work packages created by plan method (instantiation, json-validation, test-execution)." },
             { "content": "{bold syntax}: {italic ./spl_execute <app> test/run <options>}" },
             { "content": "" },
-            { "content": "{bold Test Discovery}: Auto-discovers tests in module/tests/ folders" },
-            { "content": "{bold Isolation}: Tests run in isolated workspace environments by default" },
-            { "content": "{bold Integration}: Full SPL debug output and workspace integration" }
+            { "content": "{bold Pipeline}: discover → plan → run → report" },
+            { "content": "{bold Input}: Work packages from workspace (created by plan method)" },
+            { "content": "{bold Output}: Test execution results with pass/fail status" }
         ]
     },
     "value": 
     [ 
         { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
         
-        { "name": "module", "type": "String", "description": "Target module for testing (e.g., gp/fs, gp/fs/read)" },
+        { "name": "module", "alias": "m", "type": "String", "description": "Target module filter (optional)" },
         
-        { "name": "recursive", "alias": "r", "type": "Boolean", "description": "Recursively test all submodules", "typeLabel": "flag", "defaultValue": true },
-        
-        { "name": "tags", "alias": "t", "type": "String", "description": "Filter tests by tags (comma-separated: smoke,critical,integration)" },
-        
-        { "name": "step", "alias": "s", "type": "Boolean", "description": "Step-by-step execution with debugging controls", "typeLabel": "flag" },
-        
-        { "name": "debug", "alias": "d", "type": "Boolean", "description": "Enable detailed debug output during test execution", "typeLabel": "flag" },
-        
-        { "name": "discover", "type": "Boolean", "description": "Auto-discover and run all tests in specified app/module", "typeLabel": "flag" },
-        
-        { "name": "app", "alias": "a", "type": "String", "description": "Target app for test discovery (e.g., gp, spl)", "defaultValue": "gp" },
-        
-        { "name": "filter", "alias": "f", "type": "String", "description": "Filter test cases by name pattern (regex supported)" },
-        
-        { "name": "timeout", "type": "Number", "description": "Test execution timeout in milliseconds", "defaultValue": 30000 },
-        
-        { "name": "failfast", "type": "Boolean", "description": "Stop execution on first test failure", "typeLabel": "flag" },
-        
-        { "name": "isolated", "alias": "i", "type": "Boolean", "description": "Run tests in isolated workspace environments", "typeLabel": "flag", "defaultValue": true }
+        { "name": "failfast", "alias": "f", "type": "Boolean", "description": "Stop execution on first test failure", "typeLabel": "flag" }
     ]
 }

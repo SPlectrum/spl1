@@ -16,357 +16,147 @@ exports.TestResult = {
     ERROR: 'ERROR'
 };
 
-// Test discovery - find test suite files in module directories
-exports.discoverTests = function(appRoot, modulePath, options = {}) {
-    const results = [];
-    const basePath = path.join(appRoot, 'modules');
+// REPORT GENERATION FUNCTIONS
+
+// Output report to stdout
+exports.outputReport = function(report, options) {
+    const { format, includeDetails } = options;
     
-    try {
-        const searchPath = modulePath ? path.join(basePath, modulePath) : basePath;
-        const recursive = options.recursive !== false;
-        
-        const traverse = (currentPath, relativePath = '') => {
-            if (!fs.existsSync(currentPath)) return;
-            
-            const entries = fs.readdirSync(currentPath, { withFileTypes: true });
-            
-            for (const entry of entries) {
-                const fullPath = path.join(currentPath, entry.name);
-                const relativeEntryPath = path.join(relativePath, entry.name);
+    console.log("=".repeat(60));
+    console.log(`TEST REPORT - ${report.requestKey}`);
+    console.log("=".repeat(60));
+    
+    // Workflow sections with simplified formatting
+    if (report.sections) {
+        Object.entries(report.sections).forEach(([sectionName, section]) => {
+            if (sectionName === 'discovery') {
+                console.log(`DISCOVERY: ${section.summary.assets} assets`);
+                section.items.assets.forEach(asset => {
+                    console.log(`  ${asset}`);
+                });
                 
-                if (entry.isDirectory()) {
-                    if (entry.name === 'tests') {
-                        // Found a tests directory - scan for test suites
-                        const testFiles = this.scanTestDirectory(fullPath);
-                        for (const testFile of testFiles) {
-                            results.push({
-                                module: relativePath || path.basename(currentPath),
-                                testFile: testFile.name,
-                                fullPath: testFile.path,
-                                suite: testFile.suite
-                            });
-                        }
-                    } else if (recursive && !entry.name.startsWith('.')) {
-                        // Recurse into subdirectories
-                        traverse(fullPath, relativeEntryPath);
+            } else if (sectionName === 'plan') {
+                console.log(`PLAN: ${section.summary.workPackages} packages`);
+                section.items.workPackages.forEach((pkg, i) => {
+                    console.log(`  ${pkg.type}:`);
+                    if (pkg.filePaths) {
+                        pkg.filePaths.forEach(path => {
+                            console.log(`    ${path}`);
+                        });
+                    } else if (pkg.commands) {
+                        // Group test files by syntax prefix
+                        const testsByPrefix = {};
+                        pkg.commands.forEach(cmd => {
+                            const prefix = cmd.syntax || 'simple';
+                            if (!testsByPrefix[prefix]) testsByPrefix[prefix] = [];
+                            testsByPrefix[prefix].push(cmd.testFile);
+                        });
+                        Object.entries(testsByPrefix).forEach(([prefix, files]) => {
+                            console.log(`    ${prefix}: ${files.join(', ')}`);
+                        });
                     }
-                }
-            }
-        };
-        
-        traverse(searchPath);
-        return results;
-        
-    } catch (error) {
-        throw new Error(`Test discovery failed: ${error.message}`);
-    }
-};
-
-// Scan a tests directory for JSON test suite files
-exports.scanTestDirectory = function(testsPath) {
-    const testFiles = [];
-    
-    try {
-        if (!fs.existsSync(testsPath)) return testFiles;
-        
-        const entries = fs.readdirSync(testsPath);
-        
-        for (const entry of entries) {
-            if (entry.endsWith('.json')) {
-                const filePath = path.join(testsPath, entry);
-                try {
-                    const content = fs.readFileSync(filePath, 'utf8');
-                    const suite = JSON.parse(content);
+                });
+                
+            } else if (sectionName === 'run') {
+                const totalTime = section.items.results.reduce((sum, r) => sum + (r.duration || 0), 0);
+                console.log(`RUN: ${totalTime}ms total`);
+                
+                // Group results by package type
+                const resultsByType = {};
+                section.items.results.forEach(result => {
+                    const type = result.type;
+                    if (!resultsByType[type]) resultsByType[type] = [];
+                    resultsByType[type].push(result);
+                });
+                
+                Object.entries(resultsByType).forEach(([type, results]) => {
+                    const passed = results.filter(r => r.status === 'PASS').length;
+                    const failed = results.filter(r => r.status === 'FAIL' || r.status === 'ERROR').length;
+                    const stubbed = results.filter(r => r.status === 'STUB').length;
                     
-                    testFiles.push({
-                        name: entry,
-                        path: filePath,
-                        suite: suite
+                    let summary = `${passed} passed`;
+                    if (failed > 0) summary += `, ${failed} failed`;
+                    if (stubbed > 0) summary += `, ${stubbed} stubbed`;
+                    
+                    console.log(`  ${type}: ${summary}`);
+                    
+                    // Show failures in detail
+                    const failedResults = results.filter(r => r.status === 'FAIL' || r.status === 'ERROR');
+                    failedResults.forEach(result => {
+                        const asset = result.filePath || result.testFile || 'unknown';
+                        console.log(`    FAIL: ${asset} - ${result.message}`);
                     });
-                } catch (error) {
-                    // Skip invalid JSON files
-                    console.warn(`Skipping invalid test file ${entry}: ${error.message}`);
-                }
+                });
             }
-        }
-        
-        return testFiles;
-        
-    } catch (error) {
-        throw new Error(`Failed to scan test directory ${testsPath}: ${error.message}`);
-    }
-};
-
-// Execute a single test case
-exports.executeTest = function(spl, input, testCase, options = {}) {
-    const startTime = Date.now();
-    const isolated = options.isolated !== false;
-    
-    try {
-        spl.history(input, `test: Executing "${testCase.name}"`);
-        
-        // Create isolated workspace if requested
-        let originalWorkspace = null;
-        if (isolated) {
-            originalWorkspace = this.captureWorkspace(input);
-            this.resetWorkspace(input);
-        }
-        
-        // Execute the test action
-        const testInput = this.createTestInput(input, testCase);
-        const result = this.runTestAction(spl, testInput, testCase);
-        
-        // Restore workspace if isolated
-        if (isolated && originalWorkspace) {
-            this.restoreWorkspace(input, originalWorkspace);
-        }
-        
-        const duration = Date.now() - startTime;
-        
-        return {
-            name: testCase.name,
-            result: this.TestResult.PASS,
-            duration: duration,
-            message: `Test passed in ${duration}ms`,
-            details: result
-        };
-        
-    } catch (error) {
-        const duration = Date.now() - startTime;
-        
-        return {
-            name: testCase.name,
-            result: this.TestResult.FAIL,
-            duration: duration,
-            message: error.message,
-            error: error
-        };
-    }
-};
-
-// Create test input based on test case parameters
-exports.createTestInput = function(originalInput, testCase) {
-    // Create a copy of the input with test-specific parameters
-    const testInput = JSON.parse(JSON.stringify(originalInput));
-    
-    // Override action parameters with test case params
-    if (testCase.params) {
-        if (!testInput.value) testInput.value = {};
-        if (!testInput.value.parsed) testInput.value.parsed = {};
-        if (!testInput.value.parsed.line_0) testInput.value.parsed.line_0 = {};
-        
-        // Set test parameters
-        Object.assign(testInput.value.parsed.line_0, testCase.params);
-    }
-    
-    return testInput;
-};
-
-// Run the actual test action
-exports.runTestAction = function(spl, testInput, testCase) {
-    // This would execute the SPL action specified in testCase.action
-    // For now, return a basic result structure
-    return {
-        action: testCase.action,
-        params: testCase.params,
-        executed: true
-    };
-};
-
-// Workspace management for test isolation
-exports.captureWorkspace = function(input) {
-    if (input.value && input.value.workspace) {
-        return JSON.parse(JSON.stringify(input.value.workspace));
-    }
-    return {};
-};
-
-exports.resetWorkspace = function(input) {
-    if (!input.value) input.value = {};
-    input.value.workspace = {};
-};
-
-exports.restoreWorkspace = function(input, workspace) {
-    if (!input.value) input.value = {};
-    input.value.workspace = workspace;
-};
-
-// Assertion engine for test validation
-exports.evaluateAssertions = function(spl, input, testCase) {
-    const assertions = testCase.expect || {};
-    const results = [];
-    
-    // Workspace assertions
-    if (assertions.workspace) {
-        const result = this.evaluateWorkspaceAssertion(spl, input, assertions.workspace);
-        results.push({
-            type: 'workspace',
-            expression: assertions.workspace,
-            result: result.success,
-            message: result.message
         });
     }
     
-    // History assertions
-    if (assertions.history) {
-        const result = this.evaluateHistoryAssertion(spl, input, assertions.history);
-        results.push({
-            type: 'history',
-            expression: assertions.history,
-            result: result.success,
-            message: result.message
-        });
-    }
-    
-    // Error assertions
-    if (assertions.error) {
-        const result = this.evaluateErrorAssertion(spl, input, assertions.error);
-        results.push({
-            type: 'error',
-            expression: assertions.error,
-            result: result.success,
-            message: result.message
-        });
-    }
-    
-    return results;
+    console.log("=".repeat(60));
 };
 
-// Workspace assertion evaluation
-exports.evaluateWorkspaceAssertion = function(spl, input, expression) {
-    try {
-        // Simple expression evaluation for workspace data
-        // This is a basic implementation - could be enhanced with a proper expression parser
-        if (expression.includes('contains')) {
-            const searchTerm = expression.match(/"([^"]+)"/)?.[1];
-            if (searchTerm) {
-                const workspace = spl.wsRef(input) || {};
-                const workspaceStr = JSON.stringify(workspace);
-                const success = workspaceStr.includes(searchTerm);
-                return {
-                    success: success,
-                    message: success ? `Workspace contains "${searchTerm}"` : `Workspace does not contain "${searchTerm}"`
-                };
-            }
-        }
-        
-        return { success: false, message: `Unsupported workspace assertion: ${expression}` };
-        
-    } catch (error) {
-        return { success: false, message: `Assertion error: ${error.message}` };
-    }
-};
-
-// History assertion evaluation
-exports.evaluateHistoryAssertion = function(spl, input, expression) {
-    try {
-        if (expression.includes('contains')) {
-            const searchTerm = expression.match(/"([^"]+)"/)?.[1];
-            if (searchTerm) {
-                const history = input.value?.history || [];
-                const historyStr = JSON.stringify(history);
-                const success = historyStr.includes(searchTerm);
-                return {
-                    success: success,
-                    message: success ? `History contains "${searchTerm}"` : `History does not contain "${searchTerm}"`
-                };
-            }
-        }
-        
-        return { success: false, message: `Unsupported history assertion: ${expression}` };
-        
-    } catch (error) {
-        return { success: false, message: `History assertion error: ${error.message}` };
-    }
-};
-
-// Error assertion evaluation
-exports.evaluateErrorAssertion = function(spl, input, expression) {
-    try {
-        const hasError = input.headers?.spl?.execute?.error || false;
-        
-        if (expression === 'none' || expression === false) {
-            return {
-                success: !hasError,
-                message: hasError ? 'Unexpected error occurred' : 'No errors as expected'
-            };
-        }
-        
-        if (expression === 'any' || expression === true) {
-            return {
-                success: hasError,
-                message: hasError ? 'Error occurred as expected' : 'Expected error but none occurred'
-            };
-        }
-        
-        return { success: false, message: `Unsupported error assertion: ${expression}` };
-        
-    } catch (error) {
-        return { success: false, message: `Error assertion error: ${error.message}` };
-    }
-};
-
-// Generate test reports
-exports.generateReport = function(testResults, options = {}) {
-    const total = testResults.length;
-    const passed = testResults.filter(r => r.result === this.TestResult.PASS).length;
-    const failed = testResults.filter(r => r.result === this.TestResult.FAIL).length;
-    const skipped = testResults.filter(r => r.result === this.TestResult.SKIP).length;
-    const errors = testResults.filter(r => r.result === this.TestResult.ERROR).length;
-    
-    const totalDuration = testResults.reduce((sum, r) => sum + (r.duration || 0), 0);
+// Generate comprehensive workflow report showing all steps
+exports.generateWorkflowReport = function(workflowData, options) {
+    const { format, includeDetails, threshold } = options;
     
     const report = {
-        summary: {
-            total: total,
-            passed: passed,
-            failed: failed,
-            skipped: skipped,
-            errors: errors,
-            successRate: total > 0 ? Math.round((passed / total) * 100) : 0,
-            totalDuration: totalDuration
-        },
-        details: testResults
+        title: "SPL Test Workflow Report",
+        requestKey: workflowData.requestKey,
+        patterns: workflowData.patterns,
+        workflow: workflowData.workflow,
+        startTime: workflowData.startTime,
+        sections: {},
+        timestamp: new Date().toISOString()
     };
     
-    if (options.verbose) {
-        report.verbose = {
-            failedTests: testResults.filter(r => r.result === this.TestResult.FAIL),
-            errorTests: testResults.filter(r => r.result === this.TestResult.ERROR)
+    // Discovery section
+    if (workflowData.discovery) {
+        const disco = workflowData.discovery;
+        report.sections.discovery = {
+            title: "🔍 DISCOVERY PHASE",
+            summary: {
+                assets: disco.assets ? disco.assets.length : 0,
+                operations: disco.operations ? disco.operations.length : 0,
+                tests: disco.tests ? disco.tests.length : 0, 
+                schemas: disco.schemas ? disco.schemas.length : 0
+            },
+            items: {
+                assets: disco.assets || [],
+                operations: disco.operations || [],
+                tests: disco.tests || [],
+                schemas: disco.schemas || []
+            }
+        };
+    }
+    
+    // Plan section
+    if (workflowData.plan) {
+        const plan = workflowData.plan;
+        report.sections.plan = {
+            title: "📋 PLANNING PHASE", 
+            summary: {
+                workPackages: plan.workPackages ? plan.workPackages.length : 0,
+                totalAssets: plan.metadata ? plan.metadata.totalAssets : 0,
+                threshold: plan.metadata ? plan.metadata.threshold : 0
+            },
+            items: {
+                workPackages: plan.workPackages || []
+            }
+        };
+    }
+    
+    // Run section
+    if (workflowData.run) {
+        const run = workflowData.run;
+        report.sections.run = {
+            title: "⚡ EXECUTION PHASE",
+            summary: run.summary || {},
+            items: {
+                results: run.results || []
+            }
         };
     }
     
     return report;
-};
-
-// Filter tests by tags
-exports.filterTestsByTags = function(testSuites, tags) {
-    if (!tags || tags.length === 0) return testSuites;
-    
-    const tagArray = Array.isArray(tags) ? tags : tags.split(',').map(t => t.trim());
-    
-    return testSuites.filter(suite => {
-        if (!suite.suite.tags) return false;
-        const suiteTags = Array.isArray(suite.suite.tags) ? suite.suite.tags : [suite.suite.tags];
-        return tagArray.some(tag => suiteTags.includes(tag));
-    });
-};
-
-// Create standardized test record structure
-exports.createTestRecord = function(module, testResults, options = {}) {
-    return {
-        headers: {
-            gp: {
-                test: {
-                    module: module,
-                    timestamp: new Date().toISOString(),
-                    framework: 'gp/test',
-                    version: '1.0.0'
-                }
-            }
-        },
-        value: testResults
-    };
 };
 
 // COVERAGE ANALYSIS FUNCTIONS

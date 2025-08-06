@@ -1,0 +1,71 @@
+{
+    "name": "gp/fs Error Handling Test Suite",
+    "description": "Tests for proper error handling and edge cases",
+    "tags": ["error", "edge-cases", "robustness"],
+    "author": "gp/test framework", 
+    "version": "1.0.0",
+    "tests": [
+        {
+            "name": "read non-existent file",
+            "description": "Test reading a file that doesn't exist should fail gracefully",
+            "action": "gp/fs/read",
+            "params": {
+                "file": "non-existent-file.txt"
+            },
+            "expect": {
+                "error": "any",
+                "history": "contains('ERROR')"
+            }
+        },
+        {
+            "name": "write to invalid path",
+            "description": "Test writing to an invalid path should fail",
+            "action": "gp/fs/write",
+            "params": {
+                "file": "/invalid/path/file.txt",
+                "content": "test"
+            },
+            "expect": {
+                "error": "any",
+                "history": "contains('outside app boundary')"
+            }
+        },
+        {
+            "name": "delete non-existent file",
+            "description": "Test deleting a file that doesn't exist",
+            "action": "gp/fs/delete",
+            "params": {
+                "file": "non-existent-file.txt"
+            },
+            "expect": {
+                "error": "any",
+                "history": "contains('ERROR')"
+            }
+        },
+        {
+            "name": "copy with missing source",
+            "description": "Test copying from a non-existent source file",
+            "action": "gp/fs/copy",
+            "params": {
+                "from": "missing-source.txt",
+                "to": "destination.txt"
+            },
+            "expect": {
+                "error": "any",
+                "history": "contains('ERROR')"
+            }
+        },
+        {
+            "name": "path boundary validation",
+            "description": "Test that path validation prevents directory traversal",
+            "action": "gp/fs/read",
+            "params": {
+                "file": "../../../etc/passwd"
+            },
+            "expect": {
+                "error": "any",
+                "history": "contains('outside app boundary')"
+            }
+        }
+    ]
+}

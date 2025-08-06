@@ -1,0 +1,25 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "gp/test/discover" },
+            { "content": "Pure discovery - list operations, tests, schemas using powerful pattern matching." },
+            { "content": "{bold syntax}: {italic ./spl_execute <app> test/discover <options>}" },
+            { "content": "" },
+            { "content": "{bold Patterns}: Use * for wildcards, ** for deep recursion" },
+            { "content": "{bold Examples}: --modules='gp/*' --tests='smoke/*' --schemas='api'" },
+            { "content": "{bold Integration}: Uses spl.moduleResolution for accurate path discovery" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
+        
+        { "name": "modules", "alias": "m", "type": "String", "description": "Module pattern (e.g., 'gp/*', 'spl/*/read', '*')", "defaultValue": "*" },
+        
+        { "name": "tests", "alias": "t", "type": "String", "description": "Test pattern (e.g., 'smoke/*', '*/integration', 'none')", "defaultValue": "*" },
+        
+        { "name": "schemas", "alias": "s", "type": "String", "description": "Schema pattern (e.g., 'api', 'arguments', 'none')", "defaultValue": "none" }
+    ]
+}

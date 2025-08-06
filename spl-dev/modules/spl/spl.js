@@ -161,38 +161,68 @@ exports.history = function ( input, activity )
     else if ( spl_context ( input, "consoleMode" ) != "silent" && activity.substring ( 0, 7 ) == "WARNING" ) console.error ( message.join ( " - " ) );
 }
 
-// easy functions to invoke actions
-exports.moduleAction = function (input, module)
+// Module resolution - returns metadata about where module resolves
+exports.moduleResolution = function (input, module)
 {
-    var moduleRoot = "modules";
-    var cwd = spl_context ( input, "cwd" );
-    
-    // Parse module path for app overlay
+    const cwd = spl_context(input, "cwd");
     const parts = module.split('/');
-    if (parts.length >= 2) {
-        const app = parts[0];
-        const moduleFile = parts.slice(1).join('/');
-        const appPath = `${cwd}/apps/${app}/modules/${moduleFile}`;
-        
-        // Try app version first
+    
+    // Helper function to try a path
+    const tryPath = (relativePath, type) => {
         try {
-            return require(appPath).default(input);
+            const resolvedModule = require(`${cwd}/${relativePath}`);
+            return {
+                resolved: {
+                    path: relativePath,
+                    type: type,
+                    defaultReference: resolvedModule.default || null,
+                    error: resolvedModule.default ? null : new Error(`Module ${module} missing .default export`)
+                }
+            };
         } catch (e) {
-            // TODO: Remove this enhanced error handling when gp/test API is implemented (Issue #061)
-            // The gp/test API will provide comprehensive pre-execution module validation
-            // Only fall back to global modules for MODULE_NOT_FOUND
-            // Bubble up all other errors (syntax, import, runtime errors)
-            if (e.code === 'MODULE_NOT_FOUND') {
-                // App module doesn't exist, fall back to global modules
-            } else {
-                // App module exists but has errors - bubble up the real error
-                throw e;
+            if (e.code !== 'MODULE_NOT_FOUND') {
+                return {
+                    resolved: {
+                        path: relativePath,
+                        type: type,
+                        defaultReference: null,
+                        error: e
+                    }
+                };
             }
+            return null; // Not found, continue trying
         }
+    };
+    
+    // Try app overlay first (if has app prefix)
+    if (parts.length >= 2) {
+        const result = tryPath(`apps/${parts[0]}/modules/${parts.slice(1).join('/')}`, "app");
+        if (result) return result;
     }
     
-    // Use global modules (original logic)
-    return require ( `${cwd}/${moduleRoot}/${module}`).default ( input );
+    // Try global modules
+    const result = tryPath(`modules/${module}`, "module");
+    if (result) return result;
+    
+    // Module not found anywhere
+    return {
+        resolved: {
+            path: undefined,
+            type: undefined,
+            defaultReference: null,
+            error: new Error(`Module not found: ${module}`)
+        }
+    };
+}
+
+// Module action - uses moduleResolution internally
+exports.moduleAction = function (input, module)
+{
+    const resolution = exports.moduleResolution(input, module);
+    if (resolution.resolved.defaultReference) {
+        return resolution.resolved.defaultReference(input);
+    }
+    throw resolution.resolved.error;
 }
 
 // gets a deep clone of a keyvalue in input
