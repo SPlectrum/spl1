@@ -11,9 +11,9 @@ const fs = require("gp_fs");
 exports.default = function gp_fs_exists(input) {
     try {
         // Get app context and method parameters  
-        const cwd = spl.context(input, "cwd");
-        const appRoot = spl.context(input, "appRoot") || "apps/gp";
-        const fullAppPath = `${cwd}/${appRoot}`;
+        const appRoot = spl.context(input, "appRoot");
+        const appRootData = spl.context(input, "appRootData");
+        const fullAppDataPath = spl.getFullAppDataPath(input);
         const params = spl.action(input);
         
         // Set execution time in request context
@@ -27,13 +27,13 @@ exports.default = function gp_fs_exists(input) {
         spl.history(input, `fs/exists: Checking existence of ${params.path}`);
         
         // Check if path exists
-        const exists = fs.existsSecure(fullAppPath + "/data", params.path);
+        const exists = fs.existsSecure(fullAppDataPath, params.path);
         
         // Get additional info if it exists
         let pathInfo = null;
         if (exists) {
             try {
-                pathInfo = fs.infoSecure(fullAppPath + "/data", params.path);
+                pathInfo = fs.infoSecure(fullAppDataPath, params.path);
             } catch (error) {
                 // If we can't get info, just note it exists
                 pathInfo = { exists: true, error: error.message };

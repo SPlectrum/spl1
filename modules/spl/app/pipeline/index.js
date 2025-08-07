@@ -49,6 +49,8 @@ exports.default = function spl_app_pipeline (input)
                     // Add appRoot to request if it exists in parsed details
                     if ( parsed[key].appRoot !== undefined ) {
                         request.appRoot = parsed[key].appRoot;
+                        // Initialize appRootData with default value: {appRoot}/data
+                        request.appRootData = parsed[key].appRoot + "/data";
                     }
                     
                     splApp.pipeline.push ( request );

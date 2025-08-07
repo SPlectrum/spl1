@@ -1,7 +1,0 @@
-tools/git -h --repo test-repo
-tools/git --help --repo test-repo
-tools/git -h -p /some/path --repo test-repo
-tools/git --help --repo /some/path
-tools/git -h --create --repo test-repo
-tools/git --help -c --repo test-repo
-tools/git -h -p /test/path --create --repo test-repo

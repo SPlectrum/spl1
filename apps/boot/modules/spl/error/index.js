@@ -1,5 +1,0 @@
-//  name        Error API
-//  URI         spl/error
-//  type        API Module
-//  description Manages the error handling.
-///////////////////////////////////////////////////////////////////////////////

@@ -11,9 +11,9 @@ const fs = require("gp_fs");
 exports.default = function gp_fs_rmdir(input) {
     try {
         // Get app context and method parameters  
-        const cwd = spl.context(input, "cwd");
-        const appRoot = spl.context(input, "appRoot") || "apps/gp";
-        const fullAppPath = `${cwd}/${appRoot}`;
+        const appRoot = spl.context(input, "appRoot");
+        const appRootData = spl.context(input, "appRootData");
+        const fullAppDataPath = spl.getFullAppDataPath(input);
         const params = spl.action(input);
         
         // Set execution time in request context
@@ -31,7 +31,7 @@ exports.default = function gp_fs_rmdir(input) {
             recursive: params.recursive === true, // default to false for safety
             force: params.force === true // default to false for safety
         };
-        fs.rmdirSecure(fullAppPath + "/data", params.path, options);
+        fs.rmdirSecure(fullAppDataPath, params.path, options);
         
         // Create standardized rmdir record
         const rmdirRecord = {

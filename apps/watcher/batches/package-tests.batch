@@ -1,5 +1,0 @@
-spl/console/log Starting Package API tests
-spl/package/create -r apps -d test2 -f test2-package.json @@ spl/package/save -r apps/test-suite -d packages -f test2-package.json
-spl/package/create -r apps -d test2 -f test2-package2.json @@ spl/package/save -r apps/test-suite -d packages -f test2-package2.json
-spl/package/load -r apps/test-suite -d packages -f test2-package.json @@ spl/package/deploy -r apps/test-suite -d data/test2-deployed -f test2-package.json
-spl/console/log Package API tests completed

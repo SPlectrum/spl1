@@ -1,0 +1,22 @@
+{
+    "headers": {
+        "header": [
+            {"header": "gp/config/clear-session-working-dir"},
+            {"content": "Clears session-specific working directory setting and restores default appRootData."},
+            {"content": "{bold syntax}: {italic ./spl_execute <app> config/clear-session-working-dir}"},
+            {"content": ""},
+            {"content": "{bold Session Restoration}: Restores default appRootData setting"},
+            {"content": "{bold Stateless}: No persistent state changes after restoration"},
+            {"content": "{bold Note}: Physical cleanup handled separately by test runner"}
+        ]
+    },
+    "value": [
+        {
+            "name": "help",
+            "alias": "h",
+            "type": "Boolean",
+            "description": "show help information",
+            "typeLabel": "flag"
+        }
+    ]
+}

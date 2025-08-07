@@ -71,6 +71,18 @@ exports.config = spl_config;
 function spl_context ( input, key ) { return ( ( key === undefined ) ? input.headers.spl.execute : input.headers.spl.execute[key] ); }
 exports.context = spl_context;
 
+// get full app data path with proper absolute/relative path handling
+function spl_getFullAppDataPath ( input ) {
+    const appRootData = spl_context ( input, "appRootData" );
+    const cwd = spl_context ( input, "cwd" );
+    
+    if ( !appRootData ) return undefined;
+    
+    // Handle absolute vs relative paths
+    return appRootData.startsWith('/') ? appRootData : `${cwd}/${appRootData}`;
+}
+exports.getFullAppDataPath = spl_getFullAppDataPath;
+
 // get request properties only ( spl/execute/request )
 function spl_request ( input, key ) { return ( ( key === undefined ) ? input.headers.spl.request : input.headers.spl.request[key] ); }
 exports.request = spl_request;

@@ -11,9 +11,9 @@ const fs = require("gp_fs");
 exports.default = function gp_fs_read(input) {
     try {
         // Get app context and method parameters  
-        const cwd = spl.context(input, "cwd");
-        const appRoot = spl.context(input, "appRoot") || "apps/gp";
-        const fullAppPath = `${cwd}/${appRoot}`;
+        const appRoot = spl.context(input, "appRoot");
+        const appRootData = spl.context(input, "appRootData");
+        const fullAppDataPath = spl.getFullAppDataPath(input);
         const params = spl.action(input);
         
         // Set execution time in request context
@@ -29,15 +29,15 @@ exports.default = function gp_fs_read(input) {
         // Read file content
         let content;
         if (isText) {
-            content = fs.readFileSecure(fullAppPath + "/data", params.file, actualEncoding);
+            content = fs.readFileSecure(fullAppDataPath, params.file, actualEncoding);
         } else {
             // Binary files - read as buffer and encode as base64 for JSON safety
-            const buffer = fs.readFileSecure(fullAppPath + "/data", params.file, null);
+            const buffer = fs.readFileSecure(fullAppDataPath, params.file, null);
             content = buffer.toString('base64');
         }
         
         // Create standardized file record
-        const fileRecord = fs.createFileRecord(fullAppPath + "/data", params.file, content);
+        const fileRecord = fs.createFileRecord(fullAppDataPath, params.file, content);
         
         // Update encoding information based on what we actually did
         fileRecord.headers.gp.fs.encoding = actualEncoding;
@@ -54,7 +54,7 @@ exports.default = function gp_fs_read(input) {
         }
         
         // STEP 2: Work within the API record - add/update file
-        const fileKey = spl.fURI("data", params.file);
+        const fileKey = spl.fURI(appRootData, params.file);
         apiRecord.value[fileKey] = fileRecord;
         
         // Save the updated API record back to workspace

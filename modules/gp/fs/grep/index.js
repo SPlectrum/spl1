@@ -11,9 +11,9 @@ const fs = require("gp_fs");
 exports.default = function gp_fs_grep(input) {
     try {
         // Get app context and method parameters  
-        const cwd = spl.context(input, "cwd");
-        const appRoot = spl.context(input, "appRoot") || "apps/gp";
-        const fullAppPath = `${cwd}/${appRoot}`;
+        const appRoot = spl.context(input, "appRoot");
+        const appRootData = spl.context(input, "appRootData");
+        const fullAppDataPath = spl.getFullAppDataPath(input);
         
         // Extract parameters individually for better readability and default handling
         const pattern = spl.action(input, 'pattern');
@@ -39,7 +39,7 @@ exports.default = function gp_fs_grep(input) {
         };
         
         // Search file contents
-        const results = fs.grepSecure(fullAppPath + "/data", pattern, options);
+        const results = fs.grepSecure(fullAppDataPath, pattern, options);
         
         // Calculate total matches across all files
         const totalMatches = results.reduce((sum, file) => sum + file.matchCount, 0);

@@ -1,4 +1,0 @@
-Second test file for 7zip operations.
-Different content to verify multiple file handling.
-Contains unicode: áéíóú ñ 中文 🚀
-Numbers: 12345 67890

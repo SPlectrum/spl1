@@ -5,17 +5,33 @@
 //              Pipeline continuation: discover → plan → run → report
 ///////////////////////////////////////////////////////////////////////////////
 const spl = require("spl");
-const fs = require('fs');
+const testLib = require('../test.js');
+const workspace = require('../test-workspace.js');
 ///////////////////////////////////////////////////////////////////////////////
 
 // IMPLEMENTATION - Work Package Execution
 exports.default = function gp_test_run(input) {
     const failfast = spl.action(input, 'failfast') === true;
+    let uniqueWorkspace = null;
     
     spl.history(input, `test/run: Starting work package execution`);
     spl.history(input, `test/run: Failfast=${failfast}`);
     
     try {
+        // Create unique test workspace if we're in a temp data directory
+        const appRootData = spl.context(input, "appRootData");
+        
+        if (appRootData && appRootData.startsWith('/tmp/spl-test')) {
+            // Use SPL's standard path resolution
+            const basePath = spl.getFullAppDataPath(input);
+            
+            uniqueWorkspace = workspace.createUniqueWorkspace(spl, input, basePath);
+            spl.history(input, `test/run: Created unique workspace: ${uniqueWorkspace}`);
+            
+            // Update appRootData to point to our unique workspace (keep as absolute if it was absolute)
+            const newAppRootData = appRootData.startsWith('/') ? uniqueWorkspace : uniqueWorkspace.replace(`${spl.context(input, "cwd")}/`, '');
+            spl.rcSet(input.headers, "spl.execute.appRootData", newAppRootData);
+        }
         // Get work packages from pattern-based workspace
         const testApiRecord = spl.wsRef(input, "gp/test");
         if (!testApiRecord || !testApiRecord.value) {
@@ -41,7 +57,7 @@ exports.default = function gp_test_run(input) {
         const allResults = [];
         let executionStopped = false;
         
-        // Execute each work package
+        // Execute each work package using functions from test.js
         for (const workPackage of workPackages) {
             if (executionStopped) break;
             
@@ -50,18 +66,18 @@ exports.default = function gp_test_run(input) {
             let packageResults = [];
             
             try {
-                switch (workPackage.type) {
-                    case 'instantiation':
-                        packageResults = executeInstantiationPackage(input, workPackage);
-                        break;
-                    case 'json-validation':
-                        packageResults = executeJsonValidationPackage(input, workPackage);
-                        break;
-                    case 'test-execution':
-                        packageResults = executeTestExecutionPackage(input, workPackage);
-                        break;
-                    default:
-                        throw new Error(`Unknown work package type: ${workPackage.type}`);
+                // Map work package type to execution function
+                const packageExecutors = {
+                    'instantiation': testLib.executeInstantiationPackage,
+                    'json-validation': testLib.executeJsonValidationPackage,
+                    'basic-test-execution': testLib.executeBasicTestPackage
+                };
+                
+                const executor = packageExecutors[workPackage.type];
+                if (executor) {
+                    packageResults = executor(spl, input, workPackage);
+                } else {
+                    throw new Error(`Unknown work package type: ${workPackage.type}`);
                 }
                 
                 allResults.push(...packageResults);
@@ -90,8 +106,8 @@ exports.default = function gp_test_run(input) {
             }
         }
         
-        // Generate summary
-        const summary = generateExecutionSummary(allResults);
+        // Generate summary using function from test.js
+        const summary = testLib.generateExecutionSummary(allResults);
         
         spl.history(input, `test/run: Executed ${allResults.length} tests - ${summary.passed} passed, ${summary.failed} failed, ${summary.errors} errors`);
         
@@ -131,164 +147,23 @@ exports.default = function gp_test_run(input) {
         });
         
         spl.history(input, `test/run: ERROR - ${error.message}`);
+    } finally {
+        // Clean up unique workspace if it was created
+        if (uniqueWorkspace) {
+            try {
+                const removed = workspace.removeWorkspace(uniqueWorkspace);
+                if (removed) {
+                    spl.history(input, `test/run: Cleaned up workspace: ${uniqueWorkspace}`);
+                } else {
+                    spl.history(input, `test/run: Workspace already cleaned up: ${uniqueWorkspace}`);
+                }
+            } catch (cleanupError) {
+                spl.history(input, `test/run: WARNING - Cleanup failed: ${cleanupError.message}`);
+            }
+        }
     }
     
     spl.completed(input);
-}
-
-// Execute instantiation work package - test that modules can be required
-function executeInstantiationPackage(input, workPackage) {
-    const results = [];
-    
-    spl.history(input, `test/run: Testing instantiation of ${workPackage.filePaths.length} modules`);
-    
-    for (const filePath of workPackage.filePaths) {
-        const startTime = Date.now();
-        
-        try {
-            // Clear require cache to ensure fresh require
-            delete require.cache[require.resolve(filePath)];
-            
-            // Attempt to require the module
-            const module = require(filePath);
-            
-            // Check that module exports something
-            if (module === undefined || module === null) {
-                throw new Error('Module exports undefined or null');
-            }
-            
-            results.push({
-                type: 'instantiation',
-                filePath: filePath,
-                status: 'PASS',
-                message: 'Module instantiated successfully',
-                duration: Date.now() - startTime,
-                timestamp: new Date().toISOString()
-            });
-            
-            spl.history(input, `test/run: ✓ ${filePath}`);
-            
-        } catch (error) {
-            results.push({
-                type: 'instantiation',
-                filePath: filePath,
-                status: 'FAIL',
-                message: `Instantiation failed: ${error.message}`,
-                error: error.toString(),
-                duration: Date.now() - startTime,
-                timestamp: new Date().toISOString()
-            });
-            
-            spl.history(input, `test/run: ✗ ${filePath} - ${error.message}`);
-        }
-    }
-    
-    return results;
-}
-
-// Execute JSON validation work package - test that JSON files are valid
-function executeJsonValidationPackage(input, workPackage) {
-    const results = [];
-    
-    spl.history(input, `test/run: Validating JSON for ${workPackage.filePaths.length} files`);
-    
-    for (const filePath of workPackage.filePaths) {
-        const startTime = Date.now();
-        
-        try {
-            // Read file content
-            const fileContent = fs.readFileSync(filePath, 'utf8');
-            
-            // Attempt to parse JSON
-            const jsonData = JSON.parse(fileContent);
-            
-            // Check that parsed data is not null/undefined
-            if (jsonData === undefined || jsonData === null) {
-                throw new Error('JSON parsed to null or undefined');
-            }
-            
-            results.push({
-                type: 'json-validation',
-                filePath: filePath,
-                status: 'PASS',
-                message: 'JSON validation successful',
-                duration: Date.now() - startTime,
-                timestamp: new Date().toISOString()
-            });
-            
-            spl.history(input, `test/run: ✓ ${filePath}`);
-            
-        } catch (error) {
-            results.push({
-                type: 'json-validation',
-                filePath: filePath,
-                status: 'FAIL',
-                message: `JSON validation failed: ${error.message}`,
-                error: error.toString(),
-                duration: Date.now() - startTime,
-                timestamp: new Date().toISOString()
-            });
-            
-            spl.history(input, `test/run: ✗ ${filePath} - ${error.message}`);
-        }
-    }
-    
-    return results;
-}
-
-// Execute test execution work package - stub for now
-function executeTestExecutionPackage(input, workPackage) {
-    const results = [];
-    
-    spl.history(input, `test/run: Stubbing test execution for ${workPackage.commands?.length || 0} commands`);
-    
-    // For now, just create stub results
-    for (const command of workPackage.commands || []) {
-        results.push({
-            type: 'test-execution',
-            testFile: command.testFile,
-            targetModule: command.targetModule,
-            syntax: command.syntax,
-            status: 'STUB',
-            message: 'Test execution stubbed - not yet implemented',
-            duration: 0,
-            timestamp: new Date().toISOString()
-        });
-        
-        spl.history(input, `test/run: STUB ${command.testFile} (${command.syntax})`);
-    }
-    
-    return results;
-}
-
-// Generate execution summary
-function generateExecutionSummary(results) {
-    const summary = {
-        total: results.length,
-        passed: 0,
-        failed: 0,
-        errors: 0,
-        stubbed: 0
-    };
-    
-    for (const result of results) {
-        switch (result.status) {
-            case 'PASS':
-                summary.passed++;
-                break;
-            case 'FAIL':
-                summary.failed++;
-                break;
-            case 'ERROR':
-                summary.errors++;
-                break;
-            case 'STUB':
-                summary.stubbed++;
-                break;
-        }
-    }
-    
-    return summary;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

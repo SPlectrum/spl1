@@ -11,9 +11,9 @@ const fs = require("gp_fs");
 exports.default = function gp_fs_mkdir(input) {
     try {
         // Get app context and method parameters  
-        const cwd = spl.context(input, "cwd");
-        const appRoot = spl.context(input, "appRoot") || "apps/gp";
-        const fullAppPath = `${cwd}/${appRoot}`;
+        const appRoot = spl.context(input, "appRoot");
+        const appRootData = spl.context(input, "appRootData");
+        const fullAppDataPath = spl.getFullAppDataPath(input);
         const params = spl.action(input);
         
         // Set execution time in request context
@@ -30,7 +30,7 @@ exports.default = function gp_fs_mkdir(input) {
         const options = {
             recursive: params.recursive !== false // default to true unless explicitly false
         };
-        fs.mkdirSecure(fullAppPath + "/data", params.path, options);
+        fs.mkdirSecure(fullAppDataPath, params.path, options);
         
         // Create standardized mkdir record
         const mkdirRecord = {

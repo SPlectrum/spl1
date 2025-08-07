@@ -1,0 +1,28 @@
+{
+    "headers": {
+        "header": [
+            {"header": "gp/config/set-session-working-dir"},
+            {"content": "Sets session-specific working directory for data operations without affecting global state."},
+            {"content": "{bold syntax}: {italic ./spl_execute <app> config/set-session-working-dir <options>}"},
+            {"content": ""},
+            {"content": "{bold Session Scope}: Changes only affect current execution context"},
+            {"content": "{bold Isolation}: No global working directory state is modified"},
+            {"content": "{bold Cleanup}: Session context automatically clears when execution completes"}
+        ]
+    },
+    "value": [
+        {
+            "name": "help",
+            "alias": "h",
+            "type": "Boolean",
+            "description": "show help information",
+            "typeLabel": "flag"
+        },
+        {
+            "name": "path",
+            "alias": "p", 
+            "type": "String",
+            "description": "Target directory path for session data operations (absolute or relative)"
+        }
+    ]
+}

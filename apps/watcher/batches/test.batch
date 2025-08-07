@@ -1,7 +1,0 @@
-spl/console/log hello world
-spl/console/log hello world $@
-spl/console/log hello world $*
-spl/console/log hello world $1
-spl/console/log hello world $2
-spl/console/log hello world $3
-

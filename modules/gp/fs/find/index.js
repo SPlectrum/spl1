@@ -11,9 +11,9 @@ const fs = require("gp_fs");
 exports.default = function gp_fs_find(input) {
     try {
         // Get app context and method parameters  
-        const cwd = spl.context(input, "cwd");
-        const appRoot = spl.context(input, "appRoot") || "apps/gp";
-        const fullAppPath = `${cwd}/${appRoot}`;
+        const appRoot = spl.context(input, "appRoot");
+        const appRootData = spl.context(input, "appRootData");
+        const fullAppDataPath = spl.getFullAppDataPath(input);
         
         // Extract parameters individually for better readability and default handling
         const pattern = spl.action(input, 'pattern');
@@ -41,7 +41,7 @@ exports.default = function gp_fs_find(input) {
         };
         
         // Find files/directories
-        const results = fs.findSecure(fullAppPath + "/data", options);
+        const results = fs.findSecure(fullAppDataPath, options);
         
         // Ensure results is an array
         if (!Array.isArray(results)) {

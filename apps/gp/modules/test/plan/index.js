@@ -97,8 +97,17 @@ function createWorkPackages(input, assets, options) {
             jsFiles.push(fullPath);
         } else if (assetPath.includes('/index_arguments.json')) {
             jsonFiles.push(fullPath);
-        } else if (assetPath.includes('/tests/')) {
-            testFiles.push({ uri: assetPath, path: fullPath });
+        } else if (assetPath.includes('/.test/') && assetPath.endsWith('.json')) {
+            // Extract test type from filename (basic__, advanced__, etc.)
+            const filename = assetPath.split('/').pop();
+            const testType = filename.split('__')[0];
+            testFiles.push({ 
+                uri: assetPath, 
+                path: fullPath, 
+                testFile: fullPath,
+                targetModule: extractTargetModule(assetPath),
+                syntax: testType
+            });
         }
     }
     
@@ -120,36 +129,50 @@ function createWorkPackages(input, assets, options) {
         });
     }
     
-    // Work Package 3: Test file execution (by prefix)
+    // Work Package 3+: Test file execution (separate package per test type)
     if (testFiles.length > 0) {
-        const commands = [];
-        
-        for (const testFile of testFiles) {
-            const fileName = testFile.uri.split('/').pop();
-            const prefix = fileName.split('_')[0] || 'simple';
-            
-            // Extract target module from file path (apps/gp/modules/modulename/tests/file.json)
-            const pathParts = testFile.uri.split('/');
-            const moduleIndex = pathParts.indexOf('modules') + 1;
-            const targetModule = pathParts.slice(1, moduleIndex + 1).join('/'); // gp/modulename
-            
-            commands.push({
-                testFile: testFile.path,
-                targetModule: targetModule,
-                moduleFile: jsFiles.find(js => js.includes(`modules/${pathParts[moduleIndex]}/index.js`)),
-                syntax: prefix
+        // Group test files by test type (basic, advanced, etc.)
+        const testsByType = {};
+        testFiles.forEach(testFile => {
+            const testType = testFile.syntax;
+            if (!testsByType[testType]) {
+                testsByType[testType] = [];
+            }
+            testsByType[testType].push({
+                testFile: testFile.testFile,
+                targetModule: testFile.targetModule,
+                syntax: testFile.syntax
             });
-        }
+        });
         
-        workPackages.push({
-            type: "test-execution",
-            commands: commands,
-            expect: { successRate: 100 }
+        // Create separate work package for each test type
+        Object.entries(testsByType).forEach(([testType, commands]) => {
+            workPackages.push({
+                type: `${testType}-test-execution`,
+                commands: commands,
+                expect: { successRate: 100 }
+            });
         });
     }
     
     return workPackages;
 }
 
+// Extract target module from test file path
+function extractTargetModule(assetPath) {
+    // Extract from path like: apps/gp/modules/fs/write/.test/basic__gp_fs_write__first-tests.json
+    const pathParts = assetPath.split('/');
+    const moduleIndex = pathParts.indexOf('modules') + 1;
+    
+    if (moduleIndex > 0 && moduleIndex < pathParts.length) {
+        // Find all parts until .test directory
+        const testIndex = pathParts.findIndex(part => part === '.test');
+        if (testIndex > moduleIndex) {
+            return pathParts.slice(1, testIndex).join('/'); // gp/fs/write
+        }
+    }
+    
+    return 'unknown';
+}
 
 ///////////////////////////////////////////////////////////////////////////////

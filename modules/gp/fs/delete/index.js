@@ -11,9 +11,9 @@ const fs = require("gp_fs");
 exports.default = function gp_fs_delete(input) {
     try {
         // Get app context and method parameters  
-        const cwd = spl.context(input, "cwd");
-        const appRoot = spl.context(input, "appRoot") || "apps/gp";
-        const fullAppPath = `${cwd}/${appRoot}`;
+        const appRoot = spl.context(input, "appRoot");
+        const appRootData = spl.context(input, "appRootData");
+        const fullAppDataPath = spl.getFullAppDataPath(input);
         const params = spl.action(input);
         
         // Set execution time in request context
@@ -27,7 +27,7 @@ exports.default = function gp_fs_delete(input) {
         spl.history(input, `fs/delete: Deleting file ${params.file}`);
         
         // Delete the file
-        fs.deleteFileSecure(fullAppPath + "/data", params.file);
+        fs.deleteFileSecure(fullAppDataPath, params.file);
         
         // Create standardized delete record
         const deleteRecord = {

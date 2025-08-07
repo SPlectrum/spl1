@@ -11,9 +11,9 @@ const fs = require("gp_fs");
 exports.default = function gp_fs_diff(input) {
     try {
         // Get app context and method parameters  
-        const cwd = spl.context(input, "cwd");
-        const appRoot = spl.context(input, "appRoot") || "apps/gp";
-        const fullAppPath = `${cwd}/${appRoot}`;
+        const appRoot = spl.context(input, "appRoot");
+        const appRootData = spl.context(input, "appRootData");
+        const fullAppDataPath = spl.getFullAppDataPath(input);
         
         // Extract parameters individually for better readability and default handling
         const from = spl.action(input, 'from');
@@ -35,7 +35,7 @@ exports.default = function gp_fs_diff(input) {
         
         // Compare files/directories
         const options = { content };
-        const diffResult = fs.diffSecure(fullAppPath + "/data", from, to, options);
+        const diffResult = fs.diffSecure(fullAppDataPath, from, to, options);
         
         // Create standardized diff record
         const diffRecord = {

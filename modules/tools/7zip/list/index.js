@@ -11,9 +11,9 @@ exports.default = function tools_7zip_list(input) {
     const archive = spl.action(input, 'archive');
     const technical = spl.action(input, 'technical');
     
-    const appRoot = spl.context(input, 'appRoot');
+    const appRootData = spl.context(input, 'appRootData');
     const cwd = spl.context(input, 'cwd');
-    const archivePath = zip.getArchivePath(archive, appRoot, cwd);
+    const archivePath = zip.getArchivePath(archive, cwd, appRootData);
     
     const args = ['l'];
     

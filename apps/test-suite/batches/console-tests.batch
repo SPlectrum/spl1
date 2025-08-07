@@ -1,5 +1,0 @@
-spl/console/log Testing console log functionality
-spl/console/log This is a standard log message @@ spl/console/log Testing with special characters: !@#$%^&*()
-spl/console/warn This is a warning message @@ spl/console/warn Testing warning with multiple words and numbers 123
-spl/console/error This is an error message @@ spl/console/error Testing error handling capabilities
-spl/console/trace This is a trace message @@ spl/console/trace Testing trace functionality for debugging

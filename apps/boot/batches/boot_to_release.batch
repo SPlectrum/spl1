@@ -1,3 +1,0 @@
-spl/package/create -r apps -d boot -f apps_boot.json
-spl/package/deploy -r ../release/install -d . -f apps_boot.json
-spl/package/save -r ../release/install/packages -d . -f apps_boot.json

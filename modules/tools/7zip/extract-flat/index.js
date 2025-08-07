@@ -16,9 +16,9 @@ exports.default = function tools_7zip_extract_flat(input) {
         spl.throwError(input, 'Output directory is required for extraction');
     }
     
-    const appRoot = spl.context(input, 'appRoot');
+    const appRootData = spl.context(input, 'appRootData');
     const cwd = spl.context(input, 'cwd');
-    const archivePath = zip.getArchivePath(archive, appRoot, cwd);
+    const archivePath = zip.getArchivePath(archive, cwd, appRootData);
     
     const args = ['e'];
     args.push(`-o${output}`);

@@ -1,4 +1,0 @@
-This is a test file for 7zip testing.
-It contains multiple lines of text.
-Line 3: Testing compression and extraction.
-Final line with some special characters: !@#$%^&*()

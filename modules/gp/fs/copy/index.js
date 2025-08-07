@@ -11,9 +11,9 @@ const fs = require("gp_fs");
 exports.default = function gp_fs_copy(input) {
     try {
         // Get app context and method parameters  
-        const cwd = spl.context(input, "cwd");
-        const appRoot = spl.context(input, "appRoot") || "apps/gp";
-        const fullAppPath = `${cwd}/${appRoot}`;
+        const appRoot = spl.context(input, "appRoot");
+        const appRootData = spl.context(input, "appRootData");
+        const fullAppDataPath = spl.getFullAppDataPath(input);
         
         // Extract parameters individually for better readability and default handling
         const from = spl.action(input, 'from');
@@ -33,7 +33,7 @@ exports.default = function gp_fs_copy(input) {
         spl.history(input, `fs/copy: Copying ${from} to ${to}`);
         
         // Copy the file
-        fs.copyFileSecure(fullAppPath + "/data", from, to);
+        fs.copyFileSecure(fullAppDataPath, from, to);
         
         // Create standardized copy record
         const copyRecord = {

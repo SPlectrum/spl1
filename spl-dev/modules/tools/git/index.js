@@ -14,10 +14,10 @@ exports.default = function tools_git(input) {
     
     // Repository path resolution - repo takes precedence over path, default to "."
     const repoParam = repo || pathArg || ".";
-    const appRoot = spl.context(input, 'appRoot');
+    const appRootData = spl.context(input, 'appRootData');
     const cwd = spl.context(input, 'cwd');
-    const repoPath = git.getAppRelativeRepoPath(appRoot, cwd);
-    const repoPath2 = git.getAppRelativeRepoPath(repoParam, appRoot, cwd);
+    const repoPath = git.getAppRelativeRepoPath(".", cwd, appRootData);
+    const repoPath2 = git.getAppRelativeRepoPath(repoParam, cwd, appRootData);
     
     // Build git command arguments to validate and set repository context
     const args = ['-c', repoPath2];

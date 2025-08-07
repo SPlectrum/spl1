@@ -11,9 +11,9 @@ const fs = require("gp_fs");
 exports.default = function gp_fs_info(input) {
     try {
         // Get app context and method parameters  
-        const cwd = spl.context(input, "cwd");
-        const appRoot = spl.context(input, "appRoot") || "apps/gp";
-        const fullAppPath = `${cwd}/${appRoot}`;
+        const appRoot = spl.context(input, "appRoot");
+        const appRootData = spl.context(input, "appRootData");
+        const fullAppDataPath = spl.getFullAppDataPath(input);
         
         // Extract parameters individually for better readability and default handling
         const path = spl.action(input, 'path');
@@ -29,7 +29,7 @@ exports.default = function gp_fs_info(input) {
         spl.history(input, `fs/info: Getting info for ${path}`);
         
         // Get file/directory information
-        const pathInfo = fs.infoSecure(fullAppPath + "/data", path);
+        const pathInfo = fs.infoSecure(fullAppDataPath, path);
         
         // Create standardized info record
         const infoRecord = {

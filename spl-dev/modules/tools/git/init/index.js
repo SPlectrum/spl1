@@ -12,9 +12,9 @@ exports.default = function tools_git_init(input) {
     
     // Get repository path from --repo argument, now relative to app root
     const repo = spl.action(input, 'repo');
-    const appRoot = spl.context(input, 'appRoot');
+    const appRootData = spl.context(input, 'appRootData');
     const cwd = spl.context(input, 'cwd');
-    const repoPath = git.getAppRelativeRepoPath(repo, appRoot, cwd);
+    const repoPath = git.getAppRelativeRepoPath(repo, cwd, appRootData);
     
     // Create directory if it doesn't exist
     if (!fs.existsSync(repoPath)) {

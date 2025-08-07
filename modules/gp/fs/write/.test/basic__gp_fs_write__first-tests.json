@@ -1,0 +1,36 @@
+{
+    "key": "basic__gp_fs_write__first-tests",
+    "name": "gp/fs/write first tests",
+    "description": "Initial basic tests for gp/fs/write method functionality",
+    "tags": ["basic", "write", "smoke", "gp_fs_write"],
+    "tests": [
+        {
+            "name": "write new file",
+            "description": "Create a new file with content",
+            "action": "gp/fs/write",
+            "params": {
+                "file": "test-write.txt",
+                "content": "Hello from basic write test"
+            },
+            "expect": {
+                "workspace": "contains 'test-write.txt'",
+                "history": "contains 'Successfully wrote'",
+                "error": "none"
+            }
+        },
+        {
+            "name": "overwrite existing file",
+            "description": "Overwrite existing file content",
+            "action": "gp/fs/write",
+            "params": {
+                "file": "test-write.txt",
+                "content": "Updated content"
+            },
+            "expect": {
+                "workspace": "contains 'Updated content'",
+                "history": "contains 'Successfully wrote'",
+                "error": "none"
+            }
+        }
+    ]
+}

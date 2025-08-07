@@ -1,0 +1,24 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "gp/test/execute" },
+            { "content": "Isolated test execution with temporary workspace - executes work packages with complete isolation." },
+            { "content": "{bold syntax}: {italic ./spl_execute <app> test/execute <options>}" },
+            { "content": "" },
+            { "content": "{bold Pipeline}: discover → plan → execute → report" },
+            { "content": "{bold Isolation}: Creates temporary workspace, executes tests, then cleans up automatically" },
+            { "content": "{bold Input}: Work packages from workspace (created by plan method)" },
+            { "content": "{bold Output}: Test execution results with pass/fail status in isolated environment" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
+        
+        { "name": "module", "alias": "m", "type": "String", "description": "Target module filter (optional)" },
+        
+        { "name": "failfast", "alias": "f", "type": "Boolean", "description": "Stop execution on first test failure", "typeLabel": "flag" }
+    ]
+}
