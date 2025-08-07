@@ -1,0 +1,15 @@
+{
+    "name": "Basic Test Suite",
+    "tests": [
+        {
+            "name": "Test gp/fs module existence",
+            "action": "gp/fs",
+            "params": {},
+            "expect": {
+                "error": "none"
+            },
+            "tags": ["smoke", "basic"]
+        }
+    ],
+    "tags": ["basic", "smoke"]
+}
