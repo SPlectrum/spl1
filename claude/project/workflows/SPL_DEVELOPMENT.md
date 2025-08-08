@@ -139,17 +139,23 @@ diff modules/spl/app/app.js spl-dev/modules/spl/app/app.js
 ## Essential Development Documentation
 
 ### Required Reading for SPL API Development
+- **[SPL Coding Standards](../../docs/guides/spl-coding-standards.md)** - **MANDATORY** - Essential coding standards for all SPL development
 - **[SPL API Development Gotchas](../../docs/guides/spl-api-development-gotchas.md)** - Critical issues and solutions from collaborative AI development experience
 - **[Implementing New API](../../docs/guides/implementing-new-api.md)** - General API implementation guidance
 - **[App Development Guide](../../docs/guides/app-development.md)** - App-specific development patterns
 
 ### API Development Checklist
 Before starting API development, review:
+- [ ] **SPL Coding Standards** - MANDATORY reading, understand happy path programming
 - [ ] App structure vs global module structure requirements
 - [ ] Correct require path calculations from app modules  
 - [ ] SPL moduleAction function export requirements (`.default`)
 - [ ] SPL execution document structure and accessor patterns
 - [ ] Proper testing approach for scaffolding validation
+- [ ] No try/catch blocks in API methods (let SPL framework handle errors)
+- [ ] Use auxiliary functions for complex logic (no direct Node.js imports)
+- [ ] **Create method-level README.md** with required structure (see coding standards)
+- [ ] **Implement test coverage** using gp/test framework
 
 ## Integration with Claude Workflows
 
