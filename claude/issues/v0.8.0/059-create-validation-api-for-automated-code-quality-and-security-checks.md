@@ -1,6 +1,6 @@
 ---
 type: feature
-github_id: null
+github_id: 94
 title: "Create validation API for automated code quality and security checks"
 short_summary: "Validation API for syntax, security, conventions, and breaking change detection"
 state: open
@@ -8,7 +8,7 @@ milestone: unassigned
 labels: [feature]
 priority: medium
 estimated_effort: TBD
-github_updated_at: null
+github_updated_at: "2025-08-07T18:20:14Z"
 local_updated_at: "2025-08-04T14:41:51.794Z"
 ---
 

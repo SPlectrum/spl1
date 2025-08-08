@@ -1,6 +1,6 @@
 ---
 type: feature
-github_id: null
+github_id: 102
 title: "Create general-purpose filesystem API with app context integration"
 short_summary: "General-purpose filesystem API for installation into apps with automatic context inheritance"
 state: open
@@ -8,7 +8,7 @@ milestone: v0.8.0
 labels: [feature]
 priority: high
 estimated_effort: TBD
-github_updated_at: null
+github_updated_at: "2025-08-08T08:29:33Z"
 local_updated_at: "2025-08-03T17:59:37.602Z"
 ---
 

@@ -1,6 +1,6 @@
 ---
 type: task
-github_id: null
+github_id: 98
 title: "remove symlinks from git tracking"
 short_summary: ""  # One-line summary (max 80 chars) for collaboration lists
 state: open
@@ -8,7 +8,7 @@ milestone: unassigned
 labels: [task]
 priority: medium
 estimated_effort: TBD
-github_updated_at: null
+github_updated_at: "2025-08-08T08:29:45Z"
 local_updated_at: "2025-07-31T16:38:46.236Z"
 imported_from: "claude/inbox/2025-07-30T12-00-00-000Z_claude-swift_remove-symlinks-from-git-tracking.md"
 target: "splectrum/spl1"

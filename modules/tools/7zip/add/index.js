@@ -16,9 +16,9 @@ exports.default = function tools_7zip_add(input) {
     const exclude = spl.action(input, 'exclude');
     const recurse = spl.action(input, 'recurse');
     
-    const appRootData = spl.context(input, 'appRootData');
+    const appDataRoot = spl.context(input, 'appDataRoot');
     const cwd = spl.context(input, 'cwd');
-    const archivePath = zip.getArchivePath(archive, cwd, appRootData);
+    const archivePath = zip.getArchivePath(archive, cwd, appDataRoot);
     
     const args = ['a'];
     

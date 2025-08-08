@@ -15,9 +15,9 @@ exports.default = function tools_7zip_delete(input) {
         spl.throwError(input, 'Files to delete must be specified');
     }
     
-    const appRootData = spl.context(input, 'appRootData');
+    const appDataRoot = spl.context(input, 'appDataRoot');
     const cwd = spl.context(input, 'cwd');
-    const archivePath = zip.getArchivePath(archive, cwd, appRootData);
+    const archivePath = zip.getArchivePath(archive, cwd, appDataRoot);
     
     const args = ['d'];
     

@@ -11,6 +11,32 @@ This guide explains the SPL command structure, execution patterns, and developme
 /home/herma/splectrum/spl1/spl_execute dev [options] <command> [command-args]
 ```
 
+### Command Chaining
+```bash
+/home/herma/splectrum/spl1/spl_execute dev <command1> [args] @@ <command2> [args] @@ <command3> [args]
+```
+
+**Purpose**: Execute multiple commands in a single SPL execution context with shared workspace data.
+
+**Key Benefits**:
+- **Shared Workspace**: All chained commands access the same workspace data
+- **Single Execution**: One SPL process handles the entire chain
+- **Pipeline Workflows**: Essential for multi-step operations like test pipelines
+
+**Examples**:
+```bash
+# Test pipeline (discovery → plan → run → report)
+spl_execute dev gp/test/discover --modules=gp/fs/write @@ gp/test/plan @@ gp/test/run @@ gp/test/report
+
+# Console output chain
+spl_execute dev spl/console/log "Step 1" @@ spl/console/log "Step 2" @@ spl/console/log "Complete"
+
+# File operations chain
+spl_execute dev gp/fs/write --file=test.txt --content="Hello" @@ gp/fs/read --file=test.txt
+```
+
+**Important**: Without `@@` chaining, each command runs in isolated execution contexts and cannot share workspace data.
+
 ### Global Options
 - `-h, --help` - Show help information
 - `-d, --debug` - Debug mode with full execution trace

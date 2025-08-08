@@ -21,8 +21,8 @@ console.log("COMMAND:" + gitCommand);
 };
 
 // Get repository path relative to app root
-exports.getAppRelativeRepoPath = function (repo, cwd, appRootData) {
-    const fullAppRoot = path.resolve(cwd, appRootData);
+exports.getAppRelativeRepoPath = function (repo, cwd, appDataRoot) {
+    const fullAppRoot = path.resolve(cwd, appDataRoot);
     return path.resolve(fullAppRoot, repo);
 };
 ///////////////////////////////////////////////////////////////////////////////

@@ -29,8 +29,8 @@ Implement a session-based data directory management system that:
 ## Work Plan
 
 ### Phase 1: Core Architecture Implementation
-1. **Create `appRootData` Execution Context Setting**
-   - Add new execution context field: `spl.context(input, "appRootData")`
+1. **Create `appDataRoot` Execution Context Setting**
+   - Add new execution context field: `spl.context(input, "appDataRoot")`
    - Initialize with default value: `{appRoot}/data` when not explicitly set
    - Ensure backward compatibility with existing data path behavior
 
@@ -41,12 +41,12 @@ Implement a session-based data directory management system that:
    ```
    
    **Method Implementation**: `apps/gp/modules/config/set-session-working-dir/`
-   - Set execution context: `spl.rcSet(input.headers, "spl.execute.appRootData", targetPath)`
+   - Set execution context: `spl.rcSet(input.headers, "spl.execute.appDataRoot", targetPath)`
    - Validate target directory existence (create if needed)
    - Provide clear feedback about session workspace configuration
 
 3. **Update File System Operations**
-   - Modify `gp/fs/write` to use `appRootData` instead of hardcoded path
+   - Modify `gp/fs/write` to use `appDataRoot` instead of hardcoded path
    - Update other `gp/fs` operations (`read`, `copy`, etc.) for consistency
    - Ensure smooth fallback to default behavior when session override not set
 
@@ -101,7 +101,7 @@ Implement a session-based data directory management system that:
 // In gp/fs operations - enhanced path resolution
 function getDataDirectory(input) {
     // Check for session override first
-    const sessionDataDir = spl.context(input, "appRootData");
+    const sessionDataDir = spl.context(input, "appDataRoot");
     if (sessionDataDir) {
         return sessionDataDir;
     }
@@ -132,7 +132,7 @@ exports.default = function gp_config_set_session_working_dir(input) {
     fs.mkdirSync(resolvedPath, { recursive: true });
     
     // Set session-specific data directory
-    spl.rcSet(input.headers, "spl.execute.appRootData", resolvedPath);
+    spl.rcSet(input.headers, "spl.execute.appDataRoot", resolvedPath);
     
     spl.history(input, `Session working directory set to: ${resolvedPath}`);
     spl.completed(input);
@@ -142,10 +142,10 @@ exports.default = function gp_config_set_session_working_dir(input) {
 ## Acceptance Criteria
 
 **Core Architecture**:
-- [ ] `appRootData` execution context setting implemented and functional
+- [ ] `appDataRoot` execution context setting implemented and functional
 - [ ] Default behavior maintains backward compatibility with `{appRoot}/data`
 - [ ] `gp/config/set-session-working-dir` method creates and configures session workspace
-- [ ] All `gp/fs` operations respect `appRootData` setting consistently
+- [ ] All `gp/fs` operations respect `appDataRoot` setting consistently
 
 **Test Framework Integration**:
 - [ ] Basic test runner creates isolated workspace for each test execution

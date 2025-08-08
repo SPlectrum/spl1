@@ -12,14 +12,12 @@ exports.default = function gp_fs_write(input) {
     try {
         // Get app context and method parameters  
         const appRoot = spl.context(input, "appRoot");
-        const appRootData = spl.context(input, "appRootData");
+        const appDataRoot = spl.context(input, "appDataRoot");
         const fullAppDataPath = spl.getFullAppDataPath(input);
         const params = spl.action(input);
         
         // Set execution time in request context
         spl.rcSet(input.headers, "spl.request.executionTime", Date.now());
-        
-        spl.history(input, `fs/write: Writing to file ${params.file}`);
         
         // Validate required parameters
         if (!params.file) {
@@ -81,7 +79,7 @@ exports.default = function gp_fs_write(input) {
         }
         
         // STEP 2: Work within the API record - add/update file
-        const fileKey = spl.fURI(appRootData, params.file);
+        const fileKey = spl.fURI(appDataRoot, params.file);
         apiRecord.value[fileKey] = fileRecord;
         
         // Save the updated API record back to workspace

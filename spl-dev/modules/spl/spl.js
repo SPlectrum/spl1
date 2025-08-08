@@ -73,13 +73,13 @@ exports.context = spl_context;
 
 // get full app data path with proper absolute/relative path handling
 function spl_getFullAppDataPath ( input ) {
-    const appRootData = spl_context ( input, "appRootData" );
+    const appDataRoot = spl_context ( input, "appDataRoot" );
     const cwd = spl_context ( input, "cwd" );
     
-    if ( !appRootData ) return undefined;
+    if ( !appDataRoot ) return undefined;
     
     // Handle absolute vs relative paths
-    return appRootData.startsWith('/') ? appRootData : `${cwd}/${appRootData}`;
+    return appDataRoot.startsWith('/') ? appDataRoot : `${cwd}/${appDataRoot}`;
 }
 exports.getFullAppDataPath = spl_getFullAppDataPath;
 

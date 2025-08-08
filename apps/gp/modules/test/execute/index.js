@@ -1,10 +1,12 @@
 //  name        Test Execution with Isolation
 //  URI         gp/test/execute
 //  type        API Method
-//  description Executes work packages with complete isolation using temporary workspace
+//  description Executes work packages with complete isolation using unique workspace within appDataRoot
 //              Pipeline orchestrator: set-session-working-dir → run → clear-session-working-dir
 ///////////////////////////////////////////////////////////////////////////////
 const spl = require("spl");
+const testLib = require('gp_test');
+const path = require('path');
 ///////////////////////////////////////////////////////////////////////////////
 
 // IMPLEMENTATION - Isolated Test Execution Pipeline
@@ -12,10 +14,20 @@ exports.default = function gp_test_execute(input) {
     spl.history(input, `test/execute: Starting isolated test execution`);
     
     try {
-        // Set base temporary workspace directory
-        const baseTempWorkspace = `/tmp/spl-test`;
+        // Get base appDataRoot from context
+        const baseAppDataRoot = spl.context(input, "appDataRoot");
+        if (!baseAppDataRoot) {
+            throw new Error("No appDataRoot available in context");
+        }
         
-        spl.history(input, `test/execute: Using base temporary workspace: ${baseTempWorkspace}`);
+        // Get full path to base data directory
+        const cwd = spl.context(input, "cwd");
+        const baseDir = path.isAbsolute(baseAppDataRoot) ? baseAppDataRoot : path.join(cwd, baseAppDataRoot);
+        
+        // Create unique workspace within the base appDataRoot
+        const uniqueWorkspace = testLib.createUniqueWorkspace(baseDir);
+        
+        spl.history(input, `test/execute: Created unique workspace: ${uniqueWorkspace}`);
         
         // Forward all parameters from original request to gp/test/run
         const runParams = {};
@@ -28,7 +40,10 @@ exports.default = function gp_test_execute(input) {
             }
         }
         
-        // Create internal pipeline: set-session → run → clear-session
+        // Store unique workspace path for cleanup
+        spl.wsSet(input, "gp/test/unique-workspace", { value: uniqueWorkspace });
+        
+        // Create internal pipeline: set-session → run → cleanup
         spl.wsSet(input, "spl/execute.set-pipeline", {
             headers: {
                 spl: {
@@ -37,7 +52,7 @@ exports.default = function gp_test_execute(input) {
                             {
                                 action: "gp/config/set-session-working-dir",
                                 "gp/config/set-session-working-dir": {
-                                    path: baseTempWorkspace
+                                    path: uniqueWorkspace
                                 }
                             },
                             {
@@ -45,7 +60,7 @@ exports.default = function gp_test_execute(input) {
                                 "gp/test/run": runParams
                             },
                             {
-                                action: "gp/config/clear-session-working-dir"
+                                action: "gp/test/cleanup-workspace"
                             }
                         ]
                     }

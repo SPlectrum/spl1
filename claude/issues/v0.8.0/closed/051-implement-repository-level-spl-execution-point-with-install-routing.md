@@ -1,6 +1,6 @@
 ---
 type: feature
-github_id: null
+github_id: 100
 title: "Implement repository-level spl execution point with install routing"
 short_summary: "Repository-level spl script routing to spl-repo install folder"
 state: open
@@ -8,7 +8,7 @@ milestone: unassigned
 labels: [feature]
 priority: medium
 estimated_effort: TBD
-github_updated_at: null
+github_updated_at: "2025-08-08T08:29:39Z"
 local_updated_at: "2025-08-01T17:59:51.549Z"
 ---
 

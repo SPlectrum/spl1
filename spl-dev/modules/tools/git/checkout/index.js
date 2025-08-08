@@ -8,10 +8,10 @@ const spl = require("spl")
 exports.default = function tools_git_checkout(input) {
     // Get repository path from --repo argument, now relative to app root
     const repo = spl.action(input, 'repo');
-    const appRootData = spl.context(input, 'appRootData');
+    const appDataRoot = spl.context(input, 'appDataRoot');
     const cwd = spl.context(input, 'cwd');
     const git = require("../git");
-    const repoPath = git.getAppRelativeRepoPath(repo, cwd, appRootData);
+    const repoPath = git.getAppRelativeRepoPath(repo, cwd, appDataRoot);
     
     // Build git checkout command arguments
     const args = ['checkout'];

@@ -1,6 +1,6 @@
 ---
 type: feature
-github_id: null
+github_id: 93
 title: "Create semantic search API for AI-optimized code discovery"
 short_summary: "Semantic search API with contextual discovery, references, similarity, and history"
 state: open
@@ -8,7 +8,7 @@ milestone: unassigned
 labels: [feature]
 priority: medium
 estimated_effort: TBD
-github_updated_at: null
+github_updated_at: "2025-08-07T18:20:10Z"
 local_updated_at: "2025-08-04T14:38:29.858Z"
 ---
 

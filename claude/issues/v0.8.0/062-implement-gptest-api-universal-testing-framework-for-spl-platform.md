@@ -1,6 +1,6 @@
 ---
 type: feature
-github_id: null
+github_id: 96
 title: "Implement gp/test API - Universal Testing Framework for SPL Platform"
 short_summary: "Create comprehensive testing API for quality gates across all environments"
 state: open
@@ -8,7 +8,7 @@ milestone: v0.8.0
 labels: [feature]
 priority: high
 estimated_effort: large
-github_updated_at: null
+github_updated_at: "2025-08-07T18:20:22Z"
 local_updated_at: "2025-08-05T15:30:13.077Z"
 ---
 

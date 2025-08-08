@@ -1,11 +1,11 @@
 {
-  "last_sync": "2025-07-30T03:49:43.186Z",
-  "last_github_fetch": "2025-07-30T03:49:43.186Z",
-  "total_issues": 7,
+  "last_sync": "2025-08-08T08:30:43.875Z",
+  "last_github_fetch": "2025-08-08T08:30:43.875Z",
+  "total_issues": 38,
   "sync_version": "2.1.0",
   "bidirectional_sync": true,
-  "pulled_from_github": 18,
-  "pushed_to_github": 4,
-  "created_on_github": 0,
+  "pulled_from_github": 0,
+  "pushed_to_github": 30,
+  "created_on_github": 1,
   "conflicts": 0
 }

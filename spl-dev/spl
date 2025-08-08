@@ -2,7 +2,7 @@
 const spl = require("./modules/spl/spl.js");
 ///////////////////////////////////////////////////////////////////////////////
 // Set SPlectrum and client root directory, extract command string
-var root = process.cwd().split("/");
+var root = __dirname.split("/");
 if (root.length === 1 ) root = root[0].split(`\\`);
 const splRoot = root.join("/");
 const commandString = process.argv.slice(2);

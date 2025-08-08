@@ -1,6 +1,6 @@
 ---
 type: feature
-github_id: null
+github_id: 95
 title: "Create code generation API for AI-assisted development automation"
 short_summary: "Code generation API for boilerplate, tests, docs, and migration automation"
 state: open
@@ -8,7 +8,7 @@ milestone: unassigned
 labels: [feature]
 priority: medium
 estimated_effort: TBD
-github_updated_at: null
+github_updated_at: "2025-08-07T18:20:18Z"
 local_updated_at: "2025-08-04T14:42:33.834Z"
 ---
 

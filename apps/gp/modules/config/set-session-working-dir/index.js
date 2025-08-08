@@ -37,8 +37,8 @@ exports.default = function gp_config_set_session_working_dir(input) {
             throw new Error(`Path exists but is not a directory: ${resolvedPath}`);
         }
         
-        // Override appRootData in execution context for this session
-        spl.rcSet(input.headers, "spl.execute.appRootData", resolvedPath);
+        // Override appDataRoot in execution context for this session
+        spl.rcSet(input.headers, "spl.execute.appDataRoot", resolvedPath);
         
         spl.history(input, `config/set-session-working-dir: Session working directory configured successfully`);
         spl.history(input, `config/set-session-working-dir: All data operations will use: ${resolvedPath}`);

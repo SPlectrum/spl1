@@ -6,39 +6,22 @@
 ///////////////////////////////////////////////////////////////////////////////
 const spl = require("spl");
 const testLib = require('../test.js');
-const workspace = require('../test-workspace.js');
 ///////////////////////////////////////////////////////////////////////////////
 
 // IMPLEMENTATION - Work Package Execution
 exports.default = function gp_test_run(input) {
     const failfast = spl.action(input, 'failfast') === true;
-    let uniqueWorkspace = null;
     
     spl.history(input, `test/run: Starting work package execution`);
     spl.history(input, `test/run: Failfast=${failfast}`);
     
     try {
-        // Create unique test workspace if we're in a temp data directory
-        const appRootData = spl.context(input, "appRootData");
-        
-        if (appRootData && appRootData.startsWith('/tmp/spl-test')) {
-            // Use SPL's standard path resolution
-            const basePath = spl.getFullAppDataPath(input);
-            
-            uniqueWorkspace = workspace.createUniqueWorkspace(spl, input, basePath);
-            spl.history(input, `test/run: Created unique workspace: ${uniqueWorkspace}`);
-            
-            // Update appRootData to point to our unique workspace (keep as absolute if it was absolute)
-            const newAppRootData = appRootData.startsWith('/') ? uniqueWorkspace : uniqueWorkspace.replace(`${spl.context(input, "cwd")}/`, '');
-            spl.rcSet(input.headers, "spl.execute.appRootData", newAppRootData);
-        }
-        // Get work packages from pattern-based workspace
+        // Get work packages from workspace
         const testApiRecord = spl.wsRef(input, "gp/test");
         if (!testApiRecord || !testApiRecord.value) {
             throw new Error("No test data available - run gp/test/discover and gp/test/plan first");
         }
         
-        // Find the current request record  
         const currentRequestRecord = spl.wsRef(input, "gp/test/current-request");
         if (!currentRequestRecord || !currentRequestRecord.value) {
             throw new Error("No current request found - run gp/test/discover first");
@@ -54,10 +37,17 @@ exports.default = function gp_test_run(input) {
         const workPackages = requestRecord.value.plan.workPackages || [];
         spl.history(input, `test/run: Executing ${workPackages.length} work packages`);
         
+        // Create simple test context - centralized in one place
+        const testContext = {
+            appDataRoot: spl.context(input, "appDataRoot"),
+            cwd: spl.context(input, "cwd"),
+            executionHistory: []
+        };
+        
         const allResults = [];
         let executionStopped = false;
         
-        // Execute each work package using functions from test.js
+        // Execute each work package
         for (const workPackage of workPackages) {
             if (executionStopped) break;
             
@@ -66,16 +56,12 @@ exports.default = function gp_test_run(input) {
             let packageResults = [];
             
             try {
-                // Map work package type to execution function
-                const packageExecutors = {
-                    'instantiation': testLib.executeInstantiationPackage,
-                    'json-validation': testLib.executeJsonValidationPackage,
-                    'basic-test-execution': testLib.executeBasicTestPackage
-                };
-                
-                const executor = packageExecutors[workPackage.type];
-                if (executor) {
-                    packageResults = executor(spl, input, workPackage);
+                if (workPackage.type === 'instantiation') {
+                    packageResults = testLib.executeInstantiationPackage(testContext, workPackage);
+                } else if (workPackage.type === 'json-validation') {
+                    packageResults = testLib.executeJsonValidationPackage(testContext, workPackage);
+                } else if (workPackage.type === 'basic-test-execution') {
+                    packageResults = testLib.executeBasicTestPackage(testContext, workPackage);
                 } else {
                     throw new Error(`Unknown work package type: ${workPackage.type}`);
                 }
@@ -98,6 +84,7 @@ exports.default = function gp_test_run(input) {
                 };
                 
                 allResults.push(errorResult);
+                spl.history(input, `test/run: ERROR in ${workPackage.type}: ${error.message}`);
                 
                 if (failfast) {
                     spl.history(input, `test/run: Stopping execution due to error in failfast mode`);
@@ -106,19 +93,20 @@ exports.default = function gp_test_run(input) {
             }
         }
         
-        // Generate summary using function from test.js
+        // Generate summary
         const summary = testLib.generateExecutionSummary(allResults);
         
         spl.history(input, `test/run: Executed ${allResults.length} tests - ${summary.passed} passed, ${summary.failed} failed, ${summary.errors} errors`);
         
-        // Store run results in the same request record
+        // Store results in workspace
         requestRecord.value.run = {
             results: allResults,
             summary: summary,
             metadata: {
                 totalTests: allResults.length,
                 executionStopped: executionStopped,
-                timestamp: new Date().toISOString()
+                timestamp: new Date().toISOString(),
+                executionHistory: testContext.executionHistory
             }
         };
         
@@ -127,15 +115,6 @@ exports.default = function gp_test_run(input) {
         
         // Save updated record
         spl.wsSet(input, "gp/test", testApiRecord);
-        
-        // Set error if any tests failed
-        if (summary.failed > 0 || summary.errors > 0) {
-            spl.rcSet(input.headers, "spl.execute.error", {
-                message: `Test execution failed: ${summary.failed} failed, ${summary.errors} errors`,
-                code: 'TEST_EXECUTION_FAILED',
-                details: summary
-            });
-        }
         
         spl.history(input, `test/run: Work package execution completed`);
         
@@ -147,20 +126,6 @@ exports.default = function gp_test_run(input) {
         });
         
         spl.history(input, `test/run: ERROR - ${error.message}`);
-    } finally {
-        // Clean up unique workspace if it was created
-        if (uniqueWorkspace) {
-            try {
-                const removed = workspace.removeWorkspace(uniqueWorkspace);
-                if (removed) {
-                    spl.history(input, `test/run: Cleaned up workspace: ${uniqueWorkspace}`);
-                } else {
-                    spl.history(input, `test/run: Workspace already cleaned up: ${uniqueWorkspace}`);
-                }
-            } catch (cleanupError) {
-                spl.history(input, `test/run: WARNING - Cleanup failed: ${cleanupError.message}`);
-            }
-        }
     }
     
     spl.completed(input);

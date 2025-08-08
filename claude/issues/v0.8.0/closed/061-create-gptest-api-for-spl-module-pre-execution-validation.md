@@ -1,6 +1,6 @@
 ---
 type: feature
-github_id: null
+github_id: 103
 title: "Create gp/test API for SPL module pre-execution validation"
 short_summary: "Pre-execution validation API for SPL modules - require, syntax, security, schema tests"
 state: open
@@ -8,7 +8,7 @@ milestone: unassigned
 labels: [feature]
 priority: medium
 estimated_effort: TBD
-github_updated_at: null
+github_updated_at: "2025-08-08T08:29:30Z"
 local_updated_at: "2025-08-04T19:55:09.879Z"
 ---
 

@@ -33,12 +33,12 @@ function execute7zip(input, spl, args, workingPath) {
 exports.execute7zip = execute7zip;
 
 // Archive path resolution function
-function getArchivePath(archive, cwd, appRootData) {
+function getArchivePath(archive, cwd, appDataRoot) {
     if (path.isAbsolute(archive)) {
         return archive;
     }
     
-    const fullAppRoot = path.resolve(cwd, appRootData);
+    const fullAppRoot = path.resolve(cwd, appDataRoot);
     return path.resolve(fullAppRoot, archive);
 }
 exports.getArchivePath = getArchivePath;

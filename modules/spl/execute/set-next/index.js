@@ -22,6 +22,11 @@ exports.default = function spl_execute_set_next ( input ) {
             spl.setContext( input, "appRoot", spl.request ( input, "appRoot" ) );
         }
         
+        // Push appDataRoot from request to context if present
+        if( spl.request ( input, "appDataRoot" ) !== undefined ) {
+            spl.setContext( input, "appDataRoot", spl.request ( input, "appDataRoot" ) );
+        }
+        
         spl.setContext ( input, "action", "spl/execute/next" );
     } 
     else spl.setContext ( input, "action", "spl/execute/complete" );

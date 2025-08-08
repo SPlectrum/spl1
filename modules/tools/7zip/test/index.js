@@ -10,9 +10,9 @@ const zip = require("tools_7zip")
 exports.default = function tools_7zip_test(input) {
     const archive = spl.action(input, 'archive');
     
-    const appRootData = spl.context(input, 'appRootData');
+    const appDataRoot = spl.context(input, 'appDataRoot');
     const cwd = spl.context(input, 'cwd');
-    const archivePath = zip.getArchivePath(archive, cwd, appRootData);
+    const archivePath = zip.getArchivePath(archive, cwd, appDataRoot);
     
     const args = ['t'];
     

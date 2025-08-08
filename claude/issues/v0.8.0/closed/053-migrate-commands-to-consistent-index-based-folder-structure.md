@@ -1,6 +1,6 @@
 ---
 type: task
-github_id: null
+github_id: 101
 title: "Migrate commands to consistent index-based folder structure"
 short_summary: "Restructure command files to use consistent index_arguments.json pattern"
 state: open
@@ -8,7 +8,7 @@ milestone: v0.8.0
 labels: [task]
 priority: medium
 estimated_effort: TBD
-github_updated_at: null
+github_updated_at: "2025-08-08T08:29:36Z"
 local_updated_at: "2025-08-02T20:11:46.035Z"
 ---
 

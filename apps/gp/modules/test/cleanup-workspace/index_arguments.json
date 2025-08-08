@@ -1,0 +1,22 @@
+{
+    "headers": {
+        "header": [
+            { "header": "gp/test/cleanup-workspace" },
+            { "content": "Captures workspace assets for audit and safely removes unique test workspace." },
+            { "content": "{bold syntax}: {italic ./spl_execute <app> test/cleanup-workspace}" },
+            { "content": "" },
+            { "content": "{bold Functionality}: Automated cleanup with asset audit trail" },
+            { "content": "{bold Integration}: Used internally by test/execute pipeline" },
+            { "content": "{bold Safety}: Only removes directories with 'test-' prefix" }
+        ]
+    },
+    "value": [
+        {
+            "name": "help",
+            "alias": "h", 
+            "type": "Boolean",
+            "description": "show help information",
+            "typeLabel": "flag"
+        }
+    ]
+}

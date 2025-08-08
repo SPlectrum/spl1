@@ -1,6 +1,6 @@
 ---
 type: feature
-github_id: null
+github_id: 92
 title: "Create code analysis API for AI workflow optimization"
 short_summary: "Code analysis API providing structure, dependencies, patterns, and change analysis"
 state: open
@@ -8,7 +8,7 @@ milestone: unassigned
 labels: [feature]
 priority: medium
 estimated_effort: TBD
-github_updated_at: null
+github_updated_at: "2025-08-07T18:20:06Z"
 local_updated_at: "2025-08-04T14:37:45.469Z"
 ---
 

@@ -12,7 +12,7 @@ exports.default = function gp_fs_copy(input) {
     try {
         // Get app context and method parameters  
         const appRoot = spl.context(input, "appRoot");
-        const appRootData = spl.context(input, "appRootData");
+        const appDataRoot = spl.context(input, "appDataRoot");
         const fullAppDataPath = spl.getFullAppDataPath(input);
         
         // Extract parameters individually for better readability and default handling

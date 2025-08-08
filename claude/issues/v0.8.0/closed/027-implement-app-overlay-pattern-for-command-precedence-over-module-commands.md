@@ -7,7 +7,7 @@ milestone: v0.8.0
 labels: ["feature", "v0.8.0", "architecture", "command-system"]
 priority: high
 estimated_effort: M
-github_updated_at: "2025-07-29T17:53:34Z"
+github_updated_at: "2025-08-07T18:19:48Z"
 local_updated_at: "2025-07-29T15:37:33.680Z"
 ---
 

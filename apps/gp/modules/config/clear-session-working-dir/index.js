@@ -1,7 +1,7 @@
 //  name        Clear Session Working Directory
 //  URI         gp/config/clear-session-working-dir
 //  type        API Method  
-//  description Clears session-specific working directory setting and restores default appRootData
+//  description Clears session-specific working directory setting and restores default appDataRoot
 ///////////////////////////////////////////////////////////////////////////////
 const spl = require("spl");
 ///////////////////////////////////////////////////////////////////////////////
@@ -9,7 +9,7 @@ const spl = require("spl");
 // IMPLEMENTATION - Session Setting Restoration Only
 exports.default = function gp_config_clear_session_working_dir(input) {
     try {
-        spl.history(input, `config/clear-session-working-dir: Starting appRootData restoration`);
+        spl.history(input, `config/clear-session-working-dir: Starting appDataRoot restoration`);
         
         // Get current contexts
         const appRoot = spl.context(input, "appRoot");
@@ -17,11 +17,11 @@ exports.default = function gp_config_clear_session_working_dir(input) {
             throw new Error("Cannot restore default: appRoot context not available");
         }
         
-        // Restore default appRootData setting (appRoot + "/data")
+        // Restore default appDataRoot setting (appRoot + "/data")
         const defaultAppRootData = `${appRoot}/data`;
-        spl.rcSet(input.headers, "spl.execute.appRootData", defaultAppRootData);
+        spl.rcSet(input.headers, "spl.execute.appDataRoot", defaultAppRootData);
         
-        spl.history(input, `config/clear-session-working-dir: Restored default appRootData: ${defaultAppRootData}`);
+        spl.history(input, `config/clear-session-working-dir: Restored default appDataRoot: ${defaultAppRootData}`);
         spl.history(input, `config/clear-session-working-dir: Session restoration completed successfully`);
         
     } catch (error) {

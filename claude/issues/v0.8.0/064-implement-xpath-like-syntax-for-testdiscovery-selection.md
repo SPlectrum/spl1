@@ -1,6 +1,6 @@
 ---
 type: feature
-github_id: null
+github_id: 97
 title: "Implement XPath-like syntax for test/discovery selection"
 short_summary: ""  # One-line summary (max 80 chars) for collaboration lists
 state: open
@@ -8,7 +8,7 @@ milestone: unassigned
 labels: [feature]
 priority: medium
 estimated_effort: TBD
-github_updated_at: null
+github_updated_at: "2025-08-07T18:20:25Z"
 local_updated_at: "2025-08-06T14:23:56.658Z"
 ---
 
