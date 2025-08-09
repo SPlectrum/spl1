@@ -14,6 +14,8 @@ modules/{category}/{api}/{method}/.test/basic__{category}_{api}_{method}__{test-
 ```
 
 ### JSON Schema
+
+#### Single-Block Format (Direct JSONPath)
 ```json
 {
     "key": "basic__{category}_{api}_{method}__{test-name}",
@@ -34,6 +36,50 @@ modules/{category}/{api}/{method}/.test/basic__{category}_{api}_{method}__{test-
                     "key": "$.jsonpath.to.value",
                     "operation": "equals|exists|matches|contains|count|gt|lt|gte|lte",
                     "expectation": "expected_value|true|false|regex_pattern|number"
+                }
+            ]
+        }
+    ]
+}
+```
+
+#### Two-Block Format (Selectors + Expectations)
+```json
+{
+    "key": "basic__{category}_{api}_{method}__{test-name}",
+    "name": "Human readable test suite name", 
+    "description": "What this test suite validates",
+    "tags": ["basic", "category", "api", "method"],
+    "tests": [
+        {
+            "name": "individual test name",
+            "description": "What this specific test validates",
+            "action": "category/api/method",
+            "params": {
+                "param1": "value1",
+                "param2": "value2"
+            },
+            "selectors": {
+                "status": "$.headers.spl.execute.status",
+                "appDataRoot": "$.headers.spl.execute.appDataRoot",
+                "appRoot": "$.headers.spl.execute.appRoot",
+                "historyMessages": "$.headers.spl.execute.history[*][2]"
+            },
+            "expect": [
+                {
+                    "key": "status",
+                    "operation": "equals",
+                    "expectation": "green"
+                },
+                {
+                    "key": "appDataRoot", 
+                    "operation": "equals",
+                    "expectation": "{appRoot}/data/test-relative"
+                },
+                {
+                    "key": "historyMessages",
+                    "operation": "contains", 
+                    "expectation": "Success message"
                 }
             ]
         }
@@ -217,6 +263,56 @@ modules/{category}/{api}/{method}/.test/basic__{category}_{api}_{method}__{test-
     ]
 }
 ```
+
+## Example: Two-Block Format (Config Context Test)
+
+```json
+{
+    "key": "basic__gp_config_set_session__context-tests",
+    "name": "gp/config/set-session-working-dir context tests",
+    "description": "Test session working directory context modification with dynamic path resolution",
+    "tags": ["basic", "config", "session", "context"],
+    "tests": [
+        {
+            "name": "set relative path context",
+            "description": "Relative path resolves to subfolder of default appDataRoot",
+            "action": "gp/config/set-session-working-dir",
+            "params": {
+                "path": "test-relative"
+            },
+            "selectors": {
+                "status": "$.headers.spl.execute.status",
+                "newAppDataRoot": "$.headers.spl.execute.appDataRoot", 
+                "appRoot": "$.headers.spl.execute.appRoot",
+                "historyMessages": "$.headers.spl.execute.history[*][2]"
+            },
+            "expect": [
+                {
+                    "key": "status",
+                    "operation": "equals",
+                    "expectation": "green"
+                },
+                {
+                    "key": "newAppDataRoot",
+                    "operation": "equals", 
+                    "expectation": "{appRoot}/data/test-relative"
+                },
+                {
+                    "key": "historyMessages",
+                    "operation": "contains",
+                    "expectation": "Session working directory configured"
+                }
+            ]
+        }
+    ]
+}
+```
+
+### Benefits of Two-Block Format
+- **Reusable selectors**: Common JSONPath patterns can be standardized
+- **Dynamic expectations**: Use `{selector}` substitution for flexible validation
+- **Cleaner logic**: Expectations focus on validation rules, not JSONPath complexity
+- **Maintainable**: Changes to execution document structure only require updating selectors
 
 ## Writing Guidelines
 
