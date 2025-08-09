@@ -40,16 +40,17 @@ exports.executeJsonValidationPackage = function(testContext, workPackage) {
             testContext.executionHistory.push(`✓ ${filePath}`);
             
         } catch (error) {
+            const relativePath = filePath.replace(/^.*\/spl-dev\//, '');
             results.push({
                 type: 'json-validation',
                 filePath: filePath,
                 status: 'FAIL',
-                message: `JSON validation failed: ${error.message}`,
+                message: `${relativePath}: ${error.message}`,
                 duration: Date.now() - startTime,
                 timestamp: new Date().toISOString()
             });
             
-            testContext.executionHistory.push(`✗ ${filePath} - ${error.message}`);
+            testContext.executionHistory.push(`✗ ${relativePath} - ${error.message}`);
         }
     }
     
@@ -68,66 +69,166 @@ exports.executeBasicTestPackage = function(testContext, workPackage) {
     for (const command of workPackage.commands) {
         const startTime = Date.now();
         const testDefinition = JSON.parse(fs.readFileSync(command.testFile, 'utf8'));
-        const testResults = [];
         
-        testContext.executionHistory.push(`Running test suite: ${testDefinition.name}`);
+        // Use full filename as title for debugging clarity
+        const testTitle = path.basename(command.testFile);
         
-        // Execute each test in the suite
-        for (const test of testDefinition.tests) {
-            const testStart = Date.now();
+        testContext.executionHistory.push(`Running test: ${testTitle}`);
+        
+        const testStart = Date.now();
+        
+        let stdout = '';
+        try {
+            // Use command directly from test definition
+            const testCommand = testDefinition.command;
+            const splExecutePath = path.join(testContext.cwd, '..', 'spl_execute');
+            const splCommand = `${splExecutePath} dev ${testCommand}`;
+            stdout = execSync(splCommand, { 
+                encoding: 'utf8', 
+                timeout: 10000, 
+                cwd: testContext.cwd 
+            });
             
-            try {
-                // Build and execute SPL command
-                const fullCommand = buildTestCommand(test, testContext.appDataRoot);
-                const splCommand = `/home/herma/splectrum/spl1/spl_execute dev -d ${fullCommand}`;
-                const stdout = execSync(splCommand, { 
-                    encoding: 'utf8', 
-                    timeout: 10000, 
-                    cwd: testContext.cwd 
-                });
-                
-                // Simple validation based on expected outcomes
-                const hasError = stdout.includes('ERROR') || stdout.includes('failed');
-                const hasExpectedText = test.expect?.history ? 
-                    stdout.includes(extractExpectedText(test.expect.history)) : true;
-                
-                const status = (!hasError && hasExpectedText) ? 'PASS' : 'FAIL';
-                
-                testResults.push({
-                    testName: test.name,
-                    action: test.action,
-                    status: status,
-                    executedCommand: splCommand,
-                    duration: Date.now() - testStart,
-                    timestamp: new Date().toISOString()
-                });
-                
-                testContext.executionHistory.push(`${status} - ${test.name}`);
-                
-            } catch (error) {
-                testResults.push({
-                    testName: test.name,
-                    action: test.action,
-                    status: 'ERROR',
-                    message: error.message,
-                    duration: Date.now() - testStart,
-                    timestamp: new Date().toISOString()
-                });
-                
-                testContext.executionHistory.push(`ERROR - ${test.name}: ${error.message}`);
+            // Extract JSON from SPL command output (text first, then JSON after final newline)
+            const jsonStart = stdout.lastIndexOf('\n{');
+            if (jsonStart === -1) {
+                throw new Error('No JSON found in command output');
             }
+            const jsonOutput = stdout.substring(jsonStart + 1); // Skip the newline
+            
+            // Parse JSON response and validate using selectors
+            const response = JSON.parse(jsonOutput);
+            const validationResult = validateJsonSelectors(response, testDefinition.selectors, testDefinition.expect);
+            
+            // Store extracted JSON and selector values in test context for debugging
+            const extractedValues = {};
+            for (const [key, selector] of Object.entries(testDefinition.selectors)) {
+                const result = jsonPath(response, selector);
+                extractedValues[key] = result.length === 1 ? result[0] : result;
+            }
+            
+            // Create detailed test results structure
+            const selectorResults = {};
+            for (const [key, value] of Object.entries(extractedValues)) {
+                selectorResults[key] = value;
+            }
+            
+            const expectResults = {};
+            for (const expectation of testDefinition.expect) {
+                const actualValue = extractedValues[expectation.key];
+                
+                // Expand template variables in expected values
+                let expectedValue = expectation.expectation;
+                if (typeof expectedValue === 'string' && expectedValue.includes('{')) {
+                    // Replace {appRoot} with actual appRoot value
+                    expectedValue = expectedValue.replace(/\{appRoot\}/g, extractedValues.appRoot || 'apps/gp');
+                }
+                
+                let passed = false;
+                
+                // Determine if this specific expectation passed
+                switch (expectation.operation) {
+                    case 'equals':
+                        passed = actualValue === expectedValue;
+                        break;
+                    case 'contains':
+                        if (Array.isArray(actualValue)) {
+                            passed = actualValue.some(item => 
+                                typeof item === 'string' && item.includes(expectedValue));
+                        } else if (typeof actualValue === 'string') {
+                            passed = actualValue.includes(expectedValue);
+                        }
+                        break;
+                }
+                
+                expectResults[expectation.key] = {
+                    actual: actualValue,
+                    operation: expectation.operation,
+                    expected: expectedValue,  // Store the expanded value
+                    expectedTemplate: expectation.expectation,  // Keep original template for reference
+                    passed: passed
+                };
+            }
+            
+            testContext.lastTestDetails = {
+                testFile: command.testFile,
+                testTitle: testTitle,
+                executedCommand: testCommand,
+                responseStatus: response.headers?.spl?.execute?.status,
+                responseSize: jsonOutput.length,
+                selectorResults: selectorResults,
+                expectResults: expectResults,
+                validationResult: validationResult
+            };
+            
+            let message;
+            if (validationResult.passed) {
+                message = 'Test passed';
+            } else {
+                // Check if there's an error message from errorMessage selector
+                const errorMessage = extractedValues.errorMessage;
+                if (errorMessage && typeof errorMessage === 'string' && errorMessage.trim() !== '') {
+                    // Strip "Error: " prefix if present to avoid duplication
+                    const cleanError = errorMessage.replace(/^Error:\s*/, '');
+                    // If there's an execution error, just show that (skip expectation details)
+                    message = `${testTitle}\n${testCommand}\n${cleanError}\n`;
+                } else {
+                    // No execution error, show expectation failure
+                    message = `${testTitle}\n${testCommand}\n${validationResult.error}\n`;
+                }
+            }
+            
+            results.push({
+                type: 'basic-test',
+                testFile: command.testFile,
+                testName: testTitle,
+                status: validationResult.passed ? 'PASS' : 'FAIL',
+                message: message,
+                executedCommand: testCommand,
+                duration: Date.now() - testStart,
+                timestamp: new Date().toISOString(),
+                // Include detailed results for both PASS and FAIL
+                responseStatus: response.headers?.spl?.execute?.status,
+                responseSize: jsonOutput.length,
+                selectorResults: selectorResults,
+                expectResults: expectResults,
+                validationResult: validationResult
+            });
+            
+            testContext.executionHistory.push(`${validationResult.passed ? 'PASS' : 'FAIL'} - ${testTitle}`);
+            
+        } catch (error) {
+            const testCommand = testDefinition.command;
+            
+            // Store debug info even on error
+            const fs = require('fs');
+            const debugInfo = {
+                error: error.message,
+                stdout: stdout.substring(0, 1000) + (stdout.length > 1000 ? '...' : ''),
+                jsonStart: stdout.lastIndexOf('\n{'),
+                extractedJson: stdout.lastIndexOf('\n{') !== -1 ? 
+                    stdout.substring(stdout.lastIndexOf('\n{') + 1, stdout.lastIndexOf('\n{') + 300) + '...' : 'NO JSON FOUND',
+                testFile: command.testFile,
+                testTitle: testTitle
+            };
+            fs.writeFileSync(`/tmp/debug-${testTitle.replace(/[^a-z0-9]/gi, '-')}.json`, JSON.stringify(debugInfo, null, 2));
+            
+            // Multi-line format: test name, command, error, empty line
+            const message = `${testTitle}\n${testCommand}\n${error.message}\n`;
+            
+            results.push({
+                type: 'basic-test',
+                testFile: command.testFile,
+                testName: testTitle,
+                status: 'ERROR',
+                message: message,
+                executedCommand: testCommand,
+                duration: Date.now() - startTime,
+                timestamp: new Date().toISOString()
+            });
+            
+            testContext.executionHistory.push(`ERROR - ${testTitle}: ${error.message}`);
         }
-        
-        results.push({
-            type: 'test-execution',
-            testFile: command.testFile,
-            testName: testDefinition.name,
-            status: testResults.every(r => r.status === 'PASS') ? 'PASS' : 'FAIL',
-            message: `${testResults.filter(r => r.status === 'PASS').length}/${testResults.length} tests passed`,
-            testResults: testResults,
-            duration: Date.now() - startTime,
-            timestamp: new Date().toISOString()
-        });
     }
     
     return results;
@@ -155,6 +256,191 @@ function buildTestCommand(testCase, appDataRoot) {
 function extractExpectedText(expectedPattern) {
     const match = expectedPattern.match(/"([^"]+)"/);
     return match ? match[1] : '';
+}
+
+
+// Validate JSON response using selectors and expectations
+function validateJsonSelectors(response, selectors, expectations) {
+    try {
+        const extractedValues = {};
+        
+        // Extract values using JSONPath selectors
+        for (const [key, selector] of Object.entries(selectors)) {
+            const result = jsonPath(response, selector);
+            extractedValues[key] = result.length === 1 ? result[0] : result;
+        }
+        
+        // Validate each expectation
+        for (const expectation of expectations) {
+            const actualValue = extractedValues[expectation.key];
+            
+            // Expand template variables in expected values
+            let expectedValue = expectation.expectation;
+            if (typeof expectedValue === 'string' && expectedValue.includes('{')) {
+                // Replace {appRoot} with actual appRoot value
+                expectedValue = expectedValue.replace(/\{appRoot\}/g, extractedValues.appRoot || 'apps/gp');
+            }
+            
+            switch (expectation.operation) {
+                case 'equals':
+                    if (actualValue !== expectedValue) {
+                        return {
+                            passed: false,
+                            error: `Expected ${expectation.key} to equal "${expectedValue}", but got "${actualValue}"`
+                        };
+                    }
+                    break;
+                    
+                case 'contains':
+                    if (Array.isArray(actualValue)) {
+                        if (!actualValue.some(item => item.includes(expectedValue))) {
+                            return {
+                                passed: false,
+                                error: `Expected ${expectation.key} array to contain "${expectedValue}", but none matched`
+                            };
+                        }
+                    } else if (typeof actualValue === 'string') {
+                        if (!actualValue.includes(expectedValue)) {
+                            return {
+                                passed: false,
+                                error: `Expected ${expectation.key} to contain "${expectedValue}", but got "${actualValue}"`
+                            };
+                        }
+                    } else {
+                        return {
+                            passed: false,
+                            error: `Cannot perform contains operation on ${expectation.key} of type ${typeof actualValue}`
+                        };
+                    }
+                    break;
+                    
+                default:
+                    return {
+                        passed: false,
+                        error: `Unsupported operation: ${expectation.operation}`
+                    };
+            }
+        }
+        
+        return { passed: true };
+        
+    } catch (error) {
+        return {
+            passed: false,
+            error: `Selector validation error: ${error.message}`
+        };
+    }
+}
+
+// Enhanced JSONPath implementation with filtering support
+function jsonPath(obj, path) {
+    if (path === '$') return [obj];
+    
+    const parts = path.replace('$', '').split('.').filter(Boolean);
+    let current = [obj];
+    
+    for (const part of parts) {
+        const next = [];
+        
+        for (const item of current) {
+            if (part.includes('[?')) {
+                // Handle filtering: [?(condition)]
+                const filterMatch = part.match(/([^[]*)\[\?\(([^)]+)\)\](.*)$/);
+                if (filterMatch) {
+                    const [, arrayKey, condition, remainder] = filterMatch;
+                    const targetArray = arrayKey ? item[arrayKey] : item;
+                    
+                    if (Array.isArray(targetArray)) {
+                        const filtered = targetArray.filter(elem => evaluateFilterCondition(elem, condition));
+                        
+                        // If there's a remainder (like [2] to get third element), apply it
+                        if (remainder) {
+                            if (remainder.startsWith('[') && remainder.endsWith(']')) {
+                                const indexMatch = remainder.match(/\[(\d+)\]/);
+                                if (indexMatch) {
+                                    const index = parseInt(indexMatch[1]);
+                                    for (const filteredElem of filtered) {
+                                        if (Array.isArray(filteredElem) && filteredElem[index] !== undefined) {
+                                            next.push(filteredElem[index]);
+                                        }
+                                    }
+                                }
+                            }
+                        } else {
+                            next.push(...filtered);
+                        }
+                    }
+                }
+            } else if (part.includes('[*]')) {
+                const arrayKey = part.replace('[*]', '');
+                if (arrayKey && item[arrayKey] && Array.isArray(item[arrayKey])) {
+                    next.push(...item[arrayKey]);
+                } else if (!arrayKey && Array.isArray(item)) {
+                    next.push(...item);
+                }
+            } else if (part.includes('[') && part.includes(']')) {
+                const match = part.match(/([^[]+)\[(\d+)\]/);
+                if (match) {
+                    const [, arrayKey, index] = match;
+                    if (item[arrayKey] && Array.isArray(item[arrayKey])) {
+                        const element = item[arrayKey][parseInt(index)];
+                        if (element !== undefined) next.push(element);
+                    }
+                }
+            } else {
+                if (item && item[part] !== undefined) {
+                    next.push(item[part]);
+                }
+            }
+        }
+        
+        current = next;
+    }
+    
+    return current;
+}
+
+// Evaluate filter conditions for JSONPath filtering
+function evaluateFilterCondition(element, condition) {
+    // Handle conditions like: @[0]=='method-name' && @[1]=='action' && @[2]!=''
+    
+    // Split by && for multiple conditions
+    const conditions = condition.split('&&').map(c => c.trim());
+    
+    for (const cond of conditions) {
+        if (!evaluateSingleCondition(element, cond)) {
+            return false;
+        }
+    }
+    
+    return true;
+}
+
+// Evaluate single condition
+function evaluateSingleCondition(element, condition) {
+    // Handle @[index] == 'value' or @[index] != 'value'
+    const equalMatch = condition.match(/@\[(\d+)\]==['"]([^'"]+)['"]/);
+    if (equalMatch) {
+        const [, index, value] = equalMatch;
+        return Array.isArray(element) && element[parseInt(index)] === value;
+    }
+    
+    const notEqualMatch = condition.match(/@\[(\d+)\]!=['"]([^'"]*)['"]/);
+    if (notEqualMatch) {
+        const [, index, value] = notEqualMatch;
+        const actualValue = Array.isArray(element) ? element[parseInt(index)] : undefined;
+        return actualValue !== value;
+    }
+    
+    // Handle @[index]!='' (not empty string)
+    const notEmptyMatch = condition.match(/@\[(\d+)\]!=['"]['"]$/);
+    if (notEmptyMatch) {
+        const [, index] = notEmptyMatch;
+        const actualValue = Array.isArray(element) ? element[parseInt(index)] : undefined;
+        return actualValue !== '' && actualValue !== undefined;
+    }
+    
+    return false;
 }
 
 // Generate execution summary

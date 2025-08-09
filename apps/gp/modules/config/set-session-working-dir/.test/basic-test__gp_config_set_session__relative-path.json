@@ -1,0 +1,30 @@
+{
+  "key": "basic-test__gp_config_set_session__relative-path",
+  "name": "set relative path context",
+  "description": "Relative path resolves to subfolder of default appDataRoot",
+  "command": "-d gp/config/set-session-working-dir --path=\"test-relative-session\"",
+  "selectors": {
+    "status": "$.headers.spl.execute.status",
+    "appDataRoot": "$.headers.spl.execute.appDataRoot",
+    "appRoot": "$.headers.spl.execute.appRoot",
+    "historyMessages": "$.headers.spl.execute.history[?(@[0]=='gp/config/set-session-working-dir' && @[1]=='spl/execute/next' && @[2]!='')][2]",
+    "errorMessage": "$.headers.spl.error.catch.message"
+  },
+  "expect": [
+    {
+      "key": "status",
+      "operation": "equals",
+      "expectation": "green"
+    },
+    {
+      "key": "appDataRoot",
+      "operation": "contains",
+      "expectation": "apps/gp/data/test-relative-session"
+    },
+    {
+      "key": "historyMessages",
+      "operation": "contains",
+      "expectation": "Set appDataRoot"
+    }
+  ]
+}

@@ -25,6 +25,28 @@ This workflow defines the development process for SPL platform code within the s
 
 ## Development Process
 
+### Phase 0: MANDATORY Documentation Review
+**CRITICAL REQUIREMENT**: Before ANY SPL development work begins, the following documentation MUST be read:
+
+1. **MANDATORY READS** - Must be completed before starting any development task:
+   - **[SPL Coding Standards](../../docs/guides/spl-coding-standards.md)** - CRITICAL foundation for all SPL development
+   - **[SPL API Development Gotchas](../../docs/guides/spl-api-development-gotchas.md)** - MANDATORY - Critical issues from collaborative AI development
+   - **[Implementing New API](../../docs/guides/implementing-new-api.md)** - MANDATORY - General API implementation guidance
+   - **[App Development Guide](../../docs/guides/app-development.md)** - MANDATORY - App-specific development patterns
+   - **[Project Information](../project-info.md)** - MANDATORY - Project context and boundaries
+
+2. **ENFORCEMENT**: 
+   - **NO DEVELOPMENT WORK** may begin until all mandatory documents are confirmed read
+   - Claude MUST explicitly confirm reading each document before proceeding
+   - Any SPL development task must start with "MANDATORY DOCUMENTATION CONFIRMED" statement
+
+3. **VERIFICATION REQUIRED**: 
+   - Demonstrate understanding of happy path programming principles
+   - Confirm no try/catch usage in API methods
+   - Verify understanding of SPL framework error handling
+   - Acknowledge auxiliary function patterns
+   - Confirm method-level README.md requirements
+
 ### Phase 1: Development Work
 1. **Development Context**: ALL development happens within app context
    - **New APIs**: Develop in `spl-dev/apps/{app}/modules/{api}/`
@@ -82,6 +104,8 @@ This workflow defines the development process for SPL platform code within the s
 - **NEVER** skip the validation step before canonical sync
 
 ### ✅ Required Actions
+- **MANDATORY FIRST STEP** - Read all mandatory documentation before starting ANY development work
+- **MANDATORY CONFIRMATION** - Explicitly state "MANDATORY DOCUMENTATION CONFIRMED" before development
 - **ALWAYS** develop within `spl-dev/` folders
 - **ALWAYS** use `spl_execute dev` for development testing
 - **ALWAYS** validate changes before syncing to canonical
@@ -148,8 +172,16 @@ diff modules/spl/app/app.js spl-dev/modules/spl/app/app.js
 - **[App Development Guide](../../docs/guides/app-development.md)** - **MANDATORY** - App-specific development patterns
 
 ### API Development Checklist
-Before starting API development, review:
-- [ ] **SPL Coding Standards** - MANDATORY reading, understand happy path programming
+
+**STEP 1: MANDATORY DOCUMENTATION VERIFICATION**
+- [ ] **CONFIRMED READ: SPL Coding Standards** - Happy path programming, no try/catch, auxiliary patterns
+- [ ] **CONFIRMED READ: SPL API Development Gotchas** - Critical collaborative AI development issues  
+- [ ] **CONFIRMED READ: Implementing New API** - General API implementation guidance
+- [ ] **CONFIRMED READ: App Development Guide** - App-specific development patterns
+- [ ] **CONFIRMED READ: Project Information** - Project context and boundaries
+- [ ] **VERIFICATION STATEMENT PROVIDED** - "MANDATORY DOCUMENTATION CONFIRMED" stated explicitly
+
+**STEP 2: DEVELOPMENT REQUIREMENTS**
 - [ ] App structure vs global module structure requirements
 - [ ] Correct require path calculations from app modules  
 - [ ] SPL moduleAction function export requirements (`.default`)
@@ -160,7 +192,31 @@ Before starting API development, review:
 - [ ] **Create method-level README.md** with required structure (see coding standards)
 - [ ] **Implement test coverage** using gp/test framework
 
-## Integration with Claude Workflows
+## Claude AI Development Integration
+
+### MANDATORY DOCUMENTATION ENFORCEMENT
+**CRITICAL**: Any request for SPL development work MUST begin with:
+
+1. **DOCUMENTATION READING PHASE**:
+   - Claude must read ALL mandatory documents listed in Phase 0
+   - Each document must be explicitly acknowledged as read
+   - Understanding of key concepts must be demonstrated
+
+2. **CONFIRMATION REQUIREMENT**:
+   - Claude MUST state: **"MANDATORY DOCUMENTATION CONFIRMED"** 
+   - This statement indicates all required documents have been read and understood
+   - NO development work may begin without this explicit confirmation
+
+3. **ENFORCEMENT PATTERN**:
+   ```
+   User: "Please implement a new SPL API for X"
+   Claude: "I'll implement the SPL API. First, let me read the mandatory documentation..."
+   [Reads all required documents]
+   Claude: "MANDATORY DOCUMENTATION CONFIRMED - proceeding with development"
+   [Begins development work]
+   ```
+
+### Integration with Claude Workflows
 
 This workflow integrates with:
 - **SESSION_START**: Initialize development environment
@@ -169,4 +225,4 @@ This workflow integrates with:
 
 ---
 
-*SPL Development Workflow - Prototype to Production Pipeline*
+*SPL Development Workflow - Prototype to Production Pipeline with Mandatory Documentation Enforcement*

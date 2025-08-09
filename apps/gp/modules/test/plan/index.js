@@ -122,7 +122,7 @@ function createWorkPackages(input, assets, options) {
         
         // Create separate work package for each test type - only if requested
         Object.entries(testsByType).forEach(([testType, commands]) => {
-            const packageType = `${testType}-test-execution`;
+            const packageType = testType;
             if (requestedTypes.includes('basic-test') || requestedTypes.includes(packageType)) {
                 workPackages.push({
                     type: packageType,

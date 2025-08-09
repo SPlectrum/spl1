@@ -41,11 +41,12 @@ exports.default = function gp_test_test_instantiation(input) {
                         });
                         
                     } catch (error) {
+                        const relativePath = filePath.replace(/^.*\/spl-dev\//, '');
                         keyResults.push({
                             type: 'instantiation',
                             filePath: filePath,
                             status: 'FAIL',
-                            message: `Instantiation failed: ${error.message}`,
+                            message: `${relativePath}: ${error.message}`,
                             duration: Date.now() - startTime,
                             timestamp: new Date().toISOString()
                         });

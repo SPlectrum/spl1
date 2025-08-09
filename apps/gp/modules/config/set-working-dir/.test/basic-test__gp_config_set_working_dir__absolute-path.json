@@ -1,0 +1,30 @@
+{
+  "key": "basic-test__gp_config_set_working_dir__absolute-path",
+  "name": "absolute path",
+  "description": "Set working directory to custom path with symlink management",
+  "command": "-d gp/config/set-working-dir --path=\"/tmp/custom-work-dir\"",
+  "selectors": {
+    "status": "$.headers.spl.execute.status",
+    "appDataRoot": "$.headers.spl.execute.appDataRoot", 
+    "appRoot": "$.headers.spl.execute.appRoot",
+    "historyMessages": "$.headers.spl.execute.history[?(@[0]=='gp/config/set-working-dir' && @[1]=='spl/execute/next' && @[2]!='')][2]",
+    "errorMessage": "$.headers.spl.error.catch.message"
+  },
+  "expect": [
+    {
+      "key": "status",
+      "operation": "equals",
+      "expectation": "green"
+    },
+    {
+      "key": "appRoot",
+      "operation": "equals",
+      "expectation": "apps/gp"
+    },
+    {
+      "key": "historyMessages",
+      "operation": "contains",
+      "expectation": "Created data symlink to /tmp/custom-work-dir"
+    }
+  ]
+}

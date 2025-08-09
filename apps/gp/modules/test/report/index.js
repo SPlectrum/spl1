@@ -66,11 +66,22 @@ exports.default = function gp_test_report(input) {
         };
     }
     
-    if (reportData.run) {
+    if (reportData.results) {
+        // Flatten results from all test types into a single array
+        const allResults = [];
+        const summaryData = { total: 0, passed: 0, failed: 0 };
+        
+        for (const [testType, testData] of Object.entries(reportData.results)) {
+            allResults.push(...testData.results);
+            summaryData.total += testData.summary.total;
+            summaryData.passed += testData.summary.passed;
+            summaryData.failed += testData.summary.failed;
+        }
+        
         report.sections.run = {
             title: "⚡ EXECUTION PHASE",
-            summary: reportData.run.summary || {},
-            items: { results: reportData.run.results || [] }
+            summary: summaryData,
+            items: { results: allResults }
         };
     }
     
@@ -97,22 +108,39 @@ exports.default = function gp_test_report(input) {
     
     if (report.sections) {
         // Execution section (most important - show first)
-        if (report.sections.run) {
-            const run = report.sections.run;
-            const totalTime = run.items.results.reduce((sum, r) => sum + (r.duration || 0), 0);
-            console.log(`RUN: ${totalTime}ms total`);
+        if (reportData.results) {
+            const allResults = [];
+            let totalDuration = 0;
             
-            const resultsByType = {};
-            run.items.results.forEach(result => {
-                if (!resultsByType[result.type]) resultsByType[result.type] = [];
-                resultsByType[result.type].push(result);
-            });
+            // Calculate total duration and collect results for timing
+            for (const [testType, testData] of Object.entries(reportData.results)) {
+                allResults.push(...testData.results);
+                totalDuration += testData.results.reduce((sum, r) => sum + (r.duration || 0), 0);
+            }
             
-            Object.entries(resultsByType).forEach(([type, results]) => {
-                const passed = results.filter(r => r.status === 'PASS').length;
-                const failed = results.filter(r => r.status === 'FAIL' || r.status === 'ERROR').length;
-                console.log(`  ${type}: ${passed} passed${failed > 0 ? `, ${failed} failed` : ''}`);
-            });
+            console.log(`RUN: ${totalDuration}ms total`);
+            
+            // Simple per-type output
+            for (const [testType, testData] of Object.entries(reportData.results)) {
+                const { passed, failed, total } = testData.summary;
+                console.log(`  ${testType}: ${passed}/${total} passed${failed > 0 ? `, ${failed} failed` : ''}`);
+                
+                // Show failure details directly
+                if (failed > 0) {
+                    const failures = testData.results.filter(r => r.status === 'FAIL' || r.status === 'ERROR');
+                    if (failures.length > 0) {
+                        console.log(`    FAILED:`);
+                        failures.forEach(failure => {
+                            // Split multi-line messages to display each line properly
+                            const lines = failure.message.split('\n').filter(line => line.trim() !== '');
+                            lines.forEach((line) => {
+                                console.log(`${line}`);
+                            });
+                            console.log(''); // Empty line between failed tests
+                        });
+                    }
+                }
+            }
         }
         
         // Planning section  

@@ -11,11 +11,17 @@ const path = require("path");
 // IMPLEMENTATION - Session Data Directory Override
 exports.default = function gp_config_set_session_working_dir(input) {
     const targetPath = spl.action(input, "path") || spl.action(input, "appDataRoot");
+    const appRoot = spl.context(input, "appRoot");
     
-    // Resolve to absolute path
-    const resolvedPath = path.isAbsolute(targetPath) 
-        ? targetPath 
-        : path.resolve(targetPath);
+    // Resolve to absolute path - relative paths are relative to appRoot/data
+    let resolvedPath;
+    if (path.isAbsolute(targetPath)) {
+        resolvedPath = targetPath;
+    } else {
+        // For relative paths, resolve relative to appRoot/data
+        const appDataRoot = `${appRoot}/data`;
+        resolvedPath = path.resolve(appDataRoot, targetPath);
+    }
     
     // Create directory if it doesn't exist
     if (!fs.existsSync(resolvedPath)) {
@@ -28,7 +34,7 @@ exports.default = function gp_config_set_session_working_dir(input) {
     // Override appDataRoot in execution context for this session
     spl.setContext(input, "appDataRoot", resolvedPath);
     
-    spl.history(input, `config/set-session-working-dir: Set appDataRoot to ${resolvedPath}`);
+    spl.history(input, `Set appDataRoot to ${resolvedPath}`);
     
     spl.completed(input);
 }

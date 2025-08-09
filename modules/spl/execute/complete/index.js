@@ -19,7 +19,7 @@ exports.default = function spl_execute_complete ( input ) {
     }
     console.log( "" );
 //    console.dir ( input, { depth: 100 } );
-    if ( spl.context ( input, "consoleMode" ) === "debug" ) console.dir ( input, { depth: 100 } );
+    if ( spl.context ( input, "consoleMode" ) === "debug" ) console.log(JSON.stringify(input, null, 2));
     else if ( spl.context ( input, "consoleMode" ) === "verbose" ) console.log ( "Verbose output mode not implemented yet." );
 }
 ///////////////////////////////////////////////////////////////////////////////

@@ -15,7 +15,7 @@ exports.default = function gp_config_clear_session_working_dir(input) {
     const defaultAppRootData = `${appRoot}/data`;
     spl.setContext(input, "appDataRoot", defaultAppRootData);
     
-    spl.history(input, `config/clear-session-working-dir: Restored appDataRoot to ${defaultAppRootData}`);
+    spl.history(input, `Restored appDataRoot to ${defaultAppRootData}`);
     
     spl.completed(input);
 }

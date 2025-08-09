@@ -1,0 +1,12 @@
+{
+    "headers": {
+        "header": [
+            { "header": "gp/test/test-simple-test" },
+            { "content": "Executes basic test files with JSON selector validation" },
+            { "content": "{bold syntax}: {italic ./spl_execute <app> test/test-simple-test <options>}" }
+        ]
+    },
+    "value": [
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" }
+    ]
+}

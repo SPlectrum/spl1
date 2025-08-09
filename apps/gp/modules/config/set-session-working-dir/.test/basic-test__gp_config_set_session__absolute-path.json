@@ -1,0 +1,28 @@
+{
+  "key": "basic-test__gp_config_set_session__absolute-path",
+  "name": "set absolute path context",
+  "description": "Absolute path sets appDataRoot to exact path",
+  "command": "-d gp/config/set-session-working-dir --path=\"/tmp/test-session-basic\"",
+  "selectors": {
+    "status": "$.headers.spl.execute.status",
+    "appDataRoot": "$.headers.spl.execute.appDataRoot",
+    "historyMessages": "$.headers.spl.execute.history[?(@[0]=='gp/config/set-session-working-dir' && @[1]=='spl/execute/next' && @[2]!='')][2]"
+  },
+  "expect": [
+    {
+      "key": "status",
+      "operation": "equals",
+      "expectation": "green"
+    },
+    {
+      "key": "appDataRoot",
+      "operation": "equals",
+      "expectation": "/tmp/test-session-basic"
+    },
+    {
+      "key": "historyMessages",
+      "operation": "contains",
+      "expectation": "Set appDataRoot"
+    }
+  ]
+}

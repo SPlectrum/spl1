@@ -1,0 +1,29 @@
+{
+  "key": "basic-test__gp_config_clear_session__restore-tests",
+  "name": "restore default context",
+  "description": "Set session directory then clear it to restore original appDataRoot context",
+  "command": "-d gp/config/set-session-working-dir --path=\"/tmp/test-session-clear\" @@ gp/config/clear-session-working-dir",
+  "selectors": {
+    "status": "$.headers.spl.execute.status",
+    "appDataRoot": "$.headers.spl.execute.appDataRoot",
+    "appRoot": "$.headers.spl.execute.appRoot",
+    "historyMessages": "$.headers.spl.execute.history[?(@[0]=='gp/config/clear-session-working-dir' && @[1]=='spl/execute/next' && @[2]!='')][2]"
+  },
+  "expect": [
+    {
+      "key": "status",
+      "operation": "equals",
+      "expectation": "green"
+    },
+    {
+      "key": "appDataRoot", 
+      "operation": "contains",
+      "expectation": "apps/gp/data"
+    },
+    {
+      "key": "historyMessages",
+      "operation": "contains",
+      "expectation": "Restored appDataRoot"
+    }
+  ]
+}
