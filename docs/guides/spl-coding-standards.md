@@ -69,9 +69,24 @@ exports.default = function gp_fs_write(input) {
 **Rationale**: Input validation is handled by argument schemas and SPL pipeline  
 **Trust**: Parameters from `spl.action(input, 'param')` are valid and present
 
+### 5. No Default Value Fallbacks on Input Arguments
+**Rule**: Never use `|| 'default'` patterns on `spl.action(input, 'param')` calls  
+**Rationale**: Violates happy path programming - assume arguments are provided correctly  
+**Implementation**: Trust argument schemas and SPL pipeline to provide valid values  
+**Alternative**: Use fixed constants for non-user parameters
+
+```javascript
+// ✅ GOOD - Trust the input
+const modules = spl.action(input, 'modules');
+const fixedDefault = 'coverage'; // Non-input constant
+
+// ❌ BAD - Defensive programming
+const modules = spl.action(input, 'modules') || '*';
+```
+
 ## Architecture Standards
 
-### 5. No Direct Node.js Imports in API Methods
+### 6. No Direct Node.js Imports in API Methods
 **Rule**: API method files should only import `spl` - no fs, path, etc.  
 **Rationale**: Keep API methods lightweight, testable, and focused  
 **Pattern**: Use auxiliary functions for complex operations
@@ -93,7 +108,7 @@ const path = require('path');
 const crypto = require('crypto');
 ```
 
-### 6. Auxiliary Functions Pattern
+### 7. Auxiliary Functions Pattern
 **Rule**: Complex logic belongs in shared auxiliary modules  
 **Location**: Place in `{module}/lib.js` or `test.js` for test-related functions  
 **Export**: Export functions for reuse across multiple API methods

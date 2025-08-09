@@ -1,0 +1,17 @@
+{
+    "headers": {
+        "header": [
+            { "header": "gp/test/full-run" },
+            { "content": "Unified test pipeline: discover → plan → execute → report" },
+            { "content": "{bold syntax}: {italic ./spl_execute <app> test/full-run <options>}" },
+            { "content": "" },
+            { "content": "{bold Simple}: One command for complete testing workflow" },
+            { "content": "{bold Isolation}: Automatic workspace management and cleanup" }
+        ]
+    },
+    "value": [
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
+        { "name": "modules", "alias": "m", "type": "String", "description": "Module pattern (e.g., 'gp/*', 'gp/config/*')", "defaultValue": "*" },
+        { "name": "type", "alias": "t", "type": "String", "description": "Test types (all, instantiation, json-validation, basic-test or comma-delimited)", "defaultValue": "all" }
+    ]
+}

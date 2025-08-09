@@ -1,0 +1,12 @@
+{
+    "headers": {
+        "header": [
+            { "header": "gp/test/test-json-validation" },
+            { "content": "Tests argument schema files for valid JSON structure" },
+            { "content": "{bold syntax}: {italic ./spl_execute <app> test/test-json-validation <options>}" }
+        ]
+    },
+    "value": [
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" }
+    ]
+}

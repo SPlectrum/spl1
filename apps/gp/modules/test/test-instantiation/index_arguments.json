@@ -1,0 +1,12 @@
+{
+    "headers": {
+        "header": [
+            { "header": "gp/test/test-instantiation" },
+            { "content": "Tests that modules can be required without errors" },
+            { "content": "{bold syntax}: {italic ./spl_execute <app> test/test-instantiation <options>}" }
+        ]
+    },
+    "value": [
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" }
+    ]
+}

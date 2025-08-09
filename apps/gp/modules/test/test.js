@@ -11,50 +11,6 @@ const { randomUUID } = require('crypto');
 
 // WORK PACKAGE EXECUTION FUNCTIONS
 
-// Execute instantiation work package - test that modules can be required
-exports.executeInstantiationPackage = function(testContext, workPackage) {
-    const results = [];
-    testContext.executionHistory.push(`Testing instantiation of ${workPackage.filePaths.length} modules`);
-    
-    for (const filePath of workPackage.filePaths) {
-        const startTime = Date.now();
-        
-        try {
-            // Clear require cache and attempt to require the module
-            delete require.cache[require.resolve(filePath)];
-            const module = require(filePath);
-            
-            if (module === undefined || module === null) {
-                throw new Error('Module exports undefined or null');
-            }
-            
-            results.push({
-                type: 'instantiation',
-                filePath: filePath,
-                status: 'PASS',
-                message: 'Module instantiated successfully',
-                duration: Date.now() - startTime,
-                timestamp: new Date().toISOString()
-            });
-            
-            testContext.executionHistory.push(`✓ ${filePath}`);
-            
-        } catch (error) {
-            results.push({
-                type: 'instantiation',
-                filePath: filePath,
-                status: 'FAIL',
-                message: `Instantiation failed: ${error.message}`,
-                duration: Date.now() - startTime,
-                timestamp: new Date().toISOString()
-            });
-            
-            testContext.executionHistory.push(`✗ ${filePath} - ${error.message}`);
-        }
-    }
-    
-    return results;
-};
 
 // Execute JSON validation work package - test that JSON files are valid
 exports.executeJsonValidationPackage = function(testContext, workPackage) {
@@ -216,98 +172,6 @@ exports.generateExecutionSummary = function(results) {
     return summary;
 };
 
-// REPORT GENERATION
-
-// Output report to stdout
-exports.outputReport = function(report) {
-    console.log("=".repeat(60));
-    console.log(`TEST REPORT - ${report.requestKey}`);
-    console.log("=".repeat(60));
-    
-    if (report.sections) {
-        // Discovery section
-        if (report.sections.discovery) {
-            const disco = report.sections.discovery;
-            console.log(`DISCOVERY: ${disco.summary.assets} assets`);
-            disco.items.assets.forEach(asset => console.log(`  ${asset}`));
-        }
-        
-        // Planning section  
-        if (report.sections.plan) {
-            const plan = report.sections.plan;
-            console.log(`PLAN: ${plan.summary.workPackages} packages`);
-            plan.items.workPackages.forEach(pkg => {
-                console.log(`  ${pkg.type}:`);
-                if (pkg.filePaths) {
-                    pkg.filePaths.forEach(filePath => console.log(`    ${filePath}`));
-                } else if (pkg.commands) {
-                    pkg.commands.forEach(cmd => console.log(`    basic: ${cmd.testFile}`));
-                }
-            });
-        }
-        
-        // Execution section
-        if (report.sections.run) {
-            const run = report.sections.run;
-            const totalTime = run.items.results.reduce((sum, r) => sum + (r.duration || 0), 0);
-            console.log(`RUN: ${totalTime}ms total`);
-            
-            const resultsByType = {};
-            run.items.results.forEach(result => {
-                if (!resultsByType[result.type]) resultsByType[result.type] = [];
-                resultsByType[result.type].push(result);
-            });
-            
-            Object.entries(resultsByType).forEach(([type, results]) => {
-                const passed = results.filter(r => r.status === 'PASS').length;
-                const failed = results.filter(r => r.status === 'FAIL' || r.status === 'ERROR').length;
-                console.log(`  ${type}: ${passed} passed${failed > 0 ? `, ${failed} failed` : ''}`);
-            });
-        }
-    }
-    
-    console.log("=".repeat(60));
-};
-
-// Generate comprehensive workflow report
-exports.generateWorkflowReport = function(workflowData, options = {}) {
-    const report = {
-        title: "SPL Test Workflow Report",
-        requestKey: workflowData.requestKey,
-        patterns: workflowData.patterns,
-        workflow: workflowData.workflow,
-        sections: {},
-        timestamp: new Date().toISOString()
-    };
-    
-    // Add sections based on available workflow data
-    if (workflowData.discovery) {
-        report.sections.discovery = {
-            title: "🔍 DISCOVERY PHASE",
-            summary: { assets: workflowData.discovery.assets?.length || 0 },
-            items: { assets: workflowData.discovery.assets || [] }
-        };
-    }
-    
-    if (workflowData.plan) {
-        report.sections.plan = {
-            title: "📋 PLANNING PHASE",
-            summary: { workPackages: workflowData.plan.workPackages?.length || 0 },
-            items: { workPackages: workflowData.plan.workPackages || [] }
-        };
-    }
-    
-    if (workflowData.run) {
-        report.sections.run = {
-            title: "⚡ EXECUTION PHASE",
-            summary: workflowData.run.summary || {},
-            items: { results: workflowData.run.results || [] }
-        };
-    }
-    
-    return report;
-};
-
 // WORKSPACE MANAGEMENT FUNCTIONS
 
 // Create unique test workspace directory
@@ -335,5 +199,64 @@ exports.removeWorkspace = function(workspacePath) {
     }
     return false;
 };
+
+// WORKSPACE ASSET CAPTURE AND CLEANUP FUNCTIONS
+
+// Capture all assets (files and directories) in workspace for audit
+exports.captureWorkspaceAssets = function(workspacePath) {
+    const assets = {
+        files: [],
+        directories: [],
+        totalSize: 0,
+        captureTime: new Date().toISOString()
+    };
+    
+    if (!fs.existsSync(workspacePath)) {
+        return assets;
+    }
+    
+    // Recursively scan workspace directory
+    scanDirectory(workspacePath, workspacePath, assets);
+    return assets;
+};
+
+// Recursively scan directory and capture file/folder information
+function scanDirectory(dirPath, basePath, assets) {
+    const items = fs.readdirSync(dirPath, { withFileTypes: true });
+    
+    for (const item of items) {
+        const fullPath = path.join(dirPath, item.name);
+        const relativePath = path.relative(basePath, fullPath);
+        
+        if (item.isFile()) {
+            const stats = fs.statSync(fullPath);
+            const fileAsset = {
+                path: relativePath,
+                size: stats.size,
+                modified: stats.mtime.toISOString(),
+                permissions: stats.mode.toString(8)
+            };
+            
+            // For small files, include content sample for debugging
+            if (stats.size > 0 && stats.size <= 1000) {
+                const content = fs.readFileSync(fullPath, 'utf8');
+                fileAsset.contentSample = content.substring(0, 200);
+                if (content.length > 200) fileAsset.contentSample += '...';
+            }
+            
+            assets.files.push(fileAsset);
+            assets.totalSize += stats.size;
+            
+        } else if (item.isDirectory()) {
+            assets.directories.push({
+                path: relativePath,
+                modified: fs.statSync(fullPath).mtime.toISOString()
+            });
+            
+            // Recurse into subdirectory
+            scanDirectory(fullPath, basePath, assets);
+        }
+    }
+}
 
 ///////////////////////////////////////////////////////////////////////////////

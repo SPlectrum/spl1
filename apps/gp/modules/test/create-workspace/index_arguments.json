@@ -1,0 +1,12 @@
+{
+    "headers": {
+        "header": [
+            { "header": "gp/test/create-workspace" },
+            { "content": "Creates isolated workspace directory for test execution" },
+            { "content": "{bold syntax}: {italic ./spl_execute <app> test/create-workspace <options>}" }
+        ]
+    },
+    "value": [
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" }
+    ]
+}

@@ -1,0 +1,12 @@
+{
+    "headers": {
+        "header": [
+            { "header": "gp/test/remove-workspace" },
+            { "content": "Removes test workspace directory and captures assets" },
+            { "content": "{bold syntax}: {italic ./spl_execute <app> test/remove-workspace <options>}" }
+        ]
+    },
+    "value": [
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" }
+    ]
+}

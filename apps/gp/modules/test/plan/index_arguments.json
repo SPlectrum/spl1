@@ -7,7 +7,7 @@
             { "content": "Pure planning - examines discovery assets and creates execution plan (work packages)." },
             { "content": "{bold syntax}: {italic ./spl_execute <app> test/plan <options>}" },
             { "content": "" },
-            { "content": "{bold Planning Types}: coverage, validation, quality - determines test planning approach" },
+            { "content": "{bold Test Types}: all (default), instantiation, json-validation, basic-test, or comma-delimited list" },
             { "content": "{bold Input}: Discovery assets from workspace (URI-based)" },
             { "content": "{bold Output}: Work packages ready for run method execution" }
         ]
@@ -16,7 +16,7 @@
     [ 
         { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
         
-        { "name": "type", "alias": "t", "type": "String", "description": "Planning type (coverage, validation, quality)", "defaultValue": "coverage" },
+        { "name": "type", "alias": "t", "type": "String", "description": "Test types (all, instantiation, json-validation, basic-test or comma-delimited)", "defaultValue": "all" },
         
         { "name": "module", "alias": "m", "type": "String", "description": "Target module for planning (optional filter)" },
         

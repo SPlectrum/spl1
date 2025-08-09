@@ -9,79 +9,54 @@ const spl = require("spl");
 
 // IMPLEMENTATION - Pure Test Planning
 exports.default = function gp_test_plan(input) {
-    const planType = spl.action(input, 'type') || 'coverage';
-    const targetModule = spl.action(input, 'module');
-    const threshold = spl.action(input, 'threshold') || 80;
+    const planType = spl.action(input, 'type');
     
-    spl.history(input, `test/plan: Starting planning`);
-    spl.history(input, `test/plan: Type=${planType}, Module=${targetModule || 'all'}, Threshold=${threshold}%`);
+    // Get discovery assets from pattern-based workspace
+    const testApiRecord = spl.wsRef(input, "gp/test");
     
-    try {
-        // Get discovery assets from pattern-based workspace
-        const testApiRecord = spl.wsRef(input, "gp/test");
-        if (!testApiRecord || !testApiRecord.value) {
-            throw new Error("No discovery data available - run gp/test/discover first");
-        }
-        
-        // Find the current request record  
-        const currentRequestRecord = spl.wsRef(input, "gp/test/current-request");
-        if (!currentRequestRecord || !currentRequestRecord.value) {
-            throw new Error("No current request found - run gp/test/discover first");
-        }
-        
-        const requestKey = currentRequestRecord.value;
+    // Process all request records (blanket coverage: all)
+    let totalAssets = 0;
+    let totalPackages = 0;
+    
+    for (const requestKey in testApiRecord.value) {
         const requestRecord = testApiRecord.value[requestKey];
-        
-        if (!requestRecord || !requestRecord.value.discovery) {
-            throw new Error("No discovery data found for current request");
-        }
-        
-        const assets = requestRecord.value.discovery.assets || [];
-        spl.history(input, `test/plan: Planning ${assets.length} assets`);
+        const assets = requestRecord.value.discovery?.assets || [];
+        totalAssets += assets.length;
         
         // Create work packages from assets
-        const workPackages = createWorkPackages(input, assets, { planType, threshold, targetModule });
+        const workPackages = createWorkPackages(input, assets, { planType });
+        totalPackages += workPackages.length;
         
-        spl.history(input, `test/plan: Created ${workPackages.length} work packages`);
-        
-        // Store work packages in the same request record
+        // Store work packages in the request record
         requestRecord.value.plan = {
             workPackages: workPackages,
             metadata: {
                 totalAssets: assets.length,
-                threshold: threshold,
-                targetModule: targetModule,
                 timestamp: new Date().toISOString()
             }
         };
         
         // Update workflow to include plan
         requestRecord.headers.workflow = Array.from(new Set([...requestRecord.headers.workflow, 'plan']));
-        
-        // Save updated record
-        spl.wsSet(input, "gp/test", testApiRecord);
-        
-        spl.history(input, `test/plan: Planning completed`);
-        
-    } catch (error) {
-        spl.rcSet(input.headers, "spl.execute.error", {
-            message: error.message,
-            code: error.code || 'PLANNING_ERROR',
-            operation: 'test/plan'
-        });
-        
-        spl.history(input, `test/plan: ERROR - ${error.message}`);
     }
+    
+    // Save updated record
+    spl.wsSet(input, "gp/test", testApiRecord);
+    
+    spl.history(input, `test/plan: Created ${totalPackages} work packages (${planType}) from ${totalAssets} assets`);
     
     spl.completed(input);
 }
 
 // Create work packages from URI assets
 function createWorkPackages(input, assets, options) {
-    const { planType, threshold, targetModule } = options;
+    const { planType } = options;
     const cwd = spl.context(input, "cwd");
     
-    spl.history(input, `test/plan: Creating ${planType} work packages from ${assets.length} assets`);
+    // Parse test types - could be "all", single type, or comma-delimited list
+    const requestedTypes = planType === 'all' 
+        ? ['instantiation', 'json-validation', 'basic-test']
+        : planType.split(',').map(t => t.trim());
     
     const workPackages = [];
     
@@ -112,7 +87,7 @@ function createWorkPackages(input, assets, options) {
     }
     
     // Work Package 1: Instantiation tests (100% success required)
-    if (jsFiles.length > 0) {
+    if (jsFiles.length > 0 && requestedTypes.includes('instantiation')) {
         workPackages.push({
             type: "instantiation",
             filePaths: jsFiles,
@@ -121,7 +96,7 @@ function createWorkPackages(input, assets, options) {
     }
     
     // Work Package 2: JSON validation tests (100% success required)
-    if (jsonFiles.length > 0) {
+    if (jsonFiles.length > 0 && requestedTypes.includes('json-validation')) {
         workPackages.push({
             type: "json-validation", 
             filePaths: jsonFiles,
@@ -145,13 +120,16 @@ function createWorkPackages(input, assets, options) {
             });
         });
         
-        // Create separate work package for each test type
+        // Create separate work package for each test type - only if requested
         Object.entries(testsByType).forEach(([testType, commands]) => {
-            workPackages.push({
-                type: `${testType}-test-execution`,
-                commands: commands,
-                expect: { successRate: 100 }
-            });
+            const packageType = `${testType}-test-execution`;
+            if (requestedTypes.includes('basic-test') || requestedTypes.includes(packageType)) {
+                workPackages.push({
+                    type: packageType,
+                    commands: commands,
+                    expect: { successRate: 100 }
+                });
+            }
         });
     }
     

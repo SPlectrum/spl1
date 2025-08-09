@@ -139,10 +139,13 @@ diff modules/spl/app/app.js spl-dev/modules/spl/app/app.js
 ## Essential Development Documentation
 
 ### Required Reading for SPL API Development
+
+**MANDATORY READ DIRECTIVE**: Before working on any SPL development task, Claude MUST read ALL of the following documentation to understand project-specific requirements and avoid critical development gotchas.
+
 - **[SPL Coding Standards](../../docs/guides/spl-coding-standards.md)** - **MANDATORY** - Essential coding standards for all SPL development
-- **[SPL API Development Gotchas](../../docs/guides/spl-api-development-gotchas.md)** - Critical issues and solutions from collaborative AI development experience
-- **[Implementing New API](../../docs/guides/implementing-new-api.md)** - General API implementation guidance
-- **[App Development Guide](../../docs/guides/app-development.md)** - App-specific development patterns
+- **[SPL API Development Gotchas](../../docs/guides/spl-api-development-gotchas.md)** - **MANDATORY** - Critical issues and solutions from collaborative AI development experience
+- **[Implementing New API](../../docs/guides/implementing-new-api.md)** - **MANDATORY** - General API implementation guidance
+- **[App Development Guide](../../docs/guides/app-development.md)** - **MANDATORY** - App-specific development patterns
 
 ### API Development Checklist
 Before starting API development, review:

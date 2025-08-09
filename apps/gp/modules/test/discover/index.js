@@ -18,87 +18,73 @@ exports.default = function gp_test_discover(input) {
     spl.history(input, `test/discover: Starting discovery`);
     spl.history(input, `test/discover: Modules=${modulePattern}, Tests=${testPattern}, Schemas=${schemaPattern}`);
     
-    try {
-        const cwd = spl.context(input, "cwd");
-        const discoveries = {
-            operations: [],
-            tests: [],
-            schemas: [],
-            metadata: {
-                modulePattern: modulePattern,
-                testPattern: testPattern,
-                schemaPattern: schemaPattern,
-                timestamp: new Date().toISOString(),
-                discoveryRoot: cwd
-            }
-        };
-        
-        // Discover assets using URI-based approach
-        const assets = discoverAssets(input, modulePattern, testPattern);
-        
-        spl.history(input, `test/discover: Found ${assets.length} assets`);
-        
-        // Store simple asset list
-        const discoveryResult = {
-            assets: assets,
-            metadata: {
-                modulePattern: modulePattern,
-                testPattern: testPattern,
-                schemaPattern: schemaPattern,
-                timestamp: new Date().toISOString(),
-                discoveryRoot: cwd
-            }
-        };
-        
-        // Generate unique request key based on input patterns
-        const requestKey = generateRequestKey(modulePattern, testPattern, schemaPattern);
-        
-        // Get or create main gp/test record
-        let testApiRecord = spl.wsRef(input, "gp/test");
-        if (!testApiRecord) {
-            testApiRecord = {
-                headers: { gp: { test: { api: "gp/test", timestamp: new Date().toISOString() } } },
-                value: {}
-            };
+    const cwd = spl.context(input, "cwd");
+    const discoveries = {
+        operations: [],
+        tests: [],
+        schemas: [],
+        metadata: {
+            modulePattern: modulePattern,
+            testPattern: testPattern,
+            schemaPattern: schemaPattern,
+            timestamp: new Date().toISOString(),
+            discoveryRoot: cwd
         }
-        
-        // Create or update request record
-        if (!testApiRecord.value[requestKey]) {
-            testApiRecord.value[requestKey] = {
-                headers: { 
-                    requestKey: requestKey,
-                    workflow: ['discover'],
-                    startTime: new Date().toISOString(),
-                    modulePattern: modulePattern,
-                    testPattern: testPattern,
-                    schemaPattern: schemaPattern
-                },
-                value: {}
-            };
+    };
+    
+    // Discover assets using URI-based approach
+    const assets = discoverAssets(input, modulePattern, testPattern);
+    
+    spl.history(input, `test/discover: Found ${assets.length} assets`);
+    
+    // Store simple asset list
+    const discoveryResult = {
+        assets: assets,
+        metadata: {
+            modulePattern: modulePattern,
+            testPattern: testPattern,
+            schemaPattern: schemaPattern,
+            timestamp: new Date().toISOString(),
+            discoveryRoot: cwd
         }
-        
-        // Store discovery data in the request record
-        testApiRecord.value[requestKey].value.discovery = discoveryResult;
-        testApiRecord.value[requestKey].headers.workflow = 
-            Array.from(new Set([...testApiRecord.value[requestKey].headers.workflow, 'discover']));
-        
-        // Save updated test API record
-        spl.wsSet(input, "gp/test", testApiRecord);
-        
-        // Also set current request key for other methods to use
-        spl.wsSet(input, "gp/test/current-request", { value: requestKey });
-        
-        spl.history(input, `test/discover: Discovery completed successfully`);
-        
-    } catch (error) {
-        spl.rcSet(input.headers, "spl.execute.error", {
-            message: error.message,
-            code: error.code || 'DISCOVERY_ERROR',
-            operation: 'test/discover'
-        });
-        
-        spl.history(input, `test/discover: ERROR - ${error.message}`);
+    };
+    
+    // Generate unique request key based on input patterns
+    const requestKey = generateRequestKey(modulePattern, testPattern, schemaPattern);
+    
+    // Get or create main gp/test record
+    let testApiRecord = spl.wsRef(input, "gp/test");
+    if (!testApiRecord) {
+        testApiRecord = {
+            headers: { gp: { test: { api: "gp/test", timestamp: new Date().toISOString() } } },
+            value: {}
+        };
     }
+    
+    // Create or update request record
+    if (!testApiRecord.value[requestKey]) {
+        testApiRecord.value[requestKey] = {
+            headers: { 
+                requestKey: requestKey,
+                workflow: ['discover'],
+                startTime: new Date().toISOString(),
+                modulePattern: modulePattern,
+                testPattern: testPattern,
+                schemaPattern: schemaPattern
+            },
+            value: {}
+        };
+    }
+    
+    // Store discovery data in the request record
+    testApiRecord.value[requestKey].value.discovery = discoveryResult;
+    testApiRecord.value[requestKey].headers.workflow = 
+        Array.from(new Set([...testApiRecord.value[requestKey].headers.workflow, 'discover']));
+    
+    // Save updated test API record
+    spl.wsSet(input, "gp/test", testApiRecord);
+    
+    spl.history(input, `test/discover: Discovery completed successfully`);
     
     spl.completed(input);
 }
