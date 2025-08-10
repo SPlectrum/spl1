@@ -1,0 +1,23 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "gp/test/touch-docs" },
+            { "content": "Updates timestamps on README.md files to mark documentation as current." },
+            { "content": "{bold syntax}: {italic ./spl_execute <app> test/touch-docs --module=<pattern> [--recursive]}" },
+            { "content": "" },
+            { "content": "{bold Purpose}: Update README.md timestamps after reviewing/confirming documentation" },
+            { "content": "{bold Safety}: Only touches README.md files, no content changes" },
+            { "content": "{bold Integration}: Use after docs-current test failures to mark docs as current" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
+        
+        { "name": "module", "alias": "m", "type": "String", "description": "Target module pattern (e.g., gp/config, gp/fs)", "typeLabel": "pattern" },
+        
+        { "name": "recursive", "alias": "r", "type": "Boolean", "description": "Update README.md files recursively through module tree", "typeLabel": "flag" }
+    ]
+}

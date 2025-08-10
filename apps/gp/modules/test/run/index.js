@@ -1,8 +1,8 @@
 //  name        Test Work Package Execution
 //  URI         gp/test/run
 //  type        API Method  
-//  description Test runner pipeline: create-workspace → test-instantiation → test-json-validation → test-basic-test → remove-workspace
-//              Executes instantiation, JSON validation, and basic-test execution with workspace isolation
+//  description Test runner pipeline: create-workspace → test-instantiation → test-json-validation → test-basic-test → test-docs-present → test-docs-current → remove-workspace
+//              Executes instantiation, JSON validation, basic-test execution, documentation presence, and documentation currency testing with workspace isolation
 ///////////////////////////////////////////////////////////////////////////////
 const spl = require("spl");
 ///////////////////////////////////////////////////////////////////////////////
@@ -11,7 +11,7 @@ const spl = require("spl");
 exports.default = function gp_test_run(input) {
     spl.history(input, "test/run: Starting comprehensive test pipeline");
     
-    // Create SPL pipeline: create-workspace → test-instantiation → test-json-validation → test-basic-test → remove-workspace
+    // Create SPL pipeline: create-workspace → test-instantiation → test-json-validation → test-basic-test → test-docs-present → test-docs-current → remove-workspace
     spl.wsSet(input, "spl/execute.set-pipeline", {
         headers: {
             spl: {
@@ -30,6 +30,12 @@ exports.default = function gp_test_run(input) {
                             action: "gp/test/test-basic-test"
                         },
                         {
+                            action: "gp/test/test-docs-present"
+                        },
+                        {
+                            action: "gp/test/test-docs-current"
+                        },
+                        {
                             action: "gp/test/remove-workspace"
                         }
                     ]
@@ -39,7 +45,7 @@ exports.default = function gp_test_run(input) {
         value: {}
     });
     
-    spl.history(input, "test/run: Test pipeline configured with 5 stages (workspace + instantiation + json-validation + basic-test)");
+    spl.history(input, "test/run: Test pipeline configured with 7 stages (workspace + instantiation + json-validation + basic-test + docs-present + docs-current)");
     spl.gotoExecute(input, "spl/execute/set-pipeline");
 }
 

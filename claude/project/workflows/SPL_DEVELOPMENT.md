@@ -25,27 +25,16 @@ This workflow defines the development process for SPL platform code within the s
 
 ## Development Process
 
-### Phase 0: MANDATORY Documentation Review
-**CRITICAL REQUIREMENT**: Before ANY SPL development work begins, the following documentation MUST be read:
+### Phase 0: SPL Knowledge Verification
+**CRITICAL REQUIREMENT**: Before ANY SPL development work begins:
 
-1. **MANDATORY READS** - Must be completed before starting any development task:
-   - **[SPL Coding Standards](../../docs/guides/spl-coding-standards.md)** - CRITICAL foundation for all SPL development
-   - **[SPL API Development Gotchas](../../docs/guides/spl-api-development-gotchas.md)** - MANDATORY - Critical issues from collaborative AI development
-   - **[Implementing New API](../../docs/guides/implementing-new-api.md)** - MANDATORY - General API implementation guidance
-   - **[App Development Guide](../../docs/guides/app-development.md)** - MANDATORY - App-specific development patterns
-   - **[Project Information](../project-info.md)** - MANDATORY - Project context and boundaries
+1. **MANDATORY READ**: **[SPL_ESSENTIALS.md](../SPL_ESSENTIALS.md)** - Essential SPL execution model and patterns
 
-2. **ENFORCEMENT**: 
-   - **NO DEVELOPMENT WORK** may begin until all mandatory documents are confirmed read
-   - Claude MUST explicitly confirm reading each document before proceeding
-   - Any SPL development task must start with "MANDATORY DOCUMENTATION CONFIRMED" statement
+2. **CONFIRMATION**: Claude MUST state: **"SPL ESSENTIALS CONFIRMED"** before proceeding
 
-3. **VERIFICATION REQUIRED**: 
-   - Demonstrate understanding of happy path programming principles
-   - Confirm no try/catch usage in API methods
-   - Verify understanding of SPL framework error handling
-   - Acknowledge auxiliary function patterns
-   - Confirm method-level README.md requirements
+3. **REFERENCE**: Use SPL_ESSENTIALS.md as quick reference during development
+
+**NO ADDITIONAL MANDATORY READING** - Other documentation is available for reference when needed.
 
 ### Phase 1: Development Work
 1. **Development Context**: ALL development happens within app context
@@ -104,8 +93,8 @@ This workflow defines the development process for SPL platform code within the s
 - **NEVER** skip the validation step before canonical sync
 
 ### ✅ Required Actions
-- **MANDATORY FIRST STEP** - Read all mandatory documentation before starting ANY development work
-- **MANDATORY CONFIRMATION** - Explicitly state "MANDATORY DOCUMENTATION CONFIRMED" before development
+- **MANDATORY FIRST STEP** - Read SPL_ESSENTIALS.md before starting ANY development work
+- **MANDATORY CONFIRMATION** - Explicitly state "SPL ESSENTIALS CONFIRMED" before development
 - **ALWAYS** develop within `spl-dev/` folders
 - **ALWAYS** use `spl_execute dev` for development testing
 - **ALWAYS** validate changes before syncing to canonical
@@ -160,61 +149,48 @@ diff -r modules spl-dev/modules | head -20
 diff modules/spl/app/app.js spl-dev/modules/spl/app/app.js
 ```
 
-## Essential Development Documentation
+## Reference Documentation
 
-### Required Reading for SPL API Development
+### Available Reference Guides (As Needed)
+- **[docs/guides/spl-coding-standards.md](../../docs/guides/spl-coding-standards.md)** - Detailed coding standards reference
+- **[docs/guides/spl-api-development-gotchas.md](../../docs/guides/spl-api-development-gotchas.md)** - Comprehensive gotchas and solutions
+- **[docs/guides/implementing-new-api.md](../../docs/guides/implementing-new-api.md)** - Complete API implementation guide
+- **[docs/guides/app-development.md](../../docs/guides/app-development.md)** - Detailed app development patterns
+- **[docs/guides/gp-test-api-guide.md](../../docs/guides/gp-test-api-guide.md)** - Testing framework comprehensive guide
 
-**MANDATORY READ DIRECTIVE**: Before working on any SPL development task, Claude MUST read ALL of the following documentation to understand project-specific requirements and avoid critical development gotchas.
+### SPL Development Checklist
 
-- **[SPL Coding Standards](../../docs/guides/spl-coding-standards.md)** - **MANDATORY** - Essential coding standards for all SPL development
-- **[SPL API Development Gotchas](../../docs/guides/spl-api-development-gotchas.md)** - **MANDATORY** - Critical issues and solutions from collaborative AI development experience
-- **[Implementing New API](../../docs/guides/implementing-new-api.md)** - **MANDATORY** - General API implementation guidance
-- **[App Development Guide](../../docs/guides/app-development.md)** - **MANDATORY** - App-specific development patterns
+**STEP 1: ESSENTIAL KNOWLEDGE VERIFICATION**
+- [ ] **CONFIRMED READ: SPL_ESSENTIALS.md** - Core SPL execution model and patterns
+- [ ] **VERIFICATION STATEMENT PROVIDED** - "SPL ESSENTIALS CONFIRMED" stated explicitly
 
-### API Development Checklist
-
-**STEP 1: MANDATORY DOCUMENTATION VERIFICATION**
-- [ ] **CONFIRMED READ: SPL Coding Standards** - Happy path programming, no try/catch, auxiliary patterns
-- [ ] **CONFIRMED READ: SPL API Development Gotchas** - Critical collaborative AI development issues  
-- [ ] **CONFIRMED READ: Implementing New API** - General API implementation guidance
-- [ ] **CONFIRMED READ: App Development Guide** - App-specific development patterns
-- [ ] **CONFIRMED READ: Project Information** - Project context and boundaries
-- [ ] **VERIFICATION STATEMENT PROVIDED** - "MANDATORY DOCUMENTATION CONFIRMED" stated explicitly
-
-**STEP 2: DEVELOPMENT REQUIREMENTS**
-- [ ] App structure vs global module structure requirements
-- [ ] Correct require path calculations from app modules  
-- [ ] SPL moduleAction function export requirements (`.default`)
-- [ ] SPL execution document structure and accessor patterns
-- [ ] Proper testing approach for scaffolding validation
-- [ ] No try/catch blocks in API methods (let SPL framework handle errors)
-- [ ] Use auxiliary functions for complex logic (no direct Node.js imports)
-- [ ] **Create method-level README.md** with required structure (see coding standards)
-- [ ] **Implement test coverage** using gp/test framework
+**STEP 2: DEVELOPMENT IMPLEMENTATION**
+- [ ] Correct require path calculations (6 levels from app modules)
+- [ ] SPL `.default` export pattern followed
+- [ ] No try/catch blocks in API methods
+- [ ] Auxiliary functions used for complex logic
+- [ ] Testing via complete pipeline (discover @@ plan @@ run @@ report)
+- [ ] Debug mode used for validation (-d flag)
 
 ## Claude AI Development Integration
 
-### MANDATORY DOCUMENTATION ENFORCEMENT
+### Streamlined Knowledge Verification
 **CRITICAL**: Any request for SPL development work MUST begin with:
 
-1. **DOCUMENTATION READING PHASE**:
-   - Claude must read ALL mandatory documents listed in Phase 0
-   - Each document must be explicitly acknowledged as read
-   - Understanding of key concepts must be demonstrated
+1. **READ SPL_ESSENTIALS.md**: Core execution model and patterns (5-minute read)
 
-2. **CONFIRMATION REQUIREMENT**:
-   - Claude MUST state: **"MANDATORY DOCUMENTATION CONFIRMED"** 
-   - This statement indicates all required documents have been read and understood
-   - NO development work may begin without this explicit confirmation
+2. **CONFIRM UNDERSTANDING**: State **"SPL ESSENTIALS CONFIRMED"** before proceeding
 
-3. **ENFORCEMENT PATTERN**:
-   ```
-   User: "Please implement a new SPL API for X"
-   Claude: "I'll implement the SPL API. First, let me read the mandatory documentation..."
-   [Reads all required documents]
-   Claude: "MANDATORY DOCUMENTATION CONFIRMED - proceeding with development"
-   [Begins development work]
-   ```
+3. **REFERENCE AS NEEDED**: Access detailed guides only when specific questions arise
+
+**ENFORCEMENT PATTERN**:
+```
+User: "Please implement a new SPL API for X"
+Claude: "I'll implement the SPL API. Let me first read SPL_ESSENTIALS.md..."
+[Reads essential SPL knowledge]
+Claude: "SPL ESSENTIALS CONFIRMED - proceeding with development using SPL patterns"
+[Begins development work]
+```
 
 ### Integration with Claude Workflows
 

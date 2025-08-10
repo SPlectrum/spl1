@@ -40,6 +40,20 @@
 - **USABILITY**: External SPlectrum Engines enable isolated development workflows
 - **MAINTAINABILITY**: High test coverage, quality gates, automated rule adherence
 
+## Development Requirements
+
+### Essential Knowledge for SPL Development
+**CRITICAL**: SPL platform development requires understanding of unique execution patterns before any development work.
+
+**MANDATORY READING**: Before ANY SPL development task, Claude MUST:
+1. **Read**: `claude/project/SPL_ESSENTIALS.md` - Core SPL execution model and patterns
+2. **Confirm**: State "SPL ESSENTIALS CONFIRMED" before proceeding with SPL development
+3. **Reference**: Use as quick lookup during development work
+
+**Why Essential**: SPL's execution model, error handling, and development patterns are fundamentally different from typical development. This knowledge prevents critical errors and ensures proper integration.
+
+**Other Documentation**: Available in `docs/guides/` for reference when specific questions arise.
+
 ---
 
 *Project Hook - General project information for spl1*

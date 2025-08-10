@@ -1,0 +1,19 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "gp/test/test-docs-current" },
+            { "content": "Test runner that validates documentation currency requirements for SPL modules." },
+            { "content": "{bold syntax}: {italic ./spl_execute <app> test/test-docs-current}" },
+            { "content": "" },
+            { "content": "{bold Purpose}: Ensures README.md files are more recent than .js files in same folder" },
+            { "content": "{bold Integration}: Part of comprehensive test pipeline (gp/test/run)" },
+            { "content": "{bold Dependencies}: Requires file metadata from discovery phase" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" }
+    ]
+}

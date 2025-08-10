@@ -12,6 +12,7 @@
     "value": [
         { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
         { "name": "modules", "alias": "m", "type": "String", "description": "Module pattern (e.g., 'gp/*', 'gp/config/*')", "defaultValue": "*" },
-        { "name": "type", "alias": "t", "type": "String", "description": "Test types (all, instantiation, json-validation, basic-test or comma-delimited)", "defaultValue": "all" }
+        { "name": "type", "alias": "t", "type": "String", "description": "Test types (all, instantiation, json-validation, basic-test or comma-delimited)", "defaultValue": "all" },
+        { "name": "summaryOnly", "alias": "s", "type": "Boolean", "description": "Show only RUN results (summary mode)", "typeLabel": "flag" }
     ]
 }

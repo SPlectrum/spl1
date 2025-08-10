@@ -9,10 +9,7 @@ const spl = require("spl");
 
 // IMPLEMENTATION - Standalone Test Reporting
 exports.default = function gp_test_report(input) {
-    const format = spl.action(input, 'format') || 'summary';
-    const dataSource = spl.action(input, 'source') || 'auto';
-    const includeDetails = spl.action(input, 'includeDetails') === true;
-    const threshold = spl.action(input, 'threshold') || 80;
+    const summaryOnly = spl.action(input, 'summaryOnly') === true;
     
     // Get the main gp/test record with pattern-based keys
     const testApiRecord = spl.wsRef(input, "gp/test");
@@ -87,13 +84,11 @@ exports.default = function gp_test_report(input) {
     
     // Store report in workspace
     const reportRecord = {
-        headers: { gp: { test: { report: { timestamp: new Date().toISOString(), format, type: reportType } } } },
+        headers: { gp: { test: { report: { timestamp: new Date().toISOString(), type: reportType } } } },
         value: {
             report: report,
             metadata: {
-                format: format,
                 source: reportType,
-                includeDetails: includeDetails,
                 generatedAt: new Date().toISOString()
             }
         }
@@ -120,10 +115,15 @@ exports.default = function gp_test_report(input) {
             
             console.log(`RUN: ${totalDuration}ms total`);
             
-            // Simple per-type output
+            // Simple per-type output with execution times
             for (const [testType, testData] of Object.entries(reportData.results)) {
                 const { passed, failed, total } = testData.summary;
-                console.log(`  ${testType}: ${passed}/${total} passed${failed > 0 ? `, ${failed} failed` : ''}`);
+                
+                // Calculate execution time for this test type
+                const testTypeDuration = testData.results.reduce((sum, r) => sum + (r.duration || 0), 0);
+                const durationText = testTypeDuration > 0 ? ` (${testTypeDuration}ms)` : '';
+                
+                console.log(`  ${testType}: ${passed}/${total} passed${failed > 0 ? `, ${failed} failed` : ''}${durationText}`);
                 
                 // Show failure details directly
                 if (failed > 0) {
@@ -136,15 +136,14 @@ exports.default = function gp_test_report(input) {
                             lines.forEach((line) => {
                                 console.log(`${line}`);
                             });
-                            console.log(''); // Empty line between failed tests
                         });
                     }
                 }
             }
         }
         
-        // Planning section  
-        if (report.sections.plan) {
+        // Planning section (skip in summary-only mode)
+        if (!summaryOnly && report.sections.plan) {
             const plan = report.sections.plan;
             console.log(`PLAN: ${plan.summary.workPackages} packages`);
             plan.items.workPackages.forEach(pkg => {
@@ -157,17 +156,21 @@ exports.default = function gp_test_report(input) {
             });
         }
         
-        // Discovery section (most detailed - show last)
-        if (report.sections.discovery) {
+        // Discovery section (skip in summary-only mode)
+        if (!summaryOnly && report.sections.discovery) {
             const disco = report.sections.discovery;
             console.log(`DISCOVERY: ${disco.summary.assets} assets`);
-            disco.items.assets.forEach(asset => console.log(`  ${asset}`));
+            disco.items.assets.forEach(asset => {
+                // Handle both old string format and new object format
+                const assetPath = typeof asset === 'string' ? asset : asset.path;
+                console.log(`  ${assetPath}`);
+            });
         }
     }
     
     console.log("=".repeat(60));
     
-    spl.history(input, `test/report: Generated ${format} report for ${requestRecord.headers.workflow.join(' → ')} workflow`);
+    spl.history(input, `test/report: Generated report for ${requestRecord.headers.workflow.join(' → ')} workflow`);
     
     spl.completed(input);
 }

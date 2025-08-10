@@ -113,11 +113,21 @@ function discoverAssets(input, modulePattern, testPattern) {
         files.forEach(file => {
             const filePath = path.join(searchFolder, file);
             if (fs.statSync(filePath).isFile()) {
+                const stats = fs.statSync(filePath);
+                let relativePath;
                 if (firstPart === 'spl' || firstPart === 'modules') {
-                    assets.push(`modules/${parts.slice(1).join('/')}/${file}`);
+                    relativePath = `modules/${parts.slice(1).join('/')}/${file}`;
                 } else {
-                    assets.push(`apps/${firstPart}/modules/${parts.slice(1).join('/')}/${file}`);
+                    relativePath = `apps/${firstPart}/modules/${parts.slice(1).join('/')}/${file}`;
                 }
+                
+                // Store file metadata for docs-current testing
+                assets.push({
+                    path: relativePath,
+                    fullPath: filePath,
+                    lastModified: stats.mtime.toISOString(),
+                    size: stats.size
+                });
             }
         });
     }

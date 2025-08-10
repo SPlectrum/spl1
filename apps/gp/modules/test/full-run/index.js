@@ -13,6 +13,7 @@ exports.default = function gp_test_full_run(input) {
     // Get input parameters
     const modules = spl.action(input, 'modules');
     const type = spl.action(input, 'type');
+    const summaryOnly = spl.action(input, 'summaryOnly') === true;
     
     // Create pipeline: discover → plan → execute → report
     spl.wsSet(input, "spl/execute.set-pipeline", {
@@ -38,7 +39,9 @@ exports.default = function gp_test_full_run(input) {
                         },
                         {
                             action: "gp/test/report",
-                            "gp/test/report": {}
+                            "gp/test/report": {
+                                ...(summaryOnly && { summaryOnly: true })
+                            }
                         }
                     ]
                 }

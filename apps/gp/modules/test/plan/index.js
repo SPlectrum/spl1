@@ -55,7 +55,7 @@ function createWorkPackages(input, assets, options) {
     
     // Parse test types - could be "all", single type, or comma-delimited list
     const requestedTypes = planType === 'all' 
-        ? ['instantiation', 'json-validation', 'basic-test']
+        ? ['instantiation', 'json-validation', 'basic-test', 'docs-present', 'docs-current']
         : planType.split(',').map(t => t.trim());
     
     const workPackages = [];
@@ -64,9 +64,12 @@ function createWorkPackages(input, assets, options) {
     const jsFiles = [];
     const jsonFiles = [];
     const testFiles = [];
+    const allFiles = [];
     
-    for (const assetPath of assets) {
-        const fullPath = `${cwd}/${assetPath}`;
+    for (const asset of assets) {
+        // Assets are now objects with {path, lastModified}
+        const assetPath = asset.path;
+        const fullPath = asset.fullPath;
         
         if (assetPath.includes('/index.js')) {
             jsFiles.push(fullPath);
@@ -83,6 +86,11 @@ function createWorkPackages(input, assets, options) {
                 targetModule: extractTargetModule(assetPath),
                 syntax: testType
             });
+        }
+        
+        // Collect all .js and .md files for docs-present and docs-current testing
+        if (assetPath.endsWith('.js') || assetPath.endsWith('.md')) {
+            allFiles.push(asset); // Store full asset object with metadata for docs-current
         }
     }
     
@@ -130,6 +138,24 @@ function createWorkPackages(input, assets, options) {
                     expect: { successRate: 100 }
                 });
             }
+        });
+    }
+    
+    // Work Package 4: Documentation presence tests (100% success required)
+    if (allFiles.length > 0 && requestedTypes.includes('docs-present')) {
+        workPackages.push({
+            type: "docs-present",
+            filePaths: allFiles.map(asset => asset.fullPath), // Extract just paths for docs-present
+            expect: { successRate: 100 }
+        });
+    }
+    
+    // Work Package 5: Documentation currency tests (100% success required)
+    if (allFiles.length > 0 && requestedTypes.includes('docs-current')) {
+        workPackages.push({
+            type: "docs-current",
+            assets: allFiles, // Pass full assets with metadata for docs-current
+            expect: { successRate: 100 }
         });
     }
     

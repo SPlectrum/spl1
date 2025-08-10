@@ -16,12 +16,6 @@
     [ 
         { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
         
-        { "name": "format", "alias": "f", "type": "String", "description": "Report format (summary, detailed)", "defaultValue": "summary" },
-        
-        { "name": "source", "alias": "s", "type": "String", "description": "Data source (auto, discover, analyze, run)", "defaultValue": "auto" },
-        
-        { "name": "includeDetails", "alias": "d", "type": "Boolean", "description": "Include detailed information in report", "typeLabel": "flag" },
-        
-        { "name": "threshold", "alias": "t", "type": "Number", "description": "Threshold for recommendations", "defaultValue": 80 }
+        { "name": "summaryOnly", "alias": "s", "type": "Boolean", "description": "Show only RUN results (summary mode)", "typeLabel": "flag" }
     ]
 }

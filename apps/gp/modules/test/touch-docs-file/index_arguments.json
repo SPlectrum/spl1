@@ -1,0 +1,21 @@
+{
+    "headers": 
+    {
+        "header": 
+        [
+            { "header": "gp/test/touch-docs-file" },
+            { "content": "Worker method that processes discovered assets and updates README.md timestamps." },
+            { "content": "{bold syntax}: {italic ./spl_execute <app> test/touch-docs-file [--recursive]}" },
+            { "content": "" },
+            { "content": "{bold Purpose}: Internal worker method for touching README.md files" },
+            { "content": "{bold Usage}: Called by gp/test/touch-docs pipeline, not directly" },
+            { "content": "{bold Input}: Discovered assets from workspace (gp/test discovery data)" }
+        ]
+    },
+    "value": 
+    [ 
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
+        
+        { "name": "recursive", "alias": "r", "type": "Boolean", "description": "Process README.md files recursively through module tree", "typeLabel": "flag" }
+    ]
+}
