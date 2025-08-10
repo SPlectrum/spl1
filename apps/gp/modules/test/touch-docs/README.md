@@ -6,7 +6,7 @@ Updates timestamps on README.md files to mark documentation as current.
 Utility method for updating README.md file timestamps after reviewing and confirming that documentation accurately reflects current code state. Resolves docs-current test failures when documentation content is accurate but timestamps are outdated.
 
 ## Parameters
-- `--module` (required) - Target module pattern (e.g., `gp/config`, `gp/fs`)
+- `--modules` (`-m`) (required) - Target module pattern (e.g., `gp/config`, `gp/fs`)
 - `--recursive`, `-r` (optional) - Update README.md files recursively through entire module tree
 
 ## Behavior
@@ -23,17 +23,17 @@ Utility method for updating README.md file timestamps after reviewing and confir
 
 **Update single module documentation:**
 ```bash
-spl_execute dev gp/test/touch-docs --module=gp/config
+spl_execute dev gp/test/touch-docs --modules=gp/config
 ```
 
 **Update entire module tree documentation:**
 ```bash
-spl_execute dev gp/test/touch-docs --module=gp/config -r
+spl_execute dev gp/test/touch-docs --modules=gp/config -r
 ```
 
 **Update different module:**
 ```bash
-spl_execute dev gp/test/touch-docs --module=gp/fs -r
+spl_execute dev gp/test/touch-docs --modules=gp/fs -r
 ```
 
 ## Integration with docs-current Testing
@@ -52,7 +52,7 @@ spl_execute dev gp/test/discover --modules=gp/config @@ gp/test/plan --type=docs
 # Review documentation content manually...
 
 # Mark documentation as current after review
-spl_execute dev gp/test/touch-docs --module=gp/config -r
+spl_execute dev gp/test/touch-docs --modules=gp/config -r
 
 # Verify docs-current compliance
 spl_execute dev gp/test/discover --modules=gp/config @@ gp/test/plan --type=docs-current @@ gp/test/run @@ gp/test/report

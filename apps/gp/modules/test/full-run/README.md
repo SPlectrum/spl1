@@ -6,8 +6,9 @@ Unified test pipeline: discover → plan → execute → report
 Single command for complete testing workflow with automatic workspace isolation
 
 ## Parameters
-- `--modules` (required) - Module pattern (e.g., 'gp/config', 'gp/fs')
-- `--type` (optional) - Planning type (coverage, validation, quality) 
+- `--modules` (`-m`) - Module pattern (e.g., 'gp/config', 'gp/fs', default: '*')
+- `--type` (`-t`) - Test types (all, instantiation, json-validation, basic-test or comma-delimited, default: 'all')
+- `--summaryOnly` (`-s`) - Show only RUN results (summary mode) 
 
 ## Context Changes
 - **Before**: Current workspace state

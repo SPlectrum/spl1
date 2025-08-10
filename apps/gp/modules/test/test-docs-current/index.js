@@ -3,8 +3,8 @@
 //  type        API Method
 //  description Validates that README.md files are more recent than .js files in the same folder
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl");
-const path = require('path');
+const spl = require("spl_lib");
+const testLib = require("gp_test_lib");
 ///////////////////////////////////////////////////////////////////////////////
 
 // IMPLEMENTATION - Documentation Currency Testing
@@ -25,12 +25,12 @@ exports.default = function gp_test_test_docs_current(input) {
                 // Group assets by directory
                 const folderMap = {};
                 workPackage.assets.forEach(asset => {
-                    const dir = path.dirname(asset.fullPath);
+                    const dir = testLib.pathDirname(asset.fullPath);
                     if (!folderMap[dir]) {
                         folderMap[dir] = { jsFiles: [], mdFiles: [] };
                     }
                     
-                    const fileName = path.basename(asset.fullPath);
+                    const fileName = testLib.pathBasename(asset.fullPath);
                     if (fileName.endsWith('.js')) {
                         folderMap[dir].jsFiles.push(asset);
                     } else if (fileName.endsWith('.md')) {
@@ -41,7 +41,7 @@ exports.default = function gp_test_test_docs_current(input) {
                 // Check documentation currency for each folder
                 Object.entries(folderMap).forEach(([dir, files]) => {
                     if (files.jsFiles.length > 0) {
-                        const readmeFile = files.mdFiles.find(f => path.basename(f.fullPath) === 'README.md');
+                        const readmeFile = files.mdFiles.find(f => testLib.pathBasename(f.fullPath) === 'README.md');
                         const relativePath = dir.replace(/^.*\/spl-dev\//, '');
                         
                         if (!readmeFile) {
@@ -64,7 +64,7 @@ exports.default = function gp_test_test_docs_current(input) {
                             
                             if (outdatedJsFiles.length > 0) {
                                 // README.md is older than some .js files
-                                const outdatedFileNames = outdatedJsFiles.map(f => path.basename(f.fullPath)).join(', ');
+                                const outdatedFileNames = outdatedJsFiles.map(f => testLib.pathBasename(f.fullPath)).join(', ');
                                 keyResults.push({
                                     type: 'docs-current',
                                     folderPath: dir,

@@ -3,7 +3,7 @@
 //  type        API Method
 //  description Validates that index.js files include proper spl.history calls for progress logging
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl");
+const spl = require("spl_lib");
 const test = require("gp_test");
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -27,10 +27,47 @@ exports.default = function gp_test_test_coding_history(input) {
                         // Read file content using auxiliary function
                         const content = test.readFileSync(filePath);
                         
-                        // Validate history logging patterns
-                        const historyValidation = validateHistoryLogging(content);
+                        // Validate history logging patterns inline
+                        const lines = content.split('\n');
+                        let hasExportsDefault = false;
+                        let splHistoryCount = 0;
+                        let isValid = true;
+                        let failMatch = '';
                         
-                        if (historyValidation.isValid) {
+                        // Check for exports.default function to ensure this is an API method
+                        for (const line of lines) {
+                            const trimmed = line.trim();
+                            if (trimmed.includes('exports.default') && trimmed.includes('function')) {
+                                hasExportsDefault = true;
+                                break;
+                            }
+                        }
+                        
+                        // Only validate API methods (files with exports.default function)
+                        if (hasExportsDefault) {
+                            // Count spl.history calls with input parameter
+                            for (const line of lines) {
+                                const trimmed = line.trim();
+                                
+                                // Skip comments and empty lines
+                                if (trimmed.startsWith('//') || trimmed.length === 0) continue;
+                                
+                                // Check for spl.history call with input parameter and meaningful message (only at start of line)
+                                if (trimmed.startsWith('spl.history(') && trimmed.includes('input') && !trimmed.includes('//')) {
+                                    splHistoryCount++;
+                                }
+                            }
+                            
+                            if (splHistoryCount === 0) {
+                                isValid = false;
+                                failMatch = 'Missing spl.history(input, message) call for progress logging';
+                            } else if (splHistoryCount > 1) {
+                                isValid = false;
+                                failMatch = `Multiple spl.history calls found (${splHistoryCount}). Only one spl.history call allowed per method`;
+                            }
+                        }
+                        
+                        if (isValid) {
                             keyResults.push({
                                 type: 'coding-history',
                                 filePath: filePath,
@@ -45,6 +82,7 @@ exports.default = function gp_test_test_coding_history(input) {
                                 filePath: filePath,
                                 status: 'FAIL',
                                 message: filePath.replace(spl.context(input, "cwd") + '/', ''),
+                                failMatch: failMatch,
                                 duration: Date.now() - startTime,
                                 timestamp: new Date().toISOString()
                             });
@@ -88,50 +126,4 @@ exports.default = function gp_test_test_coding_history(input) {
     
     spl.history(input, `test-coding-history: Completed history logging validation`);
     spl.completed(input);
-}
-
-// Validate history logging patterns in file content
-function validateHistoryLogging(content) {
-    const lines = content.split('\n');
-    
-    let hasExportsDefault = false;
-    let splHistoryCount = 0;
-    
-    // Check for exports.default function to ensure this is an API method
-    for (const line of lines) {
-        const trimmed = line.trim();
-        
-        if (trimmed.includes('exports.default') && trimmed.includes('function')) {
-            hasExportsDefault = true;
-            break;
-        }
-    }
-    
-    // Only validate API methods (files with exports.default function)
-    if (!hasExportsDefault) {
-        return { isValid: true }; // Skip validation for non-API files
-    }
-    
-    // Count spl.history calls with input parameter
-    for (const line of lines) {
-        const trimmed = line.trim();
-        
-        // Skip comments and empty lines
-        if (trimmed.startsWith('//') || trimmed.length === 0) continue;
-        
-        // Check for spl.history call with input parameter and meaningful message
-        if (trimmed.includes('spl.history(') && trimmed.includes('input') && !trimmed.includes('//')) {
-            splHistoryCount++;
-        }
-    }
-    
-    if (splHistoryCount === 0) {
-        return { isValid: false, reason: 'Missing spl.history(input, message) call for progress logging' };
-    }
-    
-    if (splHistoryCount > 1) {
-        return { isValid: false, reason: `Multiple spl.history calls found (${splHistoryCount}). Only one spl.history call allowed per method` };
-    }
-    
-    return { isValid: true };
 }

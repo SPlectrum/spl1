@@ -5,8 +5,8 @@
 //              and [parent-folder-name].js files; .test folders contain only .json files 
 //              prefixed with valid test types
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl");
-const path = require("path");
+const spl = require("spl_lib");
+const testLib = require("gp_test_lib");
 ///////////////////////////////////////////////////////////////////////////////
 
 // Valid test type prefixes for .test folder validation
@@ -32,8 +32,8 @@ exports.default = function gp_test_test_file_type(input) {
                 workPackage.assets.forEach(asset => {
                     const filePath = asset.path;
                     const fullPath = asset.fullPath;
-                    const dir = path.dirname(fullPath);
-                    const fileName = path.basename(fullPath);
+                    const dir = testLib.pathDirname(fullPath);
+                    const fileName = testLib.pathBasename(fullPath);
                     
                     // Track all directories from the path
                     const pathParts = filePath.split('/');
@@ -87,11 +87,90 @@ exports.default = function gp_test_test_file_type(input) {
                     
                     if (isTestFolder) {
                         // .test folder validation: only .json files with valid test type prefixes
-                        const results = validateTestFolder(files, relativePath, startTime);
+                        const results = [];
+                        
+                        for (const file of files) {
+                            if (!file.endsWith('.json')) {
+                                results.push({
+                                    type: 'file-type',
+                                    folderPath: relativePath,
+                                    status: 'FAIL',
+                                    message: `${relativePath}/.test/${file}`,
+                                    duration: Date.now() - startTime,
+                                    timestamp: new Date().toISOString()
+                                });
+                                continue;
+                            }
+                            
+                            // Check for valid test type prefix
+                            const hasValidPrefix = VALID_TEST_TYPES.some(testType => 
+                                file.startsWith(`${testType}__`)
+                            );
+                            
+                            if (!hasValidPrefix) {
+                                results.push({
+                                    type: 'file-type',
+                                    folderPath: relativePath,
+                                    status: 'FAIL',
+                                    message: `${relativePath}/.test/${file}`,
+                                    duration: Date.now() - startTime,
+                                    timestamp: new Date().toISOString()
+                                });
+                            }
+                        }
+                        
+                        // If all files are valid, return single pass result
+                        if (results.length === 0) {
+                            results.push({
+                                type: 'file-type',
+                                folderPath: relativePath,
+                                status: 'PASS',
+                                message: `Test folder structure valid (${files.length} test files)`,
+                                duration: Date.now() - startTime,
+                                timestamp: new Date().toISOString()
+                            });
+                        }
+                        
                         keyResults.push(...results);
                     } else {
                         // Regular folder validation: only README.md, index.js, and [parent-folder-name].js
-                        const results = validateRegularFolder(dir, files, relativePath, startTime);
+                        const allowedFiles = ['README.md', 'index.js', 'index_arguments.json'];
+                        
+                        // Extract parent folder name for additional allowed file
+                        const parentFolderName = testLib.pathBasename(dir);
+                        const parentJsFile = `${parentFolderName}.js`;
+                        allowedFiles.push(parentJsFile);
+                        
+                        // Filter out dot-prefixed files (hidden files/folders)
+                        const regularFiles = files.filter(file => !file.startsWith('.'));
+                        
+                        // Check for invalid files - create individual results for each
+                        const invalidFiles = regularFiles.filter(file => !allowedFiles.includes(file));
+                        const results = [];
+                        
+                        for (const file of invalidFiles) {
+                            results.push({
+                                type: 'file-type',
+                                folderPath: relativePath,
+                                status: 'FAIL',
+                                message: `${relativePath}/${file}`,
+                                duration: Date.now() - startTime,
+                                timestamp: new Date().toISOString()
+                            });
+                        }
+                        
+                        // If all files are valid, return single pass result
+                        if (results.length === 0) {
+                            results.push({
+                                type: 'file-type',
+                                folderPath: relativePath,
+                                status: 'PASS',
+                                message: `Folder structure valid (${regularFiles.length} files)`,
+                                duration: Date.now() - startTime,
+                                timestamp: new Date().toISOString()
+                            });
+                        }
+                        
                         keyResults.push(...results);
                     }
                 });
@@ -122,95 +201,4 @@ exports.default = function gp_test_test_file_type(input) {
     
     spl.history(input, `test-file-type: Completed file type validation`);
     spl.completed(input);
-}
-
-// Validate .test folder contents
-function validateTestFolder(files, relativePath, startTime) {
-    const results = [];
-    
-    for (const file of files) {
-        if (!file.endsWith('.json')) {
-            results.push({
-                type: 'file-type',
-                folderPath: relativePath,
-                status: 'FAIL',
-                message: `${relativePath}/.test/${file}`,
-                duration: Date.now() - startTime,
-                timestamp: new Date().toISOString()
-            });
-            continue;
-        }
-        
-        // Check for valid test type prefix
-        const hasValidPrefix = VALID_TEST_TYPES.some(testType => 
-            file.startsWith(`${testType}__`)
-        );
-        
-        if (!hasValidPrefix) {
-            results.push({
-                type: 'file-type',
-                folderPath: relativePath,
-                status: 'FAIL',
-                message: `${relativePath}/.test/${file}`,
-                duration: Date.now() - startTime,
-                timestamp: new Date().toISOString()
-            });
-        }
-    }
-    
-    // If all files are valid, return single pass result
-    if (results.length === 0) {
-        results.push({
-            type: 'file-type',
-            folderPath: relativePath,
-            status: 'PASS',
-            message: `Test folder structure valid (${files.length} test files)`,
-            duration: Date.now() - startTime,
-            timestamp: new Date().toISOString()
-        });
-    }
-    
-    return results;
-}
-
-// Validate regular folder contents
-function validateRegularFolder(fullDir, files, relativePath, startTime) {
-    const allowedFiles = ['README.md', 'index.js', 'index_arguments.json'];
-    
-    // Extract parent folder name for additional allowed file
-    const parentFolderName = path.basename(fullDir);
-    const parentJsFile = `${parentFolderName}.js`;
-    allowedFiles.push(parentJsFile);
-    
-    // Filter out dot-prefixed files (hidden files/folders)
-    const regularFiles = files.filter(file => !file.startsWith('.'));
-    
-    // Check for invalid files - create individual results for each
-    const invalidFiles = regularFiles.filter(file => !allowedFiles.includes(file));
-    const results = [];
-    
-    for (const file of invalidFiles) {
-        results.push({
-            type: 'file-type',
-            folderPath: relativePath,
-            status: 'FAIL',
-            message: `${relativePath}/${file}`,
-            duration: Date.now() - startTime,
-            timestamp: new Date().toISOString()
-        });
-    }
-    
-    // If all files are valid, return single pass result
-    if (results.length === 0) {
-        results.push({
-            type: 'file-type',
-            folderPath: relativePath,
-            status: 'PASS',
-            message: `Folder structure valid (${regularFiles.length} files)`,
-            duration: Date.now() - startTime,
-            timestamp: new Date().toISOString()
-        });
-    }
-    
-    return results;
 }

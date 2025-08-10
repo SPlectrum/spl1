@@ -4,25 +4,17 @@
 //  description Executes work packages with complete isolation using unique workspace within appDataRoot
 //              Pipeline orchestrator: set-session-working-dir → run → clear-session-working-dir
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl");
+const spl = require("spl_lib");
 ///////////////////////////////////////////////////////////////////////////////
 
 // IMPLEMENTATION - Isolated Test Execution Pipeline
 exports.default = function gp_test_execute(input) {
-    spl.history(input, `test/execute: Starting isolated test execution`);
+    // Extract and forward module parameter to gp/test/run
+    const moduleFilter = spl.action(input, 'module');
     
-    // Set appDataRoot to /tmp for test isolation
-    spl.history(input, `test/execute: Setting appDataRoot to /tmp for test isolation`);
-    
-    // Forward all parameters from original request to gp/test/run
     const runParams = {};
-    const originalParams = spl.action(input);
-    
-    // Copy all parameters except help (which would conflict)
-    for (const key in originalParams) {
-        if (key !== 'help') {
-            runParams[key] = originalParams[key];
-        }
+    if (moduleFilter) {
+        runParams.module = moduleFilter;
     }
     
     // Create internal pipeline: set appDataRoot → run → clear session
@@ -52,7 +44,7 @@ exports.default = function gp_test_execute(input) {
         value: {}
     });
     
-    spl.history(input, `test/execute: Pipeline configured with 3 stages`);
+    spl.history(input, "test/execute: Isolated test execution pipeline configured with 3 stages (set working dir to /tmp → run tests → clear working dir)");
     spl.gotoExecute(input, "spl/execute/set-pipeline");
 }
 ///////////////////////////////////////////////////////////////////////////////

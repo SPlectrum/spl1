@@ -4,13 +4,11 @@
 //  description Test runner pipeline: create-workspace → test-instantiation → test-json-validation → test-basic-test → test-docs-present → test-docs-current → test-file-type → test-coding-require → test-coding-export → test-coding-args → test-coding-header → test-coding-errors → test-coding-complete → test-coding-naming → test-coding-history → remove-workspace  
 //              Executes instantiation, JSON validation, basic-test execution, documentation presence, documentation currency, file type validation, and coding standards testing with workspace isolation
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl");
+const spl = require("spl_lib");
 ///////////////////////////////////////////////////////////////////////////////
 
 // IMPLEMENTATION - Comprehensive Test Pipeline
 exports.default = function gp_test_run(input) {
-    spl.history(input, "test/run: Starting comprehensive test pipeline");
-    
     // Create SPL pipeline: create-workspace → test-instantiation → test-json-validation → test-basic-test → test-docs-present → test-docs-current → test-file-type → remove-workspace
     spl.wsSet(input, "spl/execute.set-pipeline", {
         headers: {
@@ -72,7 +70,7 @@ exports.default = function gp_test_run(input) {
         value: {}
     });
     
-    spl.history(input, "test/run: Test pipeline configured with 10 stages (workspace + instantiation + json-validation + basic-test + docs-present + docs-current + file-type + coding-require + coding-export)");
+    spl.history(input, "test/run: Comprehensive test pipeline configured with 16 stages (workspace creation + instantiation + validation + basic-test + documentation checks + file type validation + coding standards validation + workspace cleanup)");
     spl.gotoExecute(input, "spl/execute/set-pipeline");
 }
 

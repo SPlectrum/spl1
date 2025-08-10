@@ -38,7 +38,7 @@ gp/test/discover --modules=gp/config @@ gp/test/touch-docs-file --recursive
 
 **Called by touch-docs orchestrator:**
 ```bash
-spl_execute dev gp/test/touch-docs --module=gp/config -r
+spl_execute dev gp/test/touch-docs --modules=gp/config -r
 ```
 
 ## File Processing Logic

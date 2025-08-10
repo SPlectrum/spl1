@@ -3,7 +3,7 @@
 //  type        API Method  
 //  description Sets session-specific working directory for data operations without affecting global state
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl");
+const spl = require("spl_lib");
 ///////////////////////////////////////////////////////////////////////////////
 
 // IMPLEMENTATION - Session Data Directory Override

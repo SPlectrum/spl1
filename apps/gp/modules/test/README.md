@@ -1,15 +1,28 @@
-# gp/test - Test Framework
+# gp/test - Universal Testing Framework
 
-## Quick Usage
+API-level batch orchestrator providing quality gates and systematic API validation with pipeline support.
+
+## Usage Modes
+
+### API Configuration Mode
 ```bash
-spl_execute dev gp/test/discover --modules=gp/fs/write @@ gp/test/plan @@ gp/test/run @@ gp/test/report
+./spl_execute dev gp/test
 ```
+Basic configuration mode for API setup and method instantiation.
 
-## Test Pipeline
-- `discover` → finds test assets (modules, test files, schemas)
-- `plan` → creates work packages (instantiation, json-validation, basic-test)  
-- `run` → executes tests in isolated workspace
-- `report` → formats and outputs results
+### Batch Orchestration Mode  
+```bash
+./spl_execute dev gp/test --batch='[{"method":"discover","params":{"modules":"gp/config"}},{"method":"plan","params":{}},{"method":"run","params":{}}]'
+```
+Processes JSON arrays of test operations through dynamic pipeline generation.
+
+## Batch Operations
+The framework supports batch execution of test operations:
+- `discover` → Asset discovery with module patterns
+- `plan` → Work package creation from discovered assets  
+- `run` → Test execution in isolated workspaces
+- `report` → Result formatting and output
+- `full-run` → Complete pipeline orchestration
 
 ## Test Types & Failure Handling
 

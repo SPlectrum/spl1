@@ -3,7 +3,7 @@
 //  type        API Method
 //  description Validates that index.js files follow SPL error handling: no try/catch blocks, no manual error setting
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl");
+const spl = require("spl_lib");
 const test = require("gp_test");
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -27,10 +27,54 @@ exports.default = function gp_test_test_coding_errors(input) {
                         // Read file content using auxiliary function
                         const content = test.readFileSync(filePath);
                         
-                        // Validate error handling patterns
-                        const errorValidation = validateErrorHandling(content);
+                        // Validate error handling patterns inline
+                        const lines = content.split('\n');
+                        let isValid = true;
+                        let failMatch = '';
                         
-                        if (errorValidation.isValid) {
+                        for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
+                            const line = lines[lineIndex];
+                            const trimmed = line.trim();
+                            
+                            // Skip comments and empty lines
+                            if (trimmed.startsWith('//') || trimmed.length === 0) continue;
+                            
+                            // Invalid: try/catch blocks
+                            if (trimmed.includes('try') && trimmed.includes('{')) {
+                                isValid = false;
+                                failMatch = `Line ${lineIndex+1}: ${trimmed}`;
+                                break;
+                            }
+                            
+                            if (trimmed.includes('catch') && trimmed.includes('(')) {
+                                isValid = false;
+                                failMatch = `Line ${lineIndex+1}: ${trimmed}`;
+                                break;
+                            }
+                            
+                            // Invalid: manual error setting with spl.rcSet
+                            if (trimmed.includes('spl.rcSet') && !trimmed.includes('//')) {
+                                isValid = false;
+                                failMatch = `Line ${lineIndex+1}: ${trimmed}`;
+                                break;
+                            }
+                            
+                            // Invalid: throw statements (SPL handles errors automatically)
+                            if (trimmed.startsWith('throw ') || trimmed.includes(' throw ')) {
+                                isValid = false;
+                                failMatch = `Line ${lineIndex+1}: ${trimmed}`;
+                                break;
+                            }
+                            
+                            // Invalid: Error constructors
+                            if (trimmed.includes('new Error(') && !trimmed.includes('//')) {
+                                isValid = false;
+                                failMatch = `Line ${lineIndex+1}: ${trimmed}`;
+                                break;
+                            }
+                        }
+                        
+                        if (isValid) {
                             keyResults.push({
                                 type: 'coding-errors',
                                 filePath: filePath,
@@ -45,6 +89,7 @@ exports.default = function gp_test_test_coding_errors(input) {
                                 filePath: filePath,
                                 status: 'FAIL',
                                 message: filePath.replace(spl.context(input, "cwd") + '/', ''),
+                                failMatch: failMatch,
                                 duration: Date.now() - startTime,
                                 timestamp: new Date().toISOString()
                             });
@@ -90,40 +135,3 @@ exports.default = function gp_test_test_coding_errors(input) {
     spl.completed(input);
 }
 
-// Validate error handling patterns in file content
-function validateErrorHandling(content) {
-    const lines = content.split('\n');
-    
-    for (const line of lines) {
-        const trimmed = line.trim();
-        
-        // Skip comments and empty lines
-        if (trimmed.startsWith('//') || trimmed.length === 0) continue;
-        
-        // Invalid: try/catch blocks
-        if (trimmed.includes('try') && trimmed.includes('{')) {
-            return { isValid: false, reason: 'try/catch blocks not allowed in SPL API methods' };
-        }
-        
-        if (trimmed.includes('catch') && trimmed.includes('(')) {
-            return { isValid: false, reason: 'try/catch blocks not allowed in SPL API methods' };
-        }
-        
-        // Invalid: manual error setting with spl.rcSet
-        if (trimmed.includes('spl.rcSet') && !trimmed.includes('//')) {
-            return { isValid: false, reason: 'Manual error setting with spl.rcSet not allowed' };
-        }
-        
-        // Invalid: throw statements (SPL handles errors automatically)
-        if (trimmed.startsWith('throw ') || trimmed.includes(' throw ')) {
-            return { isValid: false, reason: 'throw statements not allowed in SPL API methods' };
-        }
-        
-        // Invalid: Error constructors
-        if (trimmed.includes('new Error(') && !trimmed.includes('//')) {
-            return { isValid: false, reason: 'Manual error construction not allowed in SPL API methods' };
-        }
-    }
-    
-    return { isValid: true };
-}

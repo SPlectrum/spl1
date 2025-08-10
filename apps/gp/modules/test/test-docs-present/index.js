@@ -4,8 +4,8 @@
 //  description Validates that folders with .js files have exactly one README.md file
 //              Enforces SPL coding standard requirement for method-level documentation
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl");
-const path = require("path");
+const spl = require("spl_lib");
+const testLib = require("gp_test_lib");
 ///////////////////////////////////////////////////////////////////////////////
 
 // IMPLEMENTATION - Documentation Presence Testing (Blanket Coverage: All)
@@ -24,12 +24,12 @@ exports.default = function gp_test_test_docs_present(input) {
                 // Group files by directory
                 const folderMap = {};
                 workPackage.filePaths.forEach(filePath => {
-                    const dir = path.dirname(filePath);
+                    const dir = testLib.pathDirname(filePath);
                     if (!folderMap[dir]) {
                         folderMap[dir] = { jsFiles: [], mdFiles: [] };
                     }
                     
-                    const fileName = path.basename(filePath);
+                    const fileName = testLib.pathBasename(filePath);
                     if (fileName.endsWith('.js')) {
                         folderMap[dir].jsFiles.push(fileName);
                     } else if (fileName.endsWith('.md')) {

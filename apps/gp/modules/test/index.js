@@ -4,26 +4,16 @@
 //  description Universal Testing Framework for SPL Platform - API-level batch orchestrator
 //              Provides quality gates and systematic API validation with pipeline support
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl");
+const spl = require("spl_lib");
 ///////////////////////////////////////////////////////////////////////////////
 
 // IMPLEMENTATION - Universal Testing Framework with Batch Support
-exports.default = function gp_test_api(input) {
+exports.default = function gp_test(input) {
     const batchParam = spl.action(input, "batch");
     
     if (batchParam) {
-        spl.history(input, `gp/test: Batch mode activated`);
-        
         // Parse batch JSON string to array
-        let batchArray;
-        try {
-            batchArray = JSON.parse(batchParam);
-            spl.history(input, `gp/test: Parsed ${batchArray.length} batch test operations`);
-        } catch (error) {
-            spl.history(input, `gp/test: ERROR - Invalid batch JSON`);
-            spl.completed(input);
-            return;
-        }
+        const batchArray = JSON.parse(batchParam);
         
         // Generate dynamic pipeline from batch array
         const pipeline = batchArray.map((request, index) => {
@@ -44,14 +34,13 @@ exports.default = function gp_test_api(input) {
             }
         });
         
-        spl.history(input, `gp/test: Generated test pipeline with ${pipeline.length} steps`);
-        
         // Set SPL pipeline for execution
         spl.wsSet(input, "spl/execute.set-pipeline", {
             headers: { spl: { execute: { pipeline } } },
             value: {}
         });
         
+        spl.history(input, `gp/test: Batch mode activated - Generated test pipeline with ${pipeline.length} steps`);
         spl.gotoExecute(input, "spl/execute/set-pipeline");
         
     } else {

@@ -3,8 +3,8 @@
 //  type        API Method
 //  description Validates that index.js files use only exports.default and no local functions
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl");
-const test = require("gp_test");
+const spl = require("spl_lib");
+const testLib = require("gp_test_lib");
 ///////////////////////////////////////////////////////////////////////////////
 
 // IMPLEMENTATION - Export Pattern Validation (Blanket Coverage: All)
@@ -25,12 +25,62 @@ exports.default = function gp_test_test_coding_export(input) {
                     
                     try {
                         // Read file content using auxiliary function
-                        const content = test.readFileSync(filePath);
+                        const content = testLib.readFileSync(filePath);
                         
-                        // Validate export patterns
-                        const exportValidation = validateExportPatterns(content);
+                        // Validate export patterns inline
+                        const lines = content.split('\n');
+                        let hasExportsDefault = false;
+                        let isValid = true;
+                        let failMatch = '';
                         
-                        if (exportValidation.isValid) {
+                        for (let i = 0; i < lines.length; i++) {
+                            const line = lines[i];
+                            const trimmed = line.trim();
+                            
+                            // Skip comments and empty lines
+                            if (trimmed.startsWith('//') || trimmed.length === 0) continue;
+                            
+                            // Check for exports.default
+                            if (trimmed.includes('exports.default') && trimmed.includes('function')) {
+                                hasExportsDefault = true;
+                                continue;
+                            }
+                            
+                            // Check for local functions (function declarations)
+                            if (trimmed.startsWith('function ')) {
+                                isValid = false;
+                                failMatch = `Line ${i+1}: ${trimmed}`;
+                                break;
+                            }
+                            
+                            // Check for local function expressions
+                            if (trimmed.includes('= function') && !trimmed.includes('exports.default')) {
+                                isValid = false;
+                                failMatch = `Line ${i+1}: ${trimmed}`;
+                                break;
+                            }
+                            
+                            // Check for other export patterns (only at start of line)
+                            if (trimmed.startsWith('exports.') && !trimmed.includes('exports.default')) {
+                                isValid = false;
+                                failMatch = `Line ${i+1}: ${trimmed}`;
+                                break;
+                            }
+                            
+                            if (trimmed.startsWith('module.exports')) {
+                                isValid = false;
+                                failMatch = `Line ${i+1}: ${trimmed}`;
+                                break;
+                            }
+                        }
+                        
+                        // Must have exports.default
+                        if (isValid && !hasExportsDefault) {
+                            isValid = false;
+                            failMatch = 'No exports.default function found in file';
+                        }
+                        
+                        if (isValid) {
                             keyResults.push({
                                 type: 'coding-export',
                                 filePath: filePath,
@@ -45,6 +95,7 @@ exports.default = function gp_test_test_coding_export(input) {
                                 filePath: filePath,
                                 status: 'FAIL',
                                 message: filePath.replace(spl.context(input, "cwd") + '/', ''),
+                                failMatch: failMatch,
                                 duration: Date.now() - startTime,
                                 timestamp: new Date().toISOString()
                             });
@@ -88,57 +139,4 @@ exports.default = function gp_test_test_coding_export(input) {
     
     spl.history(input, `test-coding-export: Completed export pattern validation`);
     spl.completed(input);
-}
-
-// Validate export patterns in file content
-function validateExportPatterns(content) {
-    const lines = content.split('\n');
-    let hasExportsDefault = false;
-    let hasLocalFunctions = false;
-    
-    for (const line of lines) {
-        const trimmed = line.trim();
-        
-        // Skip comments and empty lines
-        if (trimmed.startsWith('//') || trimmed.length === 0) continue;
-        
-        // Check for exports.default
-        if (trimmed.includes('exports.default') && trimmed.includes('function')) {
-            hasExportsDefault = true;
-            continue;
-        }
-        
-        // Check for local functions (function declarations)
-        if (trimmed.startsWith('function ')) {
-            hasLocalFunctions = true;
-            break;
-        }
-        
-        // Check for local function expressions
-        if (trimmed.includes('= function') && !trimmed.includes('exports.default')) {
-            hasLocalFunctions = true;
-            break;
-        }
-        
-        // Check for other export patterns
-        if (trimmed.includes('exports.') && !trimmed.includes('exports.default')) {
-            return { isValid: false, reason: 'Non-default exports found' };
-        }
-        
-        if (trimmed.includes('module.exports')) {
-            return { isValid: false, reason: 'module.exports pattern found' };
-        }
-    }
-    
-    // Must have exports.default
-    if (!hasExportsDefault) {
-        return { isValid: false, reason: 'Missing exports.default' };
-    }
-    
-    // Must not have local functions
-    if (hasLocalFunctions) {
-        return { isValid: false, reason: 'Local functions found' };
-    }
-    
-    return { isValid: true };
 }

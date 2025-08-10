@@ -4,9 +4,8 @@
 //  description Pure discovery - list operations, tests, schemas, and metadata
 //              Foundation method for all test operations
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl");
-const fs = require('fs');
-const path = require('path');
+const spl = require("spl_lib");
+const testLib = require("gp_test_lib");
 ///////////////////////////////////////////////////////////////////////////////
 
 // IMPLEMENTATION - Pure Discovery Method
@@ -14,9 +13,6 @@ exports.default = function gp_test_discover(input) {
     const modulePattern = spl.action(input, 'modules') || '*';
     const testPattern = spl.action(input, 'tests') || '*';
     const schemaPattern = spl.action(input, 'schemas') || 'none';
-    
-    spl.history(input, `test/discover: Starting discovery`);
-    spl.history(input, `test/discover: Modules=${modulePattern}, Tests=${testPattern}, Schemas=${schemaPattern}`);
     
     const cwd = spl.context(input, "cwd");
     const discoveries = {
@@ -33,9 +29,7 @@ exports.default = function gp_test_discover(input) {
     };
     
     // Discover assets using URI-based approach
-    const assets = discoverAssets(input, modulePattern, testPattern);
-    
-    spl.history(input, `test/discover: Found ${assets.length} assets`);
+    const assets = testLib.discoverAssets(input, modulePattern, testPattern);
     
     // Store simple asset list
     const discoveryResult = {
@@ -50,7 +44,7 @@ exports.default = function gp_test_discover(input) {
     };
     
     // Generate unique request key based on input patterns
-    const requestKey = generateRequestKey(modulePattern, testPattern, schemaPattern);
+    const requestKey = testLib.generateRequestKey(modulePattern, testPattern, schemaPattern);
     
     // Get or create main gp/test record
     let testApiRecord = spl.wsRef(input, "gp/test");
@@ -84,56 +78,11 @@ exports.default = function gp_test_discover(input) {
     // Save updated test API record
     spl.wsSet(input, "gp/test", testApiRecord);
     
-    spl.history(input, `test/discover: Discovery completed successfully`);
+    spl.history(input, `test/discover: Discovered ${assets.length} assets with patterns - modules=${modulePattern}, tests=${testPattern}, schemas=${schemaPattern} in ${cwd}`);
     
     spl.completed(input);
 }
 
-// Simple file selector - returns file paths relative to install root
-function discoverAssets(input, modulePattern, testPattern) {
-    const assets = [];
-    const cwd = spl.context(input, "cwd");
-    
-    // Determine if app or module from first part
-    const parts = modulePattern.split('/');
-    const firstPart = parts[0];
-    
-    let searchFolder;
-    if (firstPart === 'spl' || firstPart === 'modules') {
-        // Module
-        searchFolder = path.join(cwd, 'modules', parts.slice(1).join('/'));
-    } else {
-        // App
-        searchFolder = path.join(cwd, 'apps', firstPart, 'modules', parts.slice(1).join('/'));
-    }
-    
-    // Select all files that match the selector
-    if (fs.existsSync(searchFolder)) {
-        const files = fs.readdirSync(searchFolder, { recursive: true });
-        files.forEach(file => {
-            const filePath = path.join(searchFolder, file);
-            if (fs.statSync(filePath).isFile()) {
-                const stats = fs.statSync(filePath);
-                let relativePath;
-                if (firstPart === 'spl' || firstPart === 'modules') {
-                    relativePath = `modules/${parts.slice(1).join('/')}/${file}`;
-                } else {
-                    relativePath = `apps/${firstPart}/modules/${parts.slice(1).join('/')}/${file}`;
-                }
-                
-                // Store file metadata for docs-current testing
-                assets.push({
-                    path: relativePath,
-                    fullPath: filePath,
-                    lastModified: stats.mtime.toISOString(),
-                    size: stats.size
-                });
-            }
-        });
-    }
-    
-    return assets;
-}
 
 
 
@@ -144,14 +93,4 @@ function discoverAssets(input, modulePattern, testPattern) {
 
 
 
-// Generate unique request key based on input patterns (primary key)
-function generateRequestKey(modulePattern, testPattern, schemaPattern) {
-    const patterns = [
-        modulePattern || '*',
-        testPattern || '*', 
-        schemaPattern || 'none'
-    ];
-    
-    return `|${patterns.join('||')}|`;
-}
 ///////////////////////////////////////////////////////////////////////////////

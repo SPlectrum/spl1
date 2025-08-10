@@ -3,7 +3,7 @@
 //  type        API Method
 //  description Validates that index.js files have proper SPL header format with required fields
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl");
+const spl = require("spl_lib");
 const test = require("gp_test");
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -27,10 +27,62 @@ exports.default = function gp_test_test_coding_header(input) {
                         // Read file content using auxiliary function
                         const content = test.readFileSync(filePath);
                         
-                        // Validate header format
-                        const headerValidation = validateHeaderFormat(content);
+                        // Validate header format - inlined logic
+                        const lines = content.split('\n');
                         
-                        if (headerValidation.isValid) {
+                        let isValid = true;
+                        let failMatch = null;
+                        
+                        // Must have at least 5 lines for basic header
+                        if (lines.length < 5) {
+                            isValid = false;
+                            failMatch = 'File too short for proper header';
+                        } else {
+                            // Check required header fields in first few lines
+                            let hasName = false;
+                            let hasURI = false;
+                            let hasType = false;
+                            let hasDescription = false;
+                            let hasSeparator = false;
+                            
+                            for (let i = 0; i < Math.min(10, lines.length); i++) {
+                                const line = lines[i].trim();
+                                
+                                // Check for required fields
+                                if (line.startsWith('//  name        ')) {
+                                    hasName = true;
+                                } else if (line.startsWith('//  URI         ')) {
+                                    hasURI = true;
+                                } else if (line.startsWith('//  type        ')) {
+                                    hasType = true;
+                                } else if (line.startsWith('//  description ')) {
+                                    hasDescription = true;
+                                } else if (line === '///////////////////////////////////////////////////////////////////////////////') {
+                                    hasSeparator = true;
+                                    break; // Header section ended
+                                }
+                            }
+                            
+                            // All required fields must be present
+                            if (!hasName) {
+                                isValid = false;
+                                failMatch = 'Missing //  name field in header';
+                            } else if (!hasURI) {
+                                isValid = false;
+                                failMatch = 'Missing //  URI field in header';
+                            } else if (!hasType) {
+                                isValid = false;
+                                failMatch = 'Missing //  type field in header';
+                            } else if (!hasDescription) {
+                                isValid = false;
+                                failMatch = 'Missing //  description field in header';
+                            } else if (!hasSeparator) {
+                                isValid = false;
+                                failMatch = 'Missing header separator line (///////////////////////////////////////////////////////////////////////////////)';
+                            }
+                        }
+                        
+                        if (isValid) {
                             keyResults.push({
                                 type: 'coding-header',
                                 filePath: filePath,
@@ -45,6 +97,7 @@ exports.default = function gp_test_test_coding_header(input) {
                                 filePath: filePath,
                                 status: 'FAIL',
                                 message: filePath.replace(spl.context(input, "cwd") + '/', ''),
+                                failMatch: failMatch,
                                 duration: Date.now() - startTime,
                                 timestamp: new Date().toISOString()
                             });
@@ -56,6 +109,7 @@ exports.default = function gp_test_test_coding_header(input) {
                             filePath: filePath,
                             status: 'FAIL',
                             message: filePath.replace(spl.context(input, "cwd") + '/', ''),
+                            failMatch: `Error reading file: ${error.message}`,
                             duration: Date.now() - startTime,
                             timestamp: new Date().toISOString()
                         });
@@ -90,60 +144,3 @@ exports.default = function gp_test_test_coding_header(input) {
     spl.completed(input);
 }
 
-// Validate header format in file content
-function validateHeaderFormat(content) {
-    const lines = content.split('\n');
-    
-    // Must have at least 5 lines for basic header
-    if (lines.length < 5) {
-        return { isValid: false, reason: 'File too short for proper header' };
-    }
-    
-    // Check required header fields in first few lines
-    let hasName = false;
-    let hasURI = false;
-    let hasType = false;
-    let hasDescription = false;
-    let hasSeparator = false;
-    
-    for (let i = 0; i < Math.min(10, lines.length); i++) {
-        const line = lines[i].trim();
-        
-        // Check for required fields
-        if (line.startsWith('//  name        ')) {
-            hasName = true;
-        } else if (line.startsWith('//  URI         ')) {
-            hasURI = true;
-        } else if (line.startsWith('//  type        ')) {
-            hasType = true;
-        } else if (line.startsWith('//  description ')) {
-            hasDescription = true;
-        } else if (line === '///////////////////////////////////////////////////////////////////////////////') {
-            hasSeparator = true;
-            break; // Header section ended
-        }
-    }
-    
-    // All required fields must be present
-    if (!hasName) {
-        return { isValid: false, reason: 'Missing //  name field in header' };
-    }
-    
-    if (!hasURI) {
-        return { isValid: false, reason: 'Missing //  URI field in header' };
-    }
-    
-    if (!hasType) {
-        return { isValid: false, reason: 'Missing //  type field in header' };
-    }
-    
-    if (!hasDescription) {
-        return { isValid: false, reason: 'Missing //  description field in header' };
-    }
-    
-    if (!hasSeparator) {
-        return { isValid: false, reason: 'Missing header separator line (///////////////////////////////////////////////////////////////////////////////)' };
-    }
-    
-    return { isValid: true };
-}

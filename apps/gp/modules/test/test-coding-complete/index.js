@@ -3,7 +3,7 @@
 //  type        API Method
 //  description Validates that index.js files properly call spl.completed(input) at the end
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl");
+const spl = require("spl_lib");
 const test = require("gp_test");
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -27,10 +27,52 @@ exports.default = function gp_test_test_coding_complete(input) {
                         // Read file content using auxiliary function
                         const content = test.readFileSync(filePath);
                         
-                        // Validate completion patterns
-                        const completeValidation = validateCompletionPattern(content);
+                        // Validate completion patterns inline
+                        const lines = content.split('\n');
+                        let hasSplCompleted = false;
+                        let hasExportsDefault = false;
+                        let isValid = true;
+                        let failMatch = '';
                         
-                        if (completeValidation.isValid) {
+                        // Check for exports.default function to ensure this is an API method
+                        for (const line of lines) {
+                            const trimmed = line.trim();
+                            if (trimmed.includes('exports.default') && trimmed.includes('function')) {
+                                hasExportsDefault = true;
+                                break;
+                            }
+                        }
+                        
+                        // Only validate API methods (files with exports.default function)
+                        if (hasExportsDefault) {
+                            // Look for spl.completed(input) or spl.gotoExecute(input, ...) call
+                            for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
+                                const line = lines[lineIndex];
+                                const trimmed = line.trim();
+                                
+                                // Skip comments and empty lines
+                                if (trimmed.startsWith('//') || trimmed.length === 0) continue;
+                                
+                                // Check for spl.completed call with input parameter
+                                if (trimmed.includes('spl.completed(') && trimmed.includes('input') && !trimmed.includes('//')) {
+                                    hasSplCompleted = true;
+                                    break;
+                                }
+                                
+                                // Check for spl.gotoExecute call with input parameter (gotexecute pattern)
+                                if (trimmed.includes('spl.gotoExecute(') && trimmed.includes('input') && !trimmed.includes('//')) {
+                                    hasSplCompleted = true;
+                                    break;
+                                }
+                            }
+                            
+                            if (!hasSplCompleted) {
+                                isValid = false;
+                                failMatch = 'No spl.completed(input) or spl.gotoExecute(input, ...) found in file';
+                            }
+                        }
+                        
+                        if (isValid) {
                             keyResults.push({
                                 type: 'coding-complete',
                                 filePath: filePath,
@@ -45,6 +87,7 @@ exports.default = function gp_test_test_coding_complete(input) {
                                 filePath: filePath,
                                 status: 'FAIL',
                                 message: filePath.replace(spl.context(input, "cwd") + '/', ''),
+                                failMatch: failMatch,
                                 duration: Date.now() - startTime,
                                 timestamp: new Date().toISOString()
                             });
@@ -90,45 +133,3 @@ exports.default = function gp_test_test_coding_complete(input) {
     spl.completed(input);
 }
 
-// Validate completion patterns in file content
-function validateCompletionPattern(content) {
-    const lines = content.split('\n');
-    
-    let hasSplCompleted = false;
-    let hasExportsDefault = false;
-    
-    // Check for exports.default function to ensure this is an API method
-    for (const line of lines) {
-        const trimmed = line.trim();
-        
-        if (trimmed.includes('exports.default') && trimmed.includes('function')) {
-            hasExportsDefault = true;
-            break;
-        }
-    }
-    
-    // Only validate API methods (files with exports.default function)
-    if (!hasExportsDefault) {
-        return { isValid: true }; // Skip validation for non-API files
-    }
-    
-    // Look for spl.completed(input) call
-    for (const line of lines) {
-        const trimmed = line.trim();
-        
-        // Skip comments and empty lines
-        if (trimmed.startsWith('//') || trimmed.length === 0) continue;
-        
-        // Check for spl.completed call with input parameter
-        if (trimmed.includes('spl.completed(') && trimmed.includes('input') && !trimmed.includes('//')) {
-            hasSplCompleted = true;
-            break;
-        }
-    }
-    
-    if (!hasSplCompleted) {
-        return { isValid: false, reason: 'Missing spl.completed(input) call' };
-    }
-    
-    return { isValid: true };
-}

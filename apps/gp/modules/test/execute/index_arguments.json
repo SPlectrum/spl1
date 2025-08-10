@@ -17,8 +17,6 @@
     [ 
         { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
         
-        { "name": "module", "alias": "m", "type": "String", "description": "Target module filter (optional)" },
-        
-        { "name": "failfast", "alias": "f", "type": "Boolean", "description": "Stop execution on first test failure", "typeLabel": "flag" }
+        { "name": "module", "alias": "m", "type": "String", "description": "Target module filter (optional)" }
     ]
 }

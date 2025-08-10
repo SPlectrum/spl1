@@ -3,13 +3,11 @@
 //  type        API Method
 //  description Executes complete test pipeline: discover → plan → execute → report
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl");
+const spl = require("spl_lib");
 ///////////////////////////////////////////////////////////////////////////////
 
 // IMPLEMENTATION - Simple Pipeline Orchestrator
 exports.default = function gp_test_full_run(input) {
-    spl.history(input, `test/full-run: Starting unified test pipeline`);
-    
     // Get input parameters
     const modules = spl.action(input, 'modules');
     const type = spl.action(input, 'type');
@@ -50,7 +48,7 @@ exports.default = function gp_test_full_run(input) {
         value: {}
     });
     
-    spl.history(input, `test/full-run: Pipeline configured with 4 stages`);
+    spl.history(input, `test/full-run: Unified test pipeline configured with 4 stages`);
     spl.gotoExecute(input, "spl/execute/set-pipeline");
 }
 ///////////////////////////////////////////////////////////////////////////////

@@ -3,7 +3,8 @@
 //  type        API Method
 //  description Tests that modules can be required without errors
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl");
+const spl = require("spl_lib");
+const testLib = require("gp_test_lib");
 ///////////////////////////////////////////////////////////////////////////////
 
 // IMPLEMENTATION - Module Instantiation Testing (Blanket Coverage: All)
@@ -23,9 +24,8 @@ exports.default = function gp_test_test_instantiation(input) {
                     const startTime = Date.now();
                     
                     try {
-                        // Clear require cache and attempt to require the module
-                        delete require.cache[require.resolve(filePath)];
-                        const module = require(filePath);
+                        // Use auxiliary function to require module with cache clearing
+                        const module = testLib.requireModule(filePath);
                         
                         if (module === undefined || module === null) {
                             throw new Error('Module exports undefined or null');

@@ -3,7 +3,7 @@
 //  type        API Method  
 //  description Clears session-specific working directory setting and restores default appDataRoot
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl");
+const spl = require("spl_lib");
 ///////////////////////////////////////////////////////////////////////////////
 
 // IMPLEMENTATION - Session Setting Restoration Only

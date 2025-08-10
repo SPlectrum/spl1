@@ -4,7 +4,7 @@
 //  description Standalone formatter - generates reports from any analysis/run data in workspace
 //              Reusable reporting engine for all test results and analysis data
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl");
+const spl = require("spl_lib");
 ///////////////////////////////////////////////////////////////////////////////
 
 // IMPLEMENTATION - Standalone Test Reporting
@@ -136,6 +136,10 @@ exports.default = function gp_test_report(input) {
                             lines.forEach((line) => {
                                 console.log(`${line}`);
                             });
+                            // Show failMatch details for coding standard tests
+                            if (failure.failMatch && testType.startsWith('coding-')) {
+                                console.log(`    → ${failure.failMatch}`);
+                            }
                         });
                     }
                 }

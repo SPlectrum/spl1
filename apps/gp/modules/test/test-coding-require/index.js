@@ -3,8 +3,8 @@
 //  type        API Method
 //  description Validates that index.js files use correct require patterns
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl");
-const test = require("gp_test");
+const spl = require("spl_lib");
+const testLib = require("gp_test_lib");
 ///////////////////////////////////////////////////////////////////////////////
 
 // IMPLEMENTATION - Require Pattern Validation (Blanket Coverage: All)
@@ -25,11 +25,97 @@ exports.default = function gp_test_test_coding_require(input) {
                     
                     try {
                         // Read file content using auxiliary function
-                        const content = test.readFileSync(filePath);
+                        const content = testLib.readFileSync(filePath);
                         const fileSize = content.length;
                         
-                        // Validate require patterns
-                        const requireValidation = validateRequirePatterns(content, filePath);
+                        // Validate require patterns - inlined validation logic
+                        const lines = content.split('\n');
+                        
+                        // Extract API name from file path (e.g., gp/config -> gp_config)
+                        const pathParts = filePath.split('/');
+                        const appIndex = pathParts.findIndex(part => part === 'apps') + 1;
+                        const modulesIndex = pathParts.findIndex(part => part === 'modules');
+                        let allowedApiRequire = null;
+                        
+                        if (appIndex > 0 && modulesIndex >= 0 && modulesIndex < pathParts.length - 1) {
+                            const appName = pathParts[appIndex]; // e.g., "gp"
+                            const apiName = pathParts[modulesIndex + 1]; // e.g., "config" (first dir after modules)
+                            allowedApiRequire = `${appName}_${apiName}`; // e.g., "gp_config"
+                        }
+                        
+                        // Track section boundaries
+                        let headerEnded = false;
+                        let exportFound = false;
+                        let exportLine = null;
+                        let requireValidation = { isValid: true };
+                        
+                        for (let i = 0; i < lines.length && requireValidation.isValid; i++) {
+                            const line = lines[i];
+                            const trimmed = line.trim();
+                            
+                            // Skip empty lines
+                            if (trimmed.length === 0) continue;
+                            
+                            // Track header end (after ///////////////////////////////////////////////////////////////////////////////  )
+                            if (trimmed === '///////////////////////////////////////////////////////////////////////////////') {
+                                headerEnded = true;
+                                continue;
+                            }
+                            
+                            // Track export declaration (actual export, not comments mentioning it)
+                            if (trimmed.includes('exports.default') && !trimmed.startsWith('//')) {
+                                exportFound = true;
+                                exportLine = trimmed; // Capture the actual export line
+                            }
+                            
+                            // Skip comments
+                            if (trimmed.startsWith('//')) continue;
+                            
+                            // Check for require statements
+                            if (testLib.containsRequirePattern(trimmed) && !trimmed.includes('//')) {
+                                // Require must be after header
+                                if (!headerEnded) {
+                                    requireValidation = { isValid: false, reason: 'Require statement found before header end', violatingRequire: trimmed };
+                                    break;
+                                }
+                                
+                                // Require must be before export
+                                if (exportFound) {
+                                    requireValidation = { isValid: false, reason: 'Require statement found after exports.default declaration', violatingRequire: trimmed, exportLine: exportLine };
+                                    break;
+                                }
+                                
+                                // Valid: spl_lib require
+                                if (trimmed.match(/require\s*\(\s*["|']spl_lib["|']\s*\)/)) {
+                                    continue;
+                                }
+                                
+                                // Valid: current API require (e.g., gp_test for gp/test modules)  
+                                if (allowedApiRequire && 
+                                    trimmed.match(new RegExp(`require\\s*\\(\\s*["|']${allowedApiRequire}["|']\\s*\\)`))) {
+                                    continue;
+                                }
+                                
+                                // Valid: current API library require (e.g., gp_config_lib for gp/config modules)
+                                if (allowedApiRequire && 
+                                    trimmed.match(new RegExp(`require\\s*\\(\\s*["|']${allowedApiRequire}_lib["|']\\s*\\)`))) {
+                                    continue;
+                                }
+                                
+                                // Invalid: any other require pattern
+                                const requireMatch = trimmed.match(/require\s*\(\s*["|']([^"']+)["|']\s*\)/);
+                                const moduleName = requireMatch ? requireMatch[1] : 'unknown';
+                                const fullRequireStatement = requireMatch ? requireMatch[0] : trimmed;
+                                requireValidation = { 
+                                    isValid: false, 
+                                    reason: `Invalid require pattern found: ${fullRequireStatement}`, 
+                                    violatingRequire: fullRequireStatement,
+                                    moduleName: moduleName,
+                                    allowedApiRequire: allowedApiRequire
+                                };
+                                break;
+                            }
+                        }
                         
                         if (requireValidation.isValid) {
                             keyResults.push({
@@ -51,7 +137,8 @@ exports.default = function gp_test_test_coding_require(input) {
                                 validationReason: requireValidation.reason,
                                 violatingRequire: requireValidation.violatingRequire || 'Unknown',
                                 fileSize: fileSize,
-                                allowedApiRequire: requireValidation.allowedApiRequire || 'Unknown'
+                                allowedApiRequire: requireValidation.allowedApiRequire || 'Unknown',
+                                exportLine: requireValidation.exportLine || 'Unknown'
                             });
                         }
                         
@@ -86,7 +173,7 @@ exports.default = function gp_test_test_coding_require(input) {
                     fileSize: r.fileSize,
                     validationRule: 'require-patterns',
                     found: r.violatingRequire,
-                    expected: `require("spl") OR require("${r.allowedApiRequire}") OR require("${r.allowedApiRequire}_lib")`,
+                    expected: testLib.getExpectedRequirePattern(r.allowedApiRequire),
                     validationReason: r.validationReason,
                     passed: false
                 }))
@@ -104,90 +191,3 @@ exports.default = function gp_test_test_coding_require(input) {
     spl.completed(input);
 }
 
-// Validate require patterns in file content
-function validateRequirePatterns(content, filePath) {
-    const lines = content.split('\n');
-    
-    // Extract API name from file path (e.g., gp/config -> gp_config)
-    const pathParts = filePath.split('/');
-    const appIndex = pathParts.findIndex(part => part === 'apps') + 1;
-    const modulesIndex = pathParts.findIndex(part => part === 'modules');
-    let allowedApiRequire = null;
-    
-    if (appIndex > 0 && modulesIndex >= 0 && modulesIndex < pathParts.length - 1) {
-        const appName = pathParts[appIndex]; // e.g., "gp"
-        const apiName = pathParts[modulesIndex + 1]; // e.g., "config" (first dir after modules)
-        allowedApiRequire = `${appName}_${apiName}`; // e.g., "gp_config"
-        
-    }
-    
-    // Track section boundaries
-    let headerEnded = false;
-    let exportFound = false;
-    
-    for (let i = 0; i < lines.length; i++) {
-        const line = lines[i];
-        const trimmed = line.trim();
-        
-        // Skip empty lines
-        if (trimmed.length === 0) continue;
-        
-        // Track header end (after ///////////////////////////////////////////////////////////////////////////////  )
-        if (trimmed === '///////////////////////////////////////////////////////////////////////////////') {
-            headerEnded = true;
-            continue;
-        }
-        
-        // Track export declaration
-        if (trimmed.includes('exports.default')) {
-            exportFound = true;
-        }
-        
-        // Skip comments
-        if (trimmed.startsWith('//')) continue;
-        
-        // Check for require statements
-        if (trimmed.includes('require(') && !trimmed.includes('//')) {
-            // Require must be after header
-            if (!headerEnded) {
-                return { isValid: false, reason: 'Require statement found before header end' };
-            }
-            
-            // Require must be before export
-            if (exportFound) {
-                return { isValid: false, reason: 'Require statement found after exports.default declaration' };
-            }
-            
-            // Valid: spl require
-            if (trimmed.match(/require\s*\(\s*["|']spl["|']\s*\)/)) {
-                continue;
-            }
-            
-            // Valid: current API require (e.g., gp_test for gp/test modules)  
-            if (allowedApiRequire && 
-                trimmed.match(new RegExp(`require\\s*\\(\\s*["|']${allowedApiRequire}["|']\\s*\\)`))) {
-                continue;
-            }
-            
-            // Valid: current API library require (e.g., gp_config_lib for gp/config modules)
-            if (allowedApiRequire && 
-                trimmed.match(new RegExp(`require\\s*\\(\\s*["|']${allowedApiRequire}_lib["|']\\s*\\)`))) {
-                continue;
-            }
-            
-            // Invalid: any other require pattern
-            const requireMatch = trimmed.match(/require\s*\(\s*["|']([^"']+)["|']\s*\)/);
-            const moduleName = requireMatch ? requireMatch[1] : 'unknown';
-            const fullRequireStatement = requireMatch ? requireMatch[0] : trimmed;
-            return { 
-                isValid: false, 
-                reason: `Invalid require pattern found: ${fullRequireStatement}`, 
-                violatingRequire: fullRequireStatement,
-                moduleName: moduleName,
-                allowedApiRequire: allowedApiRequire
-            };
-        }
-    }
-    
-    return { isValid: true };
-}

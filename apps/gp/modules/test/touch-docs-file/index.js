@@ -3,21 +3,22 @@
 //  type        API Method
 //  description Worker method: processes discovered assets and updates README.md timestamps
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl");
-const fs = require('fs');
-const path = require('path');
+const spl = require("spl_lib");
+const testLib = require("gp_test_lib");
 ///////////////////////////////////////////////////////////////////////////////
 
 // IMPLEMENTATION - Documentation File Touch Worker
 exports.default = function gp_test_touch_docs_file(input) {
     const recursive = spl.action(input, 'recursive') === true;
-    
-    spl.history(input, `touch-docs-file: Processing discovered assets${recursive ? ' (recursive)' : ' (module-level only)'}`);
+    const errors = [];
+    const updatedFiles = [];
+    let processingSummary = '';
     
     // Get discovered assets from workspace
     const testApiRecord = spl.wsRef(input, "gp/test");
     if (!testApiRecord || !testApiRecord.value) {
-        spl.history(input, "touch-docs-file: ERROR - No discovery data found in workspace");
+        processingSummary = 'ERROR - No discovery data found in workspace';
+        spl.history(input, `touch-docs-file: Processing discovered assets${recursive ? ' (recursive)' : ' (module-level only)'} - ${processingSummary}`);
         spl.completed(input);
         return;
     }
@@ -28,17 +29,17 @@ exports.default = function gp_test_touch_docs_file(input) {
     const requestRecord = testApiRecord.value[requestKey];
     
     if (!requestRecord.value.discovery || !requestRecord.value.discovery.assets) {
-        spl.history(input, "touch-docs-file: ERROR - No assets found in discovery data");
+        processingSummary = 'ERROR - No assets found in discovery data';
+        spl.history(input, `touch-docs-file: Processing discovered assets${recursive ? ' (recursive)' : ' (module-level only)'} - ${processingSummary}`);
         spl.completed(input);
         return;
     }
     
     const assets = requestRecord.value.discovery.assets;
-    const updatedFiles = [];
     
     // Filter for README.md files based on recursive flag
     const readmeAssets = assets.filter(asset => {
-        const fileName = path.basename(asset.path);
+        const fileName = testLib.pathBasename(asset.path);
         if (fileName !== 'README.md') {
             return false;
         }
@@ -59,7 +60,8 @@ exports.default = function gp_test_touch_docs_file(input) {
     });
     
     if (readmeAssets.length === 0) {
-        spl.history(input, "touch-docs-file: No README.md files found in discovered assets");
+        processingSummary = 'No README.md files found in discovered assets';
+        spl.history(input, `touch-docs-file: Processing discovered assets${recursive ? ' (recursive)' : ' (module-level only)'} - ${processingSummary}`);
         spl.completed(input);
         return;
     }
@@ -70,23 +72,30 @@ exports.default = function gp_test_touch_docs_file(input) {
     for (const asset of readmeAssets) {
         try {
             // Update both access time and modification time to current time
-            fs.utimesSync(asset.fullPath, currentTime, currentTime);
+            testLib.touchFile(asset.fullPath);
             updatedFiles.push(asset.path);
             
         } catch (error) {
-            spl.history(input, `touch-docs-file: ERROR updating ${asset.fullPath}: ${error.message}`);
+            errors.push(`ERROR updating ${asset.fullPath}: ${error.message}`);
         }
     }
     
-    spl.history(input, `touch-docs-file: Updated ${updatedFiles.length} README.md files`);
+    // Build comprehensive history message
+    const historyParts = [
+        `Processing discovered assets${recursive ? ' (recursive)' : ' (module-level only)'}`,
+        `Found ${readmeAssets.length} README.md file${readmeAssets.length === 1 ? '' : 's'}`,
+        `Updated ${updatedFiles.length} README.md file${updatedFiles.length === 1 ? '' : 's'}`
+    ];
     
-    // Log each updated file for audit trail
     if (updatedFiles.length > 0) {
-        updatedFiles.forEach(file => {
-            spl.history(input, `touch-docs-file: Updated ${file}`);
-        });
+        historyParts.push(`Updated files: ${updatedFiles.join(', ')}`);
     }
     
+    if (errors.length > 0) {
+        historyParts.push(`Errors: ${errors.join('; ')}`);
+    }
+    
+    spl.history(input, `touch-docs-file: ${historyParts.join(' - ')}`);
     spl.completed(input);
 }
 
