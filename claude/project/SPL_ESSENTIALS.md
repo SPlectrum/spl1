@@ -32,7 +32,7 @@ spl_execute dev -d <command>
 //  name        Method Description
 //  URI         api/method/path
 //  type        API Method
-const spl = require("../../../../../modules/spl/spl.js"); // 6 levels from app modules
+const spl = require("spl/spl.js"); // Node.js style require shortcuts via node_modules
 ///////////////////////////////////////////////////////////////////////////////
 
 exports.default = function api_method_name(input) {
@@ -58,14 +58,12 @@ exports.default = function api_method_name(input) {
 - **Export as `.default`** - SPL expects `require(module).default(input)`
 - **NO direct Node.js imports** in API methods - use auxiliary libraries
 
-### Path Calculation Critical Pattern
+### Node.js Style Require Pattern
 ```javascript
-// From: apps/gp/modules/fs/read/index.js
-// To:   modules/spl/spl.js
-// Count the levels up:
-//   read(1) → fs(2) → modules(3) → gp(4) → apps(5) → spl-dev(6) → modules/
-
-const spl = require("../../../../../modules/spl/spl.js");
+// Using Node.js style require shortcuts via spl-dev/node_modules
+const spl = require("spl");
+const gp_test = require("gp_test");
+const gp_fs = require("gp_fs");
 ```
 
 ### Auxiliary Functions Pattern
@@ -84,11 +82,14 @@ exports.default = function gp_fs_read(input) {
 
 ### Complete Test Pipeline
 ```bash
-# Full test workflow - ALWAYS chain with @@ to share workspace
-spl_execute dev gp/test/discover --modules=pattern @@ gp/test/plan @@ gp/test/run @@ gp/test/report
+# New unified test pipeline - single command for complete workflow
+spl_execute dev gp/test/full-run --modules=pattern
 
 # Debug test execution
-spl_execute dev -d gp/test/discover --modules=gp/fs/write @@ gp/test/plan @@ gp/test/run @@ gp/test/report
+spl_execute dev -d gp/test/full-run --modules=gp/fs/write
+
+# Legacy pipeline (still works) - chained commands
+spl_execute dev gp/test/discover --modules=pattern @@ gp/test/plan @@ gp/test/run @@ gp/test/report
 ```
 
 ### Test Types Generated
@@ -107,7 +108,7 @@ spl_execute dev -d gp/test/discover --modules=gp/fs/write @@ gp/test/plan @@ gp/
 ### Common Error Patterns & Solutions
 ```javascript
 // Error: "Cannot find module" 
-// → Wrong require path count or missing .default export
+// → Missing Node.js style require shortcut or missing .default export
 
 // Error: "require(...).default is not a function"
 // → Missing exports.default or wrong export pattern
@@ -124,14 +125,14 @@ spl_execute dev -d gp/test/discover --modules=gp/fs/write @@ gp/test/plan @@ gp/
 ### App Module Development (Preferred)
 ```javascript
 // Location: spl-dev/apps/gp/modules/fs/read/index.js
-// Require:  ../../../../../modules/spl/spl.js (6 levels up)
+// Require:  const spl = require("spl"); (Node.js style)
 // Benefits: Data isolation, app overlay testing, focused scope
 ```
 
 ### Core Module Development (Legacy)
 ```javascript
 // Location: spl-dev/modules/spl/execute/index.js  
-// Require:  ../spl.js (relative to core)
+// Require:  const spl = require("spl"); (Node.js style)
 // Use only: When app context not applicable
 ```
 
@@ -178,7 +179,7 @@ spl.action: "gp/config/clear-session-working-dir"
 - [ ] Help commands work for all new methods
 - [ ] App overlay precedence works correctly  
 - [ ] No breaking changes to existing functionality
-- [ ] Required path calculations verified
+- [ ] Node.js style require shortcuts verified
 
 ### Post-Sync Verification
 - [ ] Canonical modules identical to development

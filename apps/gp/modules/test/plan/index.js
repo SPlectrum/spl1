@@ -55,13 +55,14 @@ function createWorkPackages(input, assets, options) {
     
     // Parse test types - could be "all", single type, or comma-delimited list
     const requestedTypes = planType === 'all' 
-        ? ['instantiation', 'json-validation', 'basic-test', 'docs-present', 'docs-current']
+        ? ['instantiation', 'json-validation', 'basic-test', 'docs-present', 'docs-current', 'file-type', 'coding-require', 'coding-export', 'coding-args', 'coding-header', 'coding-errors', 'coding-complete', 'coding-naming', 'coding-history']
         : planType.split(',').map(t => t.trim());
     
     const workPackages = [];
     
     // Separate assets by type
     const jsFiles = [];
+    const indexJsFiles = [];
     const jsonFiles = [];
     const testFiles = [];
     const allFiles = [];
@@ -73,6 +74,9 @@ function createWorkPackages(input, assets, options) {
         
         if (assetPath.includes('/index.js')) {
             jsFiles.push(fullPath);
+            indexJsFiles.push(fullPath);
+        } else if (assetPath.endsWith('.js')) {
+            jsFiles.push(fullPath); // All JS files for instantiation
         } else if (assetPath.includes('/index_arguments.json')) {
             jsonFiles.push(fullPath);
         } else if (assetPath.includes('/.test/') && assetPath.endsWith('.json')) {
@@ -155,6 +159,27 @@ function createWorkPackages(input, assets, options) {
         workPackages.push({
             type: "docs-current",
             assets: allFiles, // Pass full assets with metadata for docs-current
+            expect: { successRate: 100 }
+        });
+    }
+    
+    // Work Package 6: File type validation tests (100% success required)
+    if (assets.length > 0 && requestedTypes.includes('file-type')) {
+        workPackages.push({
+            type: "file-type",
+            assets: assets, // Pass all assets for file structure validation
+            expect: { successRate: 100 }
+        });
+    }
+    
+    // Work Package 7: coding-standards
+    const codingStandardsTypes = ['coding-require', 'coding-export', 'coding-args', 'coding-header', 'coding-errors', 'coding-complete', 'coding-naming', 'coding-history'];
+    const hasCodingStandardsRequest = codingStandardsTypes.some(type => requestedTypes.includes(type));
+    
+    if (indexJsFiles.length > 0 && hasCodingStandardsRequest) {
+        workPackages.push({
+            type: "coding-standards",
+            filePaths: indexJsFiles,
             expect: { successRate: 100 }
         });
     }

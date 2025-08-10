@@ -9,6 +9,18 @@ const { execSync } = require('child_process');
 const { randomUUID } = require('crypto');
 ///////////////////////////////////////////////////////////////////////////////
 
+// FILE SYSTEM UTILITIES
+
+// Read file synchronously 
+exports.readFileSync = function(filePath) {
+    return fs.readFileSync(filePath, 'utf8');
+}
+
+// Convert full file path to relative module path for error reporting
+exports.getRelativeModulePath = function(filePath, cwd) {
+    return filePath.replace(cwd + '/', '').replace('/index.js', '');
+}
+
 // WORK PACKAGE EXECUTION FUNCTIONS
 
 

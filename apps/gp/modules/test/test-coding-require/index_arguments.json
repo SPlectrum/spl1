@@ -1,0 +1,12 @@
+{
+    "headers": {
+        "header": [
+            { "header": "gp/test/test-coding-require" },
+            { "content": "Coding Standards - Require Pattern Validation" },
+            { "content": "{bold syntax}: {italic ./spl_execute <app> test/test-coding-require <options>}" }
+        ]
+    },
+    "value": [
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" }
+    ]
+}

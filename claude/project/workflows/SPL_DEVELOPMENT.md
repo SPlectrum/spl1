@@ -91,6 +91,7 @@ This workflow defines the development process for SPL platform code within the s
 - **NEVER** modify files directly in `modules/` or `apps/`
 - **NEVER** execute commands against canonical folders during development
 - **NEVER** skip the validation step before canonical sync
+- **NEVER** sync to canonical as part of development activities - sync is a separate, explicit step
 
 ### ✅ Required Actions
 - **MANDATORY FIRST STEP** - Read SPL_ESSENTIALS.md before starting ANY development work

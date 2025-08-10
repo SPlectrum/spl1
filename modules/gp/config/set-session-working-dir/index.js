@@ -4,8 +4,6 @@
 //  description Sets session-specific working directory for data operations without affecting global state
 ///////////////////////////////////////////////////////////////////////////////
 const spl = require("spl");
-const fs = require("fs");
-const path = require("path");
 ///////////////////////////////////////////////////////////////////////////////
 
 // IMPLEMENTATION - Session Data Directory Override
@@ -13,23 +11,15 @@ exports.default = function gp_config_set_session_working_dir(input) {
     const targetPath = spl.action(input, "path") || spl.action(input, "appDataRoot");
     const appRoot = spl.context(input, "appRoot");
     
-    // Resolve to absolute path - relative paths are relative to appRoot/data
+    // Simple path resolution without filesystem operations
     let resolvedPath;
-    if (path.isAbsolute(targetPath)) {
+    if (targetPath.startsWith('/')) {
         resolvedPath = targetPath;
     } else {
         // For relative paths, resolve relative to appRoot/data
         const appDataRoot = `${appRoot}/data`;
-        resolvedPath = path.resolve(appDataRoot, targetPath);
+        resolvedPath = `${appDataRoot}/${targetPath}`;
     }
-    
-    // Create directory if it doesn't exist
-    if (!fs.existsSync(resolvedPath)) {
-        fs.mkdirSync(resolvedPath, { recursive: true });
-    }
-    
-    // Verify it's actually a directory
-    const stats = fs.statSync(resolvedPath);
     
     // Override appDataRoot in execution context for this session
     spl.setContext(input, "appDataRoot", resolvedPath);

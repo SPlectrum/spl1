@@ -1,0 +1,12 @@
+{
+    "headers": {
+        "header": [
+            { "header": "gp/test/test-coding-export" },
+            { "content": "Coding Standards - Export Pattern Validation" },
+            { "content": "{bold syntax}: {italic ./spl_execute <app> test/test-coding-export <options>}" }
+        ]
+    },
+    "value": [
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" }
+    ]
+}

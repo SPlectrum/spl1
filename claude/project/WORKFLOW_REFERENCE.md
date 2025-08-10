@@ -7,6 +7,7 @@ Reference guide to project-specific workflows that extend the base Claude Ways o
 | Workflow | File | Purpose |
 |----------|------|---------|
 | SPL_DEVELOPMENT | `workflows/SPL_DEVELOPMENT.md` | Development process for SPL platform code |
+| CANONICAL_SYNC | `workflows/CANONICAL_SYNC.md` | Syncing SPL development work to canonical repositories |
 
 ## Base WoW Workflows
 

@@ -4,7 +4,7 @@
 //  description Sets permanent working directory via symlink or local directory
 ///////////////////////////////////////////////////////////////////////////////
 const spl = require("spl");
-const configLib = require('../config.js');
+const configLib = require("gp_config_lib");
 ///////////////////////////////////////////////////////////////////////////////
 
 // IMPLEMENTATION - Permanent Working Directory Configuration
