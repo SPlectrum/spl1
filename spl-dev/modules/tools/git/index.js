@@ -3,8 +3,8 @@
 //  type        API Module
 //  description Set repository path context for all subsequent git operations
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl")
-const git = require("../git")
+const spl = require("spl_lib")
+const git = require("tools_git_lib")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function tools_git(input) {
     // Parameter extraction - repo takes precedence over path

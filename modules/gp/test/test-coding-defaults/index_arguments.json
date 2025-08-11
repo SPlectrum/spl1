@@ -1,0 +1,12 @@
+{
+    "headers": {
+        "header": [
+            { "header": "gp/test/test-coding-defaults" },
+            { "content": "Coding Standards - Default Value Fallbacks Validation" },
+            { "content": "{bold syntax}: {italic ./spl_execute <app> test/test-coding-defaults <options>}" }
+        ]
+    },
+    "value": [
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" }
+    ]
+}

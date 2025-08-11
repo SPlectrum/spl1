@@ -3,12 +3,10 @@
 //  type        API Method
 //  description Initialize a new git repository
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl")
-const fs = require('fs');
-const path = require('path');
+const spl = require("spl_lib")
+const git = require("tools_git_lib");
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function tools_git_init(input) {
-    const git = require("../git");
     
     // Get repository path from --repo argument, now relative to app root
     const repo = spl.action(input, 'repo');
@@ -16,11 +14,8 @@ exports.default = function tools_git_init(input) {
     const cwd = spl.context(input, 'cwd');
     const repoPath = git.getAppRelativeRepoPath(repo, cwd, appDataRoot);
     
-    // Create directory if it doesn't exist
-    if (!fs.existsSync(repoPath)) {
-        fs.mkdirSync(repoPath, { recursive: true });
-        console.log(`Created directory: ${repoPath}`);
-    }
+    // Ensure directory exists (delegate to auxiliary library)
+    git.ensureDirectory(repoPath);
     
     // Build git init command arguments
     const args = ['init'];

@@ -3,7 +3,8 @@
 //  type        API Method
 //  description This action runs a JS script
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl")
+const spl = require("spl_lib")
+const splApp = require("spl_app_lib");
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_app_run (input)
 {
@@ -21,62 +22,20 @@ exports.default = function spl_app_run (input)
     const isPythonScript = filePath.endsWith('.py');
     
     if (isShellScript) {
-        // For shell scripts, execute directly using child_process
-        const { spawn } = require('child_process');
-        const path = require('path');
-        
+        // For shell scripts, execute using auxiliary function
         const cwdRoot = spl.context(input, "cwd");
-        const scriptPath = path.join(cwdRoot, appRoot, 'scripts', filePath);
-        const scriptDir = path.join(cwdRoot, appRoot, 'scripts');
+        const paths = splApp.getScriptPaths(cwdRoot, appRoot, filePath);
         const args = fileArgs || [];
-        
-        
-        const child = spawn('bash', [scriptPath, ...args], {
-            stdio: 'inherit',
-            cwd: scriptDir
-        });
-        
-        child.on('close', (code) => {
-            if (code !== 0) {
-                console.error(`Script exited with code ${code}`);
-                process.exit(code);
-            }
-            spl.completed(input);
-        });
-        
-        child.on('error', (err) => {
-            console.error(`Failed to execute script: ${err.message}`);
-            process.exit(1);
-        });
+        splApp.executeShellScript(paths.scriptPath, paths.scriptDir, args, spl, input);
     } else if (isPythonScript) {
-        // For Python scripts, execute using python3
-        const { spawn } = require('child_process');
-        const path = require('path');
-        
+        // For Python scripts, execute using auxiliary function
         const cwdRoot = spl.context(input, "cwd");
-        const scriptPath = path.join(cwdRoot, appRoot, 'scripts', filePath);
-        const scriptDir = path.join(cwdRoot, appRoot, 'scripts');
+        const paths = splApp.getScriptPaths(cwdRoot, appRoot, filePath);
         const args = fileArgs || [];
-        
-        const child = spawn('python3', [scriptPath, ...args], {
-            stdio: 'inherit',
-            cwd: scriptDir
-        });
-        
-        child.on('close', (code) => {
-            if (code !== 0) {
-                console.error(`Script exited with code ${code}`);
-                process.exit(code);
-            }
-            spl.completed(input);
-        });
-        
-        child.on('error', (err) => {
-            console.error(`Failed to execute script: ${err.message}`);
-            process.exit(1);
-        });
+        splApp.executePythonScript(paths.scriptPath, paths.scriptDir, args, spl, input);
     } else {
         // For JS scripts, use the existing pipeline: process-file -> eval
+        spl.history(input, `app/run: executing JS script ${filePath}`);
         spl.wsSet(input, "spl/execute.set-pipeline", {
             headers: {
                 spl: {

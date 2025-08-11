@@ -4,7 +4,7 @@
 //  description Creates pipelines from the parsed commands
 //              API internal command
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl")
+const spl = require("spl_lib")
 const app = require("spl_app")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_app_pipeline (input)
@@ -59,6 +59,7 @@ exports.default = function spl_app_pipeline (input)
         }
         app.setCurrent ( splApp, current );
     }
+    spl.history(input, "app/pipeline: operation completed");
     spl.completed ( input );
 }
 ///////////////////////////////////////////////////////////////////////////////

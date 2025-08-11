@@ -4,7 +4,7 @@
 //  description This action reads commands from a file and executes them.
 //              Creates a pipeline that first reads the file, then processes the commands.
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl")
+const spl = require("spl_lib")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_app_exec (input)
 {
@@ -43,6 +43,7 @@ exports.default = function spl_app_exec (input)
         },
         value: {}
     });
+    spl.history(input, "app/exec: operation completed");
     spl.gotoExecute ( input, "spl/execute/set-pipeline" );
 }
 ///////////////////////////////////////////////////////////////////////////////

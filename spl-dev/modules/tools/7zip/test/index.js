@@ -4,7 +4,7 @@
 //  description Test archive integrity and verify files using 7zip 't' command.
 //              Validates archive structure without extracting files.
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl")
+const spl = require("spl_lib")
 const zip = require("tools_7zip")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function tools_7zip_test(input) {

@@ -4,7 +4,7 @@
 //  description This is the entry action to prepare, parse and execute the command line string.
 //              API internal command
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl")
+const spl = require("spl_lib")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_app_process (input)
 { 
@@ -24,6 +24,7 @@ exports.default = function spl_app_process (input)
         }, 
         value: {}
     });
+    spl.history(input, "app/process: operation completed");
     spl.gotoExecute ( input, "spl/execute/set-pipeline" );
 }
 ///////////////////////////////////////////////////////////////////////////////

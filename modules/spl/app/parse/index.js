@@ -4,7 +4,7 @@
 //  description This action runs a JS script
 //              API internal command
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl")
+const spl = require("spl_lib")
 const app = require("spl_app")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_app_parse (input) { 
@@ -108,6 +108,7 @@ exports.default = function spl_app_parse (input) {
     const batches = { repo: appRoot, dir: "batches", reference: [ "spl/app.batches" ] };
     const scripts = { repo: appRoot, dir: "scripts", reference: [ "spl/app.scripts" ] };
     const args = [ actions, batches, scripts ];
+    spl.history(input, "app/parse: command parsing completed, retrieving folder contents");
     spl.gotoExecute ( input, "spl/blob/contents", args );
 */
 }

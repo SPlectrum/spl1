@@ -4,7 +4,7 @@
 //  description Executes the next action request.
 //              It also routes data and error tasks raised by the request action.
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl")
+const spl = require("spl_lib")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_execute_next ( input ) 
 {

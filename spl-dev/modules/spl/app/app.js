@@ -150,6 +150,200 @@ exports.getChildOptions = function ( input, parent )
 
 }
 
+// Generate wrapper template for shell/python scripts
+exports.generateShellPythonWrapper = function (actionName, filePath, interpreter) {
+    return `//  name        ${actionName}
+//  URI         usr/${actionName}
+//  type        API Method
+//  description Auto-generated wrapper for ${filePath}
+///////////////////////////////////////////////////////////////////////////////
+const spl = require("spl_lib");
+const { spawn } = require('child_process');
+const path = require('path');
+///////////////////////////////////////////////////////////////////////////////
+exports.default = function usr_${actionName.replace(/[^a-zA-Z0-9]/g, '_')} (input)
+{
+    const actionArgs = spl.action(input, "args") || [];
+    const cwdRoot = spl.context(input, "cwd");
+    const appRoot = spl.config(input, "spl/app", "appRoot");
+    const scriptPath = path.join(cwdRoot, appRoot, 'scripts', '${filePath}');
+    const scriptDir = path.join(cwdRoot, appRoot, 'scripts');
+    
+    const child = spawn('${interpreter}', [scriptPath, ...actionArgs], {
+        stdio: 'inherit',
+        cwd: scriptDir
+    });
+    
+    child.on('close', (code) => {
+        if (code !== 0) {
+            console.error(\`Script exited with code \${code}\`);
+            process.exit(code);
+        }
+        spl.completed(input);
+    });
+    
+    child.on('error', (err) => {
+        console.error(\`Failed to execute script: \${err.message}\`);
+        process.exit(1);
+    });
+}
+///////////////////////////////////////////////////////////////////////////////`;
+}
+
+// Generate wrapper template for JS scripts  
+exports.generateJSWrapper = function (actionName, filePath, scriptContents) {
+    return `//  name        ${actionName}
+//  URI         usr/${actionName}
+//  type        API Method
+//  description Auto-generated wrapper for ${filePath}
+///////////////////////////////////////////////////////////////////////////////
+const spl = require("spl_lib");
+///////////////////////////////////////////////////////////////////////////////
+exports.default = function usr_${actionName.replace(/[^a-zA-Z0-9]/g, '_')} (input)
+{
+    const actionArgs = spl.action(input, "args") || [];
+    let scriptContent = \`${scriptContents.replace(/`/g, '\\`').replace(/\$/g, '\\$')}\`;
+    
+    // Apply argument replacements
+    if (scriptContent.indexOf("\\$@") > -1) scriptContent = scriptContent.replaceAll("\\$@", actionArgs.toString());
+    if (scriptContent.indexOf("\\$*") > -1) scriptContent = scriptContent.replaceAll("\\$*", actionArgs.join(" "));
+    for (let i = 0; i < actionArgs.length; i++) {
+        scriptContent = scriptContent.replaceAll("\\$" + (i+1).toString(), actionArgs[i]);
+    }
+    
+    eval(scriptContent);
+    spl.completed(input);
+}
+///////////////////////////////////////////////////////////////////////////////`;
+}
+
+// Generate arguments JSON template
+exports.generateArgumentsJson = function (actionName, filePath) {
+    return `{
+    "headers": { "header": [
+        { "header": "usr/${actionName}" },
+        { "content": "Auto-generated wrapper for ${filePath}." },
+        { "content": "{bold syntax}: {italic ./spl <appOpts> usr/${actionName} <opts>}" }
+    ]},
+    "value": [
+        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
+        { "name": "args", "alias": "a", "multiple": true, "description": "Arguments to pass to the wrapped script." }
+    ]
+}`;
+}
+
+// Execute shell script
+exports.executeShellScript = function (scriptPath, scriptDir, args, spl, input) {
+    const { spawn } = require('child_process');
+    const child = spawn('bash', [scriptPath, ...args], {
+        stdio: 'inherit',
+        cwd: scriptDir
+    });
+    
+    child.on('close', (code) => {
+        if (code !== 0) {
+            console.error(`Script exited with code ${code}`);
+            process.exit(code);
+        }
+        spl.completed(input);
+    });
+    
+    child.on('error', (err) => {
+        console.error(`Failed to execute script: ${err.message}`);
+        process.exit(1);
+    });
+}
+
+// Execute Python script
+exports.executePythonScript = function (scriptPath, scriptDir, args, spl, input) {
+    const { spawn } = require('child_process');
+    const child = spawn('python3', [scriptPath, ...args], {
+        stdio: 'inherit',
+        cwd: scriptDir
+    });
+    
+    child.on('close', (code) => {
+        if (code !== 0) {
+            console.error(`Script exited with code ${code}`);
+            process.exit(code);
+        }
+        spl.completed(input);
+    });
+    
+    child.on('error', (err) => {
+        console.error(`Failed to execute script: ${err.message}`);
+        process.exit(1);
+    });
+}
+
+// Get script paths
+exports.getScriptPaths = function (cwdRoot, appRoot, filePath) {
+    const path = require('path');
+    return {
+        scriptPath: path.join(cwdRoot, appRoot, 'scripts', filePath),
+        scriptDir: path.join(cwdRoot, appRoot, 'scripts')
+    };
+}
+
+// Generate command line help
+exports.generateHelp = function (sections) {
+    const help = require("command-line-usage");
+    return help(sections);
+}
+
+// Generate batch command wrapper
+exports.generateBatchCommand = function (actionName, filePath, pipelineJson, globalJson) {
+    return `//  name        ${actionName}
+//  URI         usr/${actionName}
+//  type        API Method
+//  description Auto-generated command from batch file ${filePath}
+///////////////////////////////////////////////////////////////////////////////
+const spl = require("spl_lib");
+///////////////////////////////////////////////////////////////////////////////
+exports.default = function usr_${actionName.replace(/[^a-zA-Z0-9]/g, '_')} (input)
+{
+    // Set the appRoot configuration
+    const appRoot = spl.context ( input, "appRoot" );
+    spl.setConfig ( input, "spl/app", "appRoot", appRoot );
+    
+    // Get arguments passed to this action
+    const actionArgs = spl.action(input, "args") || [];
+    
+    // Get the pre-parsed pipeline
+    let pipeline = ${pipelineJson};
+    const globalOptions = ${globalJson};
+    
+    // Apply argument replacements to the pipeline
+    let pipelineStr = JSON.stringify(pipeline);
+    if (pipelineStr.indexOf("\\\\$@") > -1) pipelineStr = pipelineStr.replaceAll("\\\\$@", actionArgs.toString());
+    if (pipelineStr.indexOf("\\\\$*") > -1) pipelineStr = pipelineStr.replaceAll("\\\\$*", actionArgs.join(" "));
+    for (let i = 0; i < actionArgs.length; i++) {
+        pipelineStr = pipelineStr.replaceAll("\\\\$" + (i+1).toString(), actionArgs[i]);
+    }
+    pipeline = JSON.parse(pipelineStr);
+    
+    // Set up the execution pipeline
+    spl.wsSet(input, "spl/execute.set-pipeline", {
+        headers: {
+            spl: {
+                execute: {
+                    pipeline: pipeline
+                }
+            }
+        },
+        value: {}
+    });
+    
+    // Apply global options if any
+    if (globalOptions.consoleMode) {
+        spl.setContext(input, "consoleMode", globalOptions.consoleMode);
+    }
+    
+    spl.gotoExecute ( input, "spl/execute/set-pipeline" );
+}
+///////////////////////////////////////////////////////////////////////////////`;
+}
+
 // parse commandline section
 exports.parse = function (args, definitions) {
     if(definitions === undefined) definitions = [{ name: 'command', defaultOption: true }];

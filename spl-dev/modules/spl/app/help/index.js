@@ -3,15 +3,15 @@
 //  type        API Method
 //  description The help function of the app API
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl")
+const spl = require("spl_lib")
 const app = require("spl_app")
-const help = require("command-line-usage");
+const splApp = require("spl_app_lib");
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_app_help (input) 
 { 
     const appRoot = spl.action ( input, "appRoot");
     const moduleRoot = "modules";
-    const helpURIs = spl.action ( input );
+    const helpURIs = spl.action ( input, "items" );
     helpURIs.sort();
     if ( helpURIs[0] != "" ) helpURIs.unshift ( "" );
     console.log ( helpURIs );
@@ -40,7 +40,7 @@ console.dir ( currentArgs, {depth:10} )
     }
 
     helpData = helpData.concat ( bottom );
-    console.log(help(helpData))
+    console.log(splApp.generateHelp(helpData))
 
     /*
     var getDetails = app.getDetails ( appRoot, moduleRoot, "" );
@@ -48,7 +48,7 @@ console.dir ( currentArgs, {depth:10} )
     var parseOptions = app.activateTypes( spl.wsRef ( input, getDetails.URI ).value );
     
 
-    const helpRequests = spl.action( input );
+    const helpRequests = spl.action( input, "items" );
     const splCommand = spl.wsRef ( input, "spl/command" );
     const parserOptionsURI = spl.fURI("spl/command", splCommand.headers.spl.command.parser.file);
     const parserOptions = spl.wsRef ( input, parserOptionsURI ).value;
@@ -61,8 +61,9 @@ console.dir ( currentArgs, {depth:10} )
         if ( section.subList ) helpData.push ( section.subList );
     }
     helpData = helpData.concat ( parserOptions.bottom );
-    console.log(help(helpData))
+    console.log(splApp.generateHelp(helpData))
 */
+    spl.history(input, "app/help: help information displayed");
     spl.completed ( input );
 }
 ///////////////////////////////////////////////////////////////////////////////

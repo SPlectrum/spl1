@@ -3,7 +3,7 @@
 //  type        API Method
 //  description Gets the contents of a folder.
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl")
+const spl = require("spl_lib")
 const blob = require("spl_blob")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_blob_contents ( input ) {

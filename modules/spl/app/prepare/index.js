@@ -4,7 +4,7 @@
 //  description This action prepares the command line entry for parsing.
 //              API internal command
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl")
+const spl = require("spl_lib")
 const app = require("spl_app")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_app_prepare (input) { 
@@ -35,6 +35,7 @@ exports.default = function spl_app_prepare (input) {
         value: { batch: spl.action ( input, "batch" ), input: batchPrepared, parsed: {}, options: {} } };
     if ( previous != undefined ) prepared.value.options = previous.value.options;
     spl.wsSet ( input, "spl/app", prepared );
+    spl.history(input, "app/prepare: operation completed");
     spl.completed ( input );
 }
 ///////////////////////////////////////////////////////////////////////////////

@@ -4,7 +4,7 @@
 //  description Update existing archive with new/changed files only using 7zip 'u' command.
 //              Only adds files that are newer than existing archive entries.
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl")
+const spl = require("spl_lib")
 const zip = require("tools_7zip")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function tools_7zip_update(input) {

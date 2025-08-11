@@ -3,7 +3,7 @@
 //  type        API Method
 //  description Implements error catching
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl")
+const spl = require("spl_lib")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_error_catch ( input ) {
     const message = spl.action ( input, "message" );

@@ -3,14 +3,14 @@
 //  type        API Method
 //  description Switch branches or restore files
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl")
+const spl = require("spl_lib")
+const git = require("tools_git_lib");
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function tools_git_checkout(input) {
     // Get repository path from --repo argument, now relative to app root
     const repo = spl.action(input, 'repo');
     const appDataRoot = spl.context(input, 'appDataRoot');
     const cwd = spl.context(input, 'cwd');
-    const git = require("../git");
     const repoPath = git.getAppRelativeRepoPath(repo, cwd, appDataRoot);
     
     // Build git checkout command arguments

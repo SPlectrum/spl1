@@ -4,7 +4,7 @@
 //  description This action creates an action from a batch of commands.
 //              Creates a pipeline that first reads the file, then processes the commands, and creates a new command.
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl")
+const spl = require("spl_lib")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_app_create (input)
 {
@@ -54,6 +54,8 @@ exports.default = function spl_app_create (input)
         },
         value: {}
     });
+    
+    spl.history(input, "app/create: pipeline created for command generation");
     spl.gotoExecute ( input, "spl/execute/set-pipeline" );
 }
 ///////////////////////////////////////////////////////////////////////////////

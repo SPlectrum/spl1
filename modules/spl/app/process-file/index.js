@@ -4,7 +4,7 @@
 //  description Reads commands from a specified file and stores them for processing.
 //              This method only reads the file, it does not process the commands.
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl")
+const spl = require("spl_lib")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_app_process_file (input)
 { 
@@ -36,6 +36,7 @@ exports.default = function spl_app_process_file (input)
 
     // Use spl.setConfig to pass the batch to spl/app/process
     spl.setConfig ( input, "spl/app/prepare", "batch", fileContents );
+    spl.history(input, "app/process-file: operation completed");
     spl.completed ( input );
 }
 ///////////////////////////////////////////////////////////////////////////////

@@ -3,7 +3,8 @@
 //  type        API Method
 //  description This action wraps a JS script into an action
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl")
+const spl = require("spl_lib")
+const splApp = require("spl_app_lib");
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_app_wrap (input)
 {
@@ -26,88 +27,20 @@ exports.default = function spl_app_wrap (input)
     if (isShellScript || isPythonScript) {
         // For shell and Python scripts, create a wrapper that executes them directly
         const interpreter = isShellScript ? 'bash' : 'python3';
-        
-        wrappedActionJs = `//  name        ${actionName}
-//  URI         usr/${actionName}
-//  type        API Method
-//  description Auto-generated wrapper for ${filePath}
-///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl")
-///////////////////////////////////////////////////////////////////////////////
-exports.default = function usr_${actionName.replace(/[^a-zA-Z0-9]/g, '_')} (input)
-{
-    const { spawn } = require('child_process');
-    const path = require('path');
-    
-    const actionArgs = spl.action(input, "args") || [];
-    const cwdRoot = spl.context(input, "cwd");
-    const appRoot = spl.config(input, "spl/app", "appRoot");
-    const scriptPath = path.join(cwdRoot, appRoot, 'scripts', '${filePath}');
-    const scriptDir = path.join(cwdRoot, appRoot, 'scripts');
-    
-    const child = spawn('${interpreter}', [scriptPath, ...actionArgs], {
-        stdio: 'inherit',
-        cwd: scriptDir
-    });
-    
-    child.on('close', (code) => {
-        if (code !== 0) {
-            console.error(\`Script exited with code \${code}\`);
-            process.exit(code);
-        }
-        spl.completed(input);
-    });
-    
-    child.on('error', (err) => {
-        console.error(\`Failed to execute script: \${err.message}\`);
-        process.exit(1);
-    });
-}
-///////////////////////////////////////////////////////////////////////////////`;
+        wrappedActionJs = splApp.generateShellPythonWrapper(actionName, filePath, interpreter);
     } else {
         // For JS scripts, use the existing eval approach
-        wrappedActionJs = `//  name        ${actionName}
-//  URI         usr/${actionName}
-//  type        API Method
-//  description Auto-generated wrapper for ${filePath}
-///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl")
-///////////////////////////////////////////////////////////////////////////////
-exports.default = function usr_${actionName.replace(/[^a-zA-Z0-9]/g, '_')} (input)
-{
-    const actionArgs = spl.action(input, "args") || [];
-    let scriptContent = \`${scriptContents.replace(/`/g, '\\`').replace(/\$/g, '\\$')}\`;
-    
-    // Apply argument replacements
-    if (scriptContent.indexOf("\\$@") > -1) scriptContent = scriptContent.replaceAll("\\$@", actionArgs.toString());
-    if (scriptContent.indexOf("\\$*") > -1) scriptContent = scriptContent.replaceAll("\\$*", actionArgs.join(" "));
-    for (let i = 0; i < actionArgs.length; i++) {
-        scriptContent = scriptContent.replaceAll("\\$" + (i+1).toString(), actionArgs[i]);
-    }
-    
-    eval(scriptContent);
-    spl.completed(input);
-}
-///////////////////////////////////////////////////////////////////////////////`;
+        wrappedActionJs = splApp.generateJSWrapper(actionName, filePath, scriptContents);
     }
 
     // Create arguments file
-    const wrappedArgumentsJson = `{
-    "headers": { "header": [
-        { "header": "usr/${actionName}" },
-        { "content": "Auto-generated wrapper for ${filePath}." },
-        { "content": "{bold syntax}: {italic ./spl <appOpts> usr/${actionName} <opts>}" }
-    ]},
-    "value": [
-        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
-        { "name": "args", "alias": "a", "multiple": true, "description": "Arguments to pass to the wrapped script." }
-    ]
-}`;
+    const wrappedArgumentsJson = splApp.generateArgumentsJson(actionName, filePath);
 
     // Store and write files
     spl.wsSet(input, `spl/blob.${spl.fURI(appRoot, "modules/usr", `${actionName}.js`)}`, { headers: {}, value: wrappedActionJs });
     spl.wsSet(input, `spl/blob.${spl.fURI(appRoot, "modules/usr", `${actionName}_arguments.json`)}`, { headers: {}, value: wrappedArgumentsJson });
 
+    spl.history(input, `app/wrap: wrapped ${filePath} as usr/${actionName}`);
     console.log(`Successfully wrapped ${filePath} as usr/${actionName}`);
     console.log(`Created: modules/usr/${actionName}.js`);
     console.log(`Created: modules/usr/${actionName}_arguments.json`);

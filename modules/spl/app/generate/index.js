@@ -4,7 +4,8 @@
 //  description This action generates a command from a parsed pipeline.
 //              Takes the pipeline created by the parser and creates a reusable command.
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl")
+const spl = require("spl_lib")
+const splApp = require("spl_app_lib");
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_app_generate (input)
 {
@@ -44,68 +45,10 @@ exports.default = function spl_app_generate (input)
     const globalJson = JSON.stringify(globalOptions, null, 8);
     
     // Create wrapped action that executes the pipeline
-    const wrappedActionJs = `//  name        ${actionName}
-//  URI         usr/${actionName}
-//  type        API Method
-//  description Auto-generated command from batch file ${filePath}
-///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl")
-///////////////////////////////////////////////////////////////////////////////
-exports.default = function usr_${actionName.replace(/[^a-zA-Z0-9]/g, '_')} (input)
-{
-    // Set the appRoot configuration
-    const appRoot = spl.context ( input, "appRoot" );
-    spl.setConfig ( input, "spl/app", "appRoot", appRoot );
-    
-    // Get arguments passed to this action
-    const actionArgs = spl.action(input, "args") || [];
-    
-    // Get the pre-parsed pipeline
-    let pipeline = ${pipelineJson};
-    const globalOptions = ${globalJson};
-    
-    // Apply argument replacements to the pipeline
-    let pipelineStr = JSON.stringify(pipeline);
-    if (pipelineStr.indexOf("\\$@") > -1) pipelineStr = pipelineStr.replaceAll("\\$@", actionArgs.toString());
-    if (pipelineStr.indexOf("\\$*") > -1) pipelineStr = pipelineStr.replaceAll("\\$*", actionArgs.join(" "));
-    for (let i = 0; i < actionArgs.length; i++) {
-        pipelineStr = pipelineStr.replaceAll("\\$" + (i+1).toString(), actionArgs[i]);
-    }
-    pipeline = JSON.parse(pipelineStr);
-    
-    // Set up the execution pipeline
-    spl.wsSet(input, "spl/execute.set-pipeline", {
-        headers: {
-            spl: {
-                execute: {
-                    pipeline: pipeline
-                }
-            }
-        },
-        value: {}
-    });
-    
-    // Apply global options if any
-    if (globalOptions.consoleMode) {
-        spl.setContext(input, "consoleMode", globalOptions.consoleMode);
-    }
-    
-    spl.gotoExecute ( input, "spl/execute/set-pipeline" );
-}
-///////////////////////////////////////////////////////////////////////////////`;
+    const wrappedActionJs = splApp.generateBatchCommand(actionName, filePath, pipelineJson, globalJson);
 
     // Create arguments file
-    const wrappedArgumentsJson = `{
-    "headers": { "header": [
-        { "header": "usr/${actionName}" },
-        { "content": "Auto-generated command from batch file ${filePath}." },
-        { "content": "{bold syntax}: {italic ./spl <appOpts> usr/${actionName} <opts>}" }
-    ]},
-    "value": [
-        { "name": "help", "alias": "h", "type": "Boolean", "description": "show help information", "typeLabel": "flag" },
-        { "name": "args", "alias": "a", "multiple": true, "description": "Arguments to pass to the batch commands." }
-    ]
-}`;
+    const wrappedArgumentsJson = splApp.generateArgumentsJson(actionName, filePath);
 
     // Store and write files
     spl.wsSet(input, `spl/blob.${spl.fURI(appRoot, "modules/usr", `${actionName}.js`)}`, { headers: {}, value: wrappedActionJs });
@@ -116,6 +59,7 @@ exports.default = function usr_${actionName.replace(/[^a-zA-Z0-9]/g, '_')} (inpu
     console.log(`Created: modules/usr/${actionName}_arguments.json`);
     console.log(`Pipeline contains ${pipeline.length} command(s)`);
 
+    spl.history(input, `app/generate: generated command usr/${actionName} with ${pipeline.length} pipeline steps`);
     spl.gotoExecute(input, "spl/blob/put", [
         { repo: appRoot, dir: "modules/usr", file: `${actionName}.js`, encoding: "text" },
         { repo: appRoot, dir: "modules/usr", file: `${actionName}_arguments.json`, encoding: "text" }

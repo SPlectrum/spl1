@@ -3,8 +3,8 @@
 //  type        API Method
 //  description Show changes between commits, commit and working tree, etc.
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl")
-const git = require("../git")
+const spl = require("spl_lib")
+const git = require("tools_git_lib")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function tools_git_diff(input) {
     // Get repository path from --repo argument, now relative to app root

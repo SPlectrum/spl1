@@ -4,7 +4,7 @@
 //  description Display archive contents and information using 7zip 'l' command.
 //              Shows files, sizes, dates, and archive structure.
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl")
+const spl = require("spl_lib")
 const zip = require("tools_7zip")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function tools_7zip_list(input) {

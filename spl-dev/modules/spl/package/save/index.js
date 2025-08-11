@@ -3,7 +3,7 @@
 //  type        API Method
 //  description Saves a package to file.
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl")
+const spl = require("spl_lib")
 const package = require("spl_package")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_package_save ( input ) {

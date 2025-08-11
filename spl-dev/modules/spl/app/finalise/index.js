@@ -4,7 +4,7 @@
 //  description Prepares execution of batch based on global settings
 //              API internal command
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl")
+const spl = require("spl_lib")
 const app = require("spl_app")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_app_finalise (input)
@@ -20,6 +20,7 @@ exports.default = function spl_app_finalise (input)
     if ( splApp.pipeline.length > 0 ) spl.wsSet(input, "spl/execute.set-pipeline", { headers: { spl: { execute: { pipeline: splApp.pipeline } } }, value: {} });
 
         // complete request if it is parseOnly
+    spl.history(input, "app/finalise: pipeline finalized, ready for execution");
     if ( splApp.global.parseOnly ) spl.completed ( input );
     else spl.gotoExecute ( input, "spl/execute/set-pipeline" );
 }

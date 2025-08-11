@@ -3,14 +3,14 @@
 //  type        API Method
 //  description Add files to staging area
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl")
+const spl = require("spl_lib")
+const git = require("tools_git_lib");
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function tools_git_add(input) {
     // Get repository path from --repo argument, now relative to app root
     const repo = spl.action(input, 'repo');
     const appDataRoot = spl.context(input, 'appDataRoot');
     const cwd = spl.context(input, 'cwd');
-    const git = require("../git");
     const repoPath = git.getAppRelativeRepoPath(repo, cwd, appDataRoot);
     
     // Build git add command arguments

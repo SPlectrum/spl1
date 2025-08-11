@@ -3,7 +3,7 @@
 //  type        API Method
 //  description Loads a package from file.
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl")
+const spl = require("spl_lib")
 const package = require("./package")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_package_load ( input ) {

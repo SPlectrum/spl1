@@ -3,8 +3,8 @@
 //  type        API Method
 //  description Simplified git status that just executes the command and shows output
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl")
-const git = require("../git")
+const spl = require("spl_lib")
+const git = require("tools_git_lib")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function tools_git_status(input) {
     // Get repository path from --repo argument, now relative to app root

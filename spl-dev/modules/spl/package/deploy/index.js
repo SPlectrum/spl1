@@ -4,7 +4,7 @@
 //  description Deploys a package to an existing install.
 //              It is used to deliver data and module packages.
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl")
+const spl = require("spl_lib")
 const package = require("spl_package")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_package_deploy ( input ) {

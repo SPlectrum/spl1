@@ -5,7 +5,7 @@
 //              A package in this context is assumend to be a hive,
 //              a top dir where everything underneath belongs to the package.
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl")
+const spl = require("spl_lib")
 const package = require("./package")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_package_remove ( input ) {
