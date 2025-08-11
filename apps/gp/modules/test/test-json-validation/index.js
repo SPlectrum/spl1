@@ -47,6 +47,7 @@ exports.default = function gp_test_test_json_validation(input) {
     // Save updated test API record
     spl.wsSet(input, "gp/test", testApiRecord);
     
+    spl.history(input, `test-json-validation: Completed JSON validation`);
     spl.completed(input);
 }
 ///////////////////////////////////////////////////////////////////////////////

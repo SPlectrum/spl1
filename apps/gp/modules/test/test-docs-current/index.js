@@ -114,6 +114,7 @@ exports.default = function gp_test_test_docs_current(input) {
     // Save updated test API record
     spl.wsSet(input, "gp/test", testApiRecord);
     
+    spl.history(input, `test-docs-current: Completed documentation currency validation`);
     spl.completed(input);
 }
 ///////////////////////////////////////////////////////////////////////////////

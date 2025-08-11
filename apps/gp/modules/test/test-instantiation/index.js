@@ -23,30 +23,24 @@ exports.default = function gp_test_test_instantiation(input) {
                 for (const filePath of workPackage.filePaths) {
                     const startTime = Date.now();
                     
-                    try {
-                        // Use auxiliary function to require module with cache clearing
-                        const module = testLib.requireModule(filePath);
-                        
-                        if (module === undefined || module === null) {
-                            throw new Error('Module exports undefined or null');
-                        }
-                        
+                    // Use auxiliary function to require module with cache clearing (SPL happy path)
+                    const module = testLib.requireModule(filePath);
+                    
+                    if (module === undefined || module === null) {
+                        keyResults.push({
+                            type: 'instantiation',
+                            filePath: filePath,
+                            status: 'FAIL',
+                            message: 'Module exports undefined or null',
+                            duration: Date.now() - startTime,
+                            timestamp: new Date().toISOString()
+                        });
+                    } else {
                         keyResults.push({
                             type: 'instantiation',
                             filePath: filePath,
                             status: 'PASS',
                             message: 'Module instantiated successfully',
-                            duration: Date.now() - startTime,
-                            timestamp: new Date().toISOString()
-                        });
-                        
-                    } catch (error) {
-                        const relativePath = filePath.replace(/^.*\/spl-dev\//, '');
-                        keyResults.push({
-                            type: 'instantiation',
-                            filePath: filePath,
-                            status: 'FAIL',
-                            message: `${relativePath}: ${error.message}`,
                             duration: Date.now() - startTime,
                             timestamp: new Date().toISOString()
                         });
@@ -75,6 +69,7 @@ exports.default = function gp_test_test_instantiation(input) {
     // Save updated test API record
     spl.wsSet(input, "gp/test", testApiRecord);
     
+    spl.history(input, `test-instantiation: Completed module instantiation validation`);
     spl.completed(input);
 }
 ///////////////////////////////////////////////////////////////////////////////

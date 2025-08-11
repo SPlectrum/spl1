@@ -55,6 +55,7 @@ exports.default = function gp_test_test_basic_test(input) {
     // Save updated test API record
     spl.wsSet(input, "gp/test", testApiRecord);
     
+    spl.history(input, `test-basic-test: Completed basic test validation`);
     spl.completed(input);
 }
 ///////////////////////////////////////////////////////////////////////////////

@@ -23,9 +23,8 @@ exports.default = function gp_test_test_coding_history(input) {
                 for (const filePath of workPackage.filePaths) {
                     const startTime = Date.now();
                     
-                    try {
-                        // Read file content using auxiliary function
-                        const content = test.readFileSync(filePath);
+                    // Read file content and validate history patterns (SPL happy path - no error handling)
+                    const content = test.readFileSync(filePath);
                         
                         // Validate history logging patterns inline
                         const lines = content.split('\n');
@@ -87,17 +86,6 @@ exports.default = function gp_test_test_coding_history(input) {
                                 timestamp: new Date().toISOString()
                             });
                         }
-                        
-                    } catch (error) {
-                        keyResults.push({
-                            type: 'coding-history',
-                            filePath: filePath,
-                            status: 'FAIL',
-                            message: filePath.replace(spl.context(input, "cwd") + '/', ''),
-                            duration: Date.now() - startTime,
-                            timestamp: new Date().toISOString()
-                        });
-                    }
                 }
             }
         }

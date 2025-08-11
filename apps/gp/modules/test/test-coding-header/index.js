@@ -23,9 +23,8 @@ exports.default = function gp_test_test_coding_header(input) {
                 for (const filePath of workPackage.filePaths) {
                     const startTime = Date.now();
                     
-                    try {
-                        // Read file content using auxiliary function
-                        const content = test.readFileSync(filePath);
+                    // Read file content and validate header format (SPL happy path - no error handling)
+                    const content = test.readFileSync(filePath);
                         
                         // Validate header format - inlined logic
                         const lines = content.split('\n');
@@ -102,18 +101,6 @@ exports.default = function gp_test_test_coding_header(input) {
                                 timestamp: new Date().toISOString()
                             });
                         }
-                        
-                    } catch (error) {
-                        keyResults.push({
-                            type: 'coding-header',
-                            filePath: filePath,
-                            status: 'FAIL',
-                            message: filePath.replace(spl.context(input, "cwd") + '/', ''),
-                            failMatch: `Error reading file: ${error.message}`,
-                            duration: Date.now() - startTime,
-                            timestamp: new Date().toISOString()
-                        });
-                    }
                 }
             }
         }

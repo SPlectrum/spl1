@@ -18,7 +18,7 @@ exports.default = function gp_test_touch_docs_file(input) {
     const testApiRecord = spl.wsRef(input, "gp/test");
     if (!testApiRecord || !testApiRecord.value) {
         processingSummary = 'ERROR - No discovery data found in workspace';
-        spl.history(input, `touch-docs-file: Processing discovered assets${recursive ? ' (recursive)' : ' (module-level only)'} - ${processingSummary}`);
+        // Note: Processing discovered assets${recursive ? ' (recursive)' : ' (module-level only)'} - ${processingSummary}
         spl.completed(input);
         return;
     }
@@ -30,7 +30,7 @@ exports.default = function gp_test_touch_docs_file(input) {
     
     if (!requestRecord.value.discovery || !requestRecord.value.discovery.assets) {
         processingSummary = 'ERROR - No assets found in discovery data';
-        spl.history(input, `touch-docs-file: Processing discovered assets${recursive ? ' (recursive)' : ' (module-level only)'} - ${processingSummary}`);
+        // Note: Processing discovered assets${recursive ? ' (recursive)' : ' (module-level only)'} - ${processingSummary}
         spl.completed(input);
         return;
     }
@@ -61,7 +61,7 @@ exports.default = function gp_test_touch_docs_file(input) {
     
     if (readmeAssets.length === 0) {
         processingSummary = 'No README.md files found in discovered assets';
-        spl.history(input, `touch-docs-file: Processing discovered assets${recursive ? ' (recursive)' : ' (module-level only)'} - ${processingSummary}`);
+        // Note: Processing discovered assets${recursive ? ' (recursive)' : ' (module-level only)'} - ${processingSummary}
         spl.completed(input);
         return;
     }
@@ -70,14 +70,9 @@ exports.default = function gp_test_touch_docs_file(input) {
     const currentTime = new Date();
     
     for (const asset of readmeAssets) {
-        try {
-            // Update both access time and modification time to current time
-            testLib.touchFile(asset.fullPath);
-            updatedFiles.push(asset.path);
-            
-        } catch (error) {
-            errors.push(`ERROR updating ${asset.fullPath}: ${error.message}`);
-        }
+        // Update both access time and modification time to current time (SPL happy path)
+        testLib.touchFile(asset.fullPath);
+        updatedFiles.push(asset.path);
     }
     
     // Build comprehensive history message

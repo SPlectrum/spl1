@@ -23,14 +23,13 @@ exports.default = function gp_test_test_coding_naming(input) {
                 for (const filePath of workPackage.filePaths) {
                     const startTime = Date.now();
                     
-                    try {
-                        // Read file content using auxiliary function
-                        const content = test.readFileSync(filePath);
-                        
-                        // Validate naming conventions
-                        const lines = content.split('\n');
-                        
-                        // Extract expected function name from file path
+                    // Read file content and validate naming patterns (SPL happy path - no error handling)
+                    const content = test.readFileSync(filePath);
+                    
+                    // Validate naming conventions
+                    const lines = content.split('\n');
+                    
+                    // Extract expected function name from file path
                         // e.g., apps/gp/modules/config/set-working-dir/index.js -> gp_config_set_working_dir
                         const pathParts = filePath.split('/');
                         const appIndex = pathParts.findIndex(part => part === 'apps') + 1;
@@ -100,17 +99,6 @@ exports.default = function gp_test_test_coding_naming(input) {
                                 timestamp: new Date().toISOString()
                             });
                         }
-                        
-                    } catch (error) {
-                        keyResults.push({
-                            type: 'coding-naming',
-                            filePath: filePath,
-                            status: 'FAIL',
-                            message: `${filePath.replace(spl.context(input, "cwd") + '/', '')}: ${error.message}`,
-                            duration: Date.now() - startTime,
-                            timestamp: new Date().toISOString()
-                        });
-                    }
                 }
             }
         }

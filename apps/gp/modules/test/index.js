@@ -45,7 +45,6 @@ exports.default = function gp_test(input) {
         
     } else {
         // API config mode - arguments automatically set by method instantiation
-        spl.history(input, `gp/test: API config mode`);
         spl.completed(input);
     }
 }

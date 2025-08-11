@@ -23,7 +23,7 @@ exports.default = function gp_test_test_coding_require(input) {
                 for (const filePath of workPackage.filePaths) {
                     const startTime = Date.now();
                     
-                    try {
+                    // Validate patterns (SPL happy path - no error handling)
                         // Read file content using auxiliary function
                         const content = testLib.readFileSync(filePath);
                         const fileSize = content.length;
@@ -141,17 +141,6 @@ exports.default = function gp_test_test_coding_require(input) {
                                 exportLine: requireValidation.exportLine || 'Unknown'
                             });
                         }
-                        
-                    } catch (error) {
-                        keyResults.push({
-                            type: 'coding-require',
-                            filePath: filePath,
-                            status: 'FAIL',
-                            message: filePath.replace(spl.context(input, "cwd") + '/', ''),
-                            duration: Date.now() - startTime,
-                            timestamp: new Date().toISOString()
-                        });
-                    }
                 }
             }
         }

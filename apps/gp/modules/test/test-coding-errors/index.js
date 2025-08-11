@@ -23,84 +23,70 @@ exports.default = function gp_test_test_coding_errors(input) {
                 for (const filePath of workPackage.filePaths) {
                     const startTime = Date.now();
                     
-                    try {
-                        // Read file content using auxiliary function
-                        const content = test.readFileSync(filePath);
+                    // Read file content and validate error handling patterns (SPL happy path - no error handling)
+                    const content = test.readFileSync(filePath);
+                    const lines = content.split('\n');
+                    let isValid = true;
+                    let failMatch = '';
+                    
+                    for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
+                        const line = lines[lineIndex];
+                        const trimmed = line.trim();
                         
-                        // Validate error handling patterns inline
-                        const lines = content.split('\n');
-                        let isValid = true;
-                        let failMatch = '';
+                        // Skip comments and empty lines
+                        if (trimmed.startsWith('//') || trimmed.length === 0) continue;
                         
-                        for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
-                            const line = lines[lineIndex];
-                            const trimmed = line.trim();
-                            
-                            // Skip comments and empty lines
-                            if (trimmed.startsWith('//') || trimmed.length === 0) continue;
-                            
-                            // Invalid: try/catch blocks
-                            if (trimmed.includes('try') && trimmed.includes('{')) {
-                                isValid = false;
-                                failMatch = `Line ${lineIndex+1}: ${trimmed}`;
-                                break;
-                            }
-                            
-                            if (trimmed.includes('catch') && trimmed.includes('(')) {
-                                isValid = false;
-                                failMatch = `Line ${lineIndex+1}: ${trimmed}`;
-                                break;
-                            }
-                            
-                            // Invalid: manual error setting with spl.rcSet
-                            if (trimmed.includes('spl.rcSet') && !trimmed.includes('//')) {
-                                isValid = false;
-                                failMatch = `Line ${lineIndex+1}: ${trimmed}`;
-                                break;
-                            }
-                            
-                            // Invalid: throw statements (SPL handles errors automatically)
-                            if (trimmed.startsWith('throw ') || trimmed.includes(' throw ')) {
-                                isValid = false;
-                                failMatch = `Line ${lineIndex+1}: ${trimmed}`;
-                                break;
-                            }
-                            
-                            // Invalid: Error constructors
-                            if (trimmed.includes('new Error(') && !trimmed.includes('//')) {
-                                isValid = false;
-                                failMatch = `Line ${lineIndex+1}: ${trimmed}`;
-                                break;
-                            }
+                        // Invalid: try/catch blocks (only at start of line)
+                        if (trimmed.startsWith('try {') || (trimmed.startsWith('try') && trimmed.includes('{'))) {
+                            isValid = false;
+                            failMatch = `Line ${lineIndex+1}: ${trimmed}`;
+                            break;
                         }
                         
-                        if (isValid) {
-                            keyResults.push({
-                                type: 'coding-errors',
-                                filePath: filePath,
-                                status: 'PASS',
-                                message: `Error handling patterns valid`,
-                                duration: Date.now() - startTime,
-                                timestamp: new Date().toISOString()
-                            });
-                        } else {
-                            keyResults.push({
-                                type: 'coding-errors',
-                                filePath: filePath,
-                                status: 'FAIL',
-                                message: filePath.replace(spl.context(input, "cwd") + '/', ''),
-                                failMatch: failMatch,
-                                duration: Date.now() - startTime,
-                                timestamp: new Date().toISOString()
-                            });
+                        if (trimmed.startsWith('} catch') || trimmed.startsWith('catch')) {
+                            isValid = false;
+                            failMatch = `Line ${lineIndex+1}: ${trimmed}`;
+                            break;
                         }
                         
-                    } catch (error) {
+                        // Invalid: manual error setting with spl.rcSet (actual usage, not validation)
+                        if (trimmed.includes('spl.rcSet(') && !trimmed.includes('//')) {
+                            isValid = false;
+                            failMatch = `Line ${lineIndex+1}: ${trimmed}`;
+                            break;
+                        }
+                        
+                        // Invalid: throw statements (actual throws at start of line)
+                        if (trimmed.startsWith('throw ')) {
+                            isValid = false;
+                            failMatch = `Line ${lineIndex+1}: ${trimmed}`;
+                            break;
+                        }
+                        
+                        // Invalid: Error constructors (actual usage)
+                        if (trimmed.includes('new Error(') && !trimmed.includes('//')) {
+                            isValid = false;
+                            failMatch = `Line ${lineIndex+1}: ${trimmed}`;
+                            break;
+                        }
+                    }
+                    
+                    if (isValid) {
+                        keyResults.push({
+                            type: 'coding-errors',
+                            filePath: filePath,
+                            status: 'PASS',
+                            message: `Error handling patterns valid`,
+                            duration: Date.now() - startTime,
+                            timestamp: new Date().toISOString()
+                        });
+                    } else {
                         keyResults.push({
                             type: 'coding-errors',
                             filePath: filePath,
                             status: 'FAIL',
                             message: filePath.replace(spl.context(input, "cwd") + '/', ''),
+                            failMatch: failMatch,
                             duration: Date.now() - startTime,
                             timestamp: new Date().toISOString()
                         });
