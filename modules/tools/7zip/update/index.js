@@ -5,7 +5,7 @@
 //              Only adds files that are newer than existing archive entries.
 ///////////////////////////////////////////////////////////////////////////////
 const spl = require("spl_lib")
-const zip = require("tools_7zip")
+const zip = require("tools_7zip_lib")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function tools_7zip_update(input) {
     const archive = spl.action(input, 'archive');

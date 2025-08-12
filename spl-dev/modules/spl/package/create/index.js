@@ -5,7 +5,7 @@
 //              It creates a package of parts of an existing install.
 ///////////////////////////////////////////////////////////////////////////////
 const spl = require("spl_lib")
-const package = require("./package")
+const package = require("spl_package_lib")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_package_create ( input ) {
     const cwd = spl.context ( input, "cwd" );

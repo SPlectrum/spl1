@@ -6,7 +6,7 @@
 //              It writes it in Kafka record mode.
 ///////////////////////////////////////////////////////////////////////////////
 const spl = require("spl_lib")
-const data = require("spl_data")
+const data = require("spl_data_lib")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_data_queue ( input ) {
     const cwd = spl.context ( input, "cwd" );

@@ -32,7 +32,7 @@ spl_execute dev -d <command>
 //  name        Method Description
 //  URI         api/method/path
 //  type        API Method
-const spl = require("spl/spl.js"); // Node.js style require shortcuts via node_modules
+const spl = require("spl_lib"); // Node.js style require shortcuts via node_modules
 ///////////////////////////////////////////////////////////////////////////////
 
 exports.default = function api_method_name(input) {
@@ -61,19 +61,19 @@ exports.default = function api_method_name(input) {
 ### Node.js Style Require Pattern
 ```javascript
 // Using Node.js style require shortcuts via spl-dev/node_modules
-const spl = require("spl");
-const gp_test = require("gp_test");
-const gp_fs = require("gp_fs");
+const spl = require("spl_lib");
+const gp_test = require("gp_test_lib");
+const gp_fs = require("gp_fs_lib");
 ```
 
 ### Auxiliary Functions Pattern
 ```javascript
 // Keep API methods clean - complex logic goes in auxiliary files
-const fsLib = require('../fs.js');  // Auxiliary library
+const fs = require('gp_fs_lib');  // Auxiliary library via node_modules
 
 exports.default = function gp_fs_read(input) {
     const file = spl.action(input, 'file');
-    const result = fsLib.readFileWithEncoding(file, input);  // Delegate to lib
+    const result = fs.readFileWithEncoding(file, input);  // Delegate to lib
     spl.completed(input);
 }
 ```

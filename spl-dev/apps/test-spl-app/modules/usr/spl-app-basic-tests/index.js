@@ -3,7 +3,7 @@
 //  type        API Method
 //  description Auto-generated command from batch file spl-app-basic-tests.batch
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl")
+const spl = require("spl_lib")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function usr_spl_app_basic_tests (input)
 {

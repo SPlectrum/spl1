@@ -4,7 +4,7 @@
 //  description Validates that index.js files follow SPL naming conventions for function names and URI paths
 ///////////////////////////////////////////////////////////////////////////////
 const spl = require("spl_lib");
-const test = require("gp_test");
+const test = require("gp_test_lib");
 ///////////////////////////////////////////////////////////////////////////////
 
 // IMPLEMENTATION - Naming Convention Validation (Blanket Coverage: All)

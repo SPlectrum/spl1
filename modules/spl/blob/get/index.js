@@ -5,7 +5,7 @@
 //              Currently only implemented for urf8
 ///////////////////////////////////////////////////////////////////////////////
 const spl = require("spl_lib")
-const blob = require("spl_blob")
+const blob = require("spl_blob_lib")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_blob_get ( input ) {
     const cwd = spl.context ( input, "cwd" );

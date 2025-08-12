@@ -4,7 +4,7 @@
 //  description This command does not execute any action.
 //              It is included to facilitate testing.
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl")
+const spl = require("spl_lib")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_usr_noop (input) { 
     const appRoot = spl.context(input, "appRoot");

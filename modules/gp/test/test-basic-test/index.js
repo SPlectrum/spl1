@@ -4,7 +4,7 @@
 //  description Executes basic test files with JSON selector validation
 ///////////////////////////////////////////////////////////////////////////////
 const spl = require("spl_lib");
-const testLib = require('gp_test');
+const testLib = require('gp_test_lib');
 ///////////////////////////////////////////////////////////////////////////////
 
 // IMPLEMENTATION - Basic Test Execution (Blanket Coverage: All)

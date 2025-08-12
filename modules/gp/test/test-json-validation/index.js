@@ -4,7 +4,7 @@
 //  description Tests argument schema files for valid JSON structure
 ///////////////////////////////////////////////////////////////////////////////
 const spl = require("spl_lib");
-const testLib = require('gp_test');
+const testLib = require('gp_test_lib');
 ///////////////////////////////////////////////////////////////////////////////
 
 // IMPLEMENTATION - JSON Validation Testing (Blanket Coverage: All)

@@ -4,7 +4,7 @@
 //  description Gets the contents of a folder.
 ///////////////////////////////////////////////////////////////////////////////
 const spl = require("spl_lib")
-const blob = require("spl_blob")
+const blob = require("spl_blob_lib")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_blob_contents ( input ) {
     const cwd = spl.context ( input, "cwd" );

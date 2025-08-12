@@ -6,7 +6,7 @@
 //              Currenlty only implemented for utf8.
 ///////////////////////////////////////////////////////////////////////////////
 const spl = require("spl_lib")
-const blob = require("spl_blob")
+const blob = require("spl_blob_lib")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_blob_put ( input ) {
     const cwd = spl.context ( input, "cwd" );

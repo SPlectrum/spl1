@@ -5,7 +5,7 @@
 //              It is used to deliver data and module packages.
 ///////////////////////////////////////////////////////////////////////////////
 const spl = require("spl_lib")
-const package = require("spl_package")
+const package = require("spl_package_lib")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_package_deploy ( input ) {
     const cwd = spl.context ( input, "cwd" );

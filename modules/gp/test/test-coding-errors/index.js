@@ -4,7 +4,7 @@
 //  description Validates that index.js files follow SPL error handling: no try/catch blocks, no manual error setting
 ///////////////////////////////////////////////////////////////////////////////
 const spl = require("spl_lib");
-const test = require("gp_test");
+const test = require("gp_test_lib");
 ///////////////////////////////////////////////////////////////////////////////
 
 // IMPLEMENTATION - Error Handling Pattern Validation (Blanket Coverage: All)

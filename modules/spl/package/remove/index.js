@@ -6,7 +6,7 @@
 //              a top dir where everything underneath belongs to the package.
 ///////////////////////////////////////////////////////////////////////////////
 const spl = require("spl_lib")
-const package = require("./package")
+const package = require("spl_package_lib")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_package_remove ( input ) {
     const cwd = spl.context ( input, "cwd" );

@@ -4,26 +4,17 @@
 //  description API-level batch orchestrator for filesystem operations
 //              Arguments are automatically set by SPL when method is invoked
 ///////////////////////////////////////////////////////////////////////////////
-const spl = require("spl");
+const spl = require("spl_lib");
 ///////////////////////////////////////////////////////////////////////////////
 
 // IMPLEMENTATION - Step 4: Add basic batch processing logic
 exports.default = function gp_fs_api(input) {
     const batchParam = spl.action(input, "batch");
+    let message;
     
     if (batchParam) {
-        spl.history(input, `gp/fs: Batch mode activated`);
-        
         // Parse batch JSON string to array
-        let batchArray;
-        try {
-            batchArray = JSON.parse(batchParam);
-            spl.history(input, `gp/fs: Parsed ${batchArray.length} batch operations`);
-        } catch (error) {
-            spl.history(input, `gp/fs: ERROR - Invalid batch JSON`);
-            spl.completed(input);
-            return;
-        }
+        const batchArray = JSON.parse(batchParam);
         
         // Generate dynamic pipeline from batch array
         const pipeline = batchArray.map((request, index) => {
@@ -44,19 +35,20 @@ exports.default = function gp_fs_api(input) {
             }
         });
         
-        spl.history(input, `gp/fs: Generated pipeline with ${pipeline.length} steps`);
-        
         // Set SPL pipeline for execution
         spl.wsSet(input, "spl/execute.set-pipeline", {
             headers: { spl: { execute: { pipeline } } },
             value: {}
         });
         
+        message = `gp/fs: batch mode completed with ${pipeline.length} operations`;
         spl.gotoExecute(input, "spl/execute/set-pipeline");
         
     } else {
-        spl.history(input, `gp/fs: API config mode`);
+        message = `gp/fs: API config mode completed`;
         spl.completed(input);
     }
+    
+    spl.history(input, message);
 }
 ///////////////////////////////////////////////////////////////////////////////

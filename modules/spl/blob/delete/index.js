@@ -5,7 +5,7 @@
 //              This method executes asynchrounously.
 ///////////////////////////////////////////////////////////////////////////////
 const spl = require("spl_lib")
-const blob = require("spl_blob")
+const blob = require("spl_blob_lib")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_blob_delete ( input ) {
     const cwd = spl.context ( input, "cwd" );

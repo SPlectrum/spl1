@@ -4,7 +4,7 @@
 //  description Loads a package from file.
 ///////////////////////////////////////////////////////////////////////////////
 const spl = require("spl_lib")
-const package = require("./package")
+const package = require("spl_package_lib")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_package_load ( input ) {
     const cwd = spl.context ( input, "cwd" );

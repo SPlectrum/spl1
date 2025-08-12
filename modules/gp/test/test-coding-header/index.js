@@ -4,7 +4,7 @@
 //  description Validates that index.js files have proper SPL header format with required fields
 ///////////////////////////////////////////////////////////////////////////////
 const spl = require("spl_lib");
-const test = require("gp_test");
+const test = require("gp_test_lib");
 ///////////////////////////////////////////////////////////////////////////////
 
 // IMPLEMENTATION - Header Format Validation (Blanket Coverage: All)

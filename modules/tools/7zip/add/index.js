@@ -5,7 +5,7 @@
 //              Supports all archive formats, compression levels, passwords, and self-extracting archives.
 ///////////////////////////////////////////////////////////////////////////////
 const spl = require("spl_lib")
-const zip = require("tools_7zip")
+const zip = require("tools_7zip_lib")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function tools_7zip_add(input) {
     const archive = spl.action(input, 'archive');

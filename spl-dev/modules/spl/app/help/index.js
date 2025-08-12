@@ -4,7 +4,7 @@
 //  description The help function of the app API
 ///////////////////////////////////////////////////////////////////////////////
 const spl = require("spl_lib")
-const app = require("spl_app")
+const app = require("spl_app_lib")
 const splApp = require("spl_app_lib");
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_app_help (input) 

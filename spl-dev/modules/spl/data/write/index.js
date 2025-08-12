@@ -5,7 +5,7 @@
 //              It creates a timestamp filename.
 ///////////////////////////////////////////////////////////////////////////////
 const spl = require("spl_lib")
-const data = require("spl_data")
+const data = require("spl_data_lib")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function spl_data_write ( input ) {
     const cwd = input.headers.spl.execute.cwd;

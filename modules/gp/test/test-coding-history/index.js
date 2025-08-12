@@ -4,7 +4,7 @@
 //  description Validates that index.js files include proper spl.history calls for progress logging
 ///////////////////////////////////////////////////////////////////////////////
 const spl = require("spl_lib");
-const test = require("gp_test");
+const test = require("gp_test_lib");
 ///////////////////////////////////////////////////////////////////////////////
 
 // IMPLEMENTATION - History Logging Pattern Validation (Blanket Coverage: All)

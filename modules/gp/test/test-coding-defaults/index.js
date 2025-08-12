@@ -4,7 +4,7 @@
 //  description Validates no default value fallbacks on spl.action calls: prevents spl.action(input, "param") || "default" patterns
 ///////////////////////////////////////////////////////////////////////////////
 const spl = require("spl_lib");
-const test = require("gp_test");
+const test = require("gp_test_lib");
 ///////////////////////////////////////////////////////////////////////////////
 
 // IMPLEMENTATION - Default Value Fallbacks Validation (Blanket Coverage: All)

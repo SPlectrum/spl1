@@ -5,7 +5,7 @@
 //              Shows files, sizes, dates, and archive structure.
 ///////////////////////////////////////////////////////////////////////////////
 const spl = require("spl_lib")
-const zip = require("tools_7zip")
+const zip = require("tools_7zip_lib")
 ///////////////////////////////////////////////////////////////////////////////
 exports.default = function tools_7zip_list(input) {
     const archive = spl.action(input, 'archive');

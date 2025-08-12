@@ -97,12 +97,6 @@ exports.default = function gp_test_test_coding_require(input) {
                                     continue;
                                 }
                                 
-                                // Valid: current API require (e.g., gp_test for gp/test modules)  
-                                if (allowedApiRequire && 
-                                    trimmed.match(new RegExp(`require\\s*\\(\\s*["|']${allowedApiRequire}["|']\\s*\\)`))) {
-                                    continue;
-                                }
-                                
                                 // Valid: current API library require (e.g., gp_config_lib for gp/config modules)
                                 if (allowedApiRequire && 
                                     trimmed.match(new RegExp(`require\\s*\\(\\s*["|']${allowedApiRequire}_lib["|']\\s*\\)`))) {

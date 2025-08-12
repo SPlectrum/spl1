@@ -4,7 +4,7 @@
 //  description Validates that spl.action calls include parameter names: spl.action(input, "param") not spl.action(input)
 ///////////////////////////////////////////////////////////////////////////////
 const spl = require("spl_lib");
-const test = require("gp_test");
+const test = require("gp_test_lib");
 ///////////////////////////////////////////////////////////////////////////////
 
 // IMPLEMENTATION - Arguments Pattern Validation (Blanket Coverage: All)

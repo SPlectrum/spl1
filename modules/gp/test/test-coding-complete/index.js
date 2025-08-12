@@ -4,7 +4,7 @@
 //  description Validates that index.js files properly call spl.completed(input) at the end
 ///////////////////////////////////////////////////////////////////////////////
 const spl = require("spl_lib");
-const test = require("gp_test");
+const test = require("gp_test_lib");
 ///////////////////////////////////////////////////////////////////////////////
 
 // IMPLEMENTATION - Completion Pattern Validation (Blanket Coverage: All)
